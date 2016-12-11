@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>02样式绑定</title>
+    <script src="../js/angular.js"></script>
+    <style>
+        .red {
+            background: red;
+        }
+
+        .green {
+            background: green;
+        }
+        .bd-yellow{
+            border:5px solid yellow;
+        }
+    </style>
+</head>
+<!--ng-app指定一个模块名-->
+<body ng-app="demo">
+
+<!--指定一个控制器在什么范围内生效（这里的控制器，指的是AngularJS的控制器）-->
+<div ng-controller="mainController">
+    <!--css类绑定-->
+    <div style="width: 100px;height: 100px;" ng-class="classDefine"></div>
+
+    <div ng-style="styleDefine"></div>
+
+    <div  style="{{styleStr}}" ></div>
+
+    <!--<div {{style}} = 'width:100px;height:100px;background-color:red'></div>-->
+</div>
+
+<script>
+    var app = angular.module('demo', []);
+    app.controller('mainController', function ($scope) {
+        $scope.classDefine = {
+            red:true,
+            green:false,
+            "bd-yellow":true
+        }
+
+        $scope.styleDefine = {
+            "width":"50px",
+            "height":"50px",
+            "background-color":"blue"
+        }
+        $scope.styleStr = "width:100px;height:100px;background:black";
+
+        $scope.style = "style";
+    })
+</script>
+
+</body>
+</html>

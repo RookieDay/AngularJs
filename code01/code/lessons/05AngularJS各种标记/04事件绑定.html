@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>04事件绑定</title>
+    <script src="../js/angular.js"></script>
+</head>
+<!--ng-app指定一个模块名-->
+<body ng-app="demo">
+
+<!--指定一个控制器在什么范围内生效（这里的控制器，指的是AngularJS的控制器）-->
+<div ng-controller="mainController">
+    <button ng-click="clickHandler()">click me</button>
+    <button onclick="clickHandler()">click me _ window</button>
+    <button ng-dblclick="clickHandler()">click me!</button>
+
+    <input type="text" ng-blur="handler('blur')">
+    <input type="text" ng-focus="handler('focus')">
+
+    <!--当用ng-model绑定的数据发生改变时，触发ng-change-->
+    <input type="text" ng-change="handler('change')" ng-model="change">
+
+</div>
+
+<script>
+    var app = angular.module('demo', []);
+    app.controller('mainController', function ($scope) {
+        $scope.clickHandler = function () {
+            alert('btn has been clicked');
+        }
+        $scope.handler = function (str) {
+            alert(str);
+        }
+        $scope.change = 'change demo'
+    })
+
+    function clickHandler() {
+        alert('btn has benn clicked __ window')
+    }
+</script>
+
+</body>
+</html>

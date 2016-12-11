@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>单页面应用示例</title>
+    <script src="../node_modules/angular/angular.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap-theme.css">
+    <style>
+        li {
+            float: left;
+        }
+    </style>
+</head>
+
+<body style="padding-top: 75px;">
+
+    <div class="container">
+
+        <!--上方导航栏-->
+        <div class="row">
+            <div class="col-xs-12">
+                <ul class="nav">
+                    <li><a class="btn btn-xs" onclick="getUserInfoAndRender('zhangsan')">张三</a></li>
+                    <li><a class="btn btn-xs" onclick="getUserInfoAndRender('lisi')">李四</a></li>
+                    <li><a class="btn btn-xs" onclick="getUserInfoAndRender('wangwu')">王五</a></li>
+                    <li><a class="btn btn-xs" onclick="getUserInfoAndRender('zhaoliu')">赵六</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!--下方信息面板-->
+        <div class="row">
+            <div class="col-xs-12">
+                <div id="info-viewer" class="panel panel-default">
+                    <!--信息面板标题-->
+                    <div class="panel-heading">
+                        <h3 class="panel-title" id="title">张三</h3>
+                    </div>
+                    <!--信息面板内容表格-->
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td style="width: 100px;">姓名</td>
+                                <td id="name">张三</td>
+                            </tr>
+                            <tr>
+                                <td>性别</td>
+                                <td id="sex">男</td>
+                            </tr>
+                            <tr>
+                                <td>年龄</td>
+                                <td id="age">23</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="width: 100%;height: 1000px;"></div>
+
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+
+    <script>
+        // 获取用户信息并渲染到界面上
+        function getUserInfoAndRender(username) {
+            var url = './res/' + username + '.json';
+            // $.get(url, function(userdata) {
+            //     // 反思：这样的代码有什么问题吗？
+            //     $("#title").html(userdata.name);
+            //     $("#name").html(userdata.name);
+            //     $("#sex").html(userdata.sex);
+            //     $("#age").html(userdata.age);
+            // })
+            $.ajax({
+                url: url,
+                type: 'get',
+                dataType: 'json',
+                success: function(data) {
+                    // 反思：这样的代码有什么问题吗？
+                    $("#title").html(data.name);
+                    $("#name").html(data.name);
+                    $("#sex").html(data.sex);
+                    $("#age").html(data.age);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

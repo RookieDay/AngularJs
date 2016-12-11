@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01数据绑定</title>
+    <script src="../js/angular.js"></script>
+</head>
+<!--ng-app指定一个模块名-->
+<body ng-app="demo">
+
+<!--指定一个控制器在什么范围内生效（这里的控制器，指的是AngularJS的控制器）-->
+<div ng-controller="mainController">
+    <!--ng-bind修改一个标签内部的innerHTML-->
+    <div ng-bind="name">abcdefg</div>
+    <div>名字：{{name}}</div>
+    <input type="text" ng-model="name">
+    <input type="number" ng-model="code">
+    <input type="checkbox" ng-model="tureOrFalse">
+    <input type="radio" name="r" value="a" ng-model="r">
+    <input type="radio" name="r" value="b" ng-model="r">
+    <input type="radio" name="r" value="c" ng-model="r">
+</div>
+
+<div ng-controller="subController">
+    {{name}}
+</div>
+
+<script>
+    var app = angular.module('demo', [])
+    app.controller('mainController', function ($scope) {
+        $scope.name = '张三'
+    })
+    app.controller('subController',function($scope){
+        $scope.name = 'sub'
+    })
+
+
+</script>
+
+</body>
+</html>

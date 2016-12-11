@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>02样式绑定扩展</title>
+    <script src="../js/angular.js"></script>
+</head>
+<!--ng-app指定一个模块名-->
+<body ng-app="demo">
+
+<!--指定一个控制器在什么范围内生效（这里的控制器，指的是AngularJS的控制器）-->
+<div ng-controller="mainController">
+    <div>
+        readonly:
+    <input type="checkbox" ng-model="readonly">
+    <input type="text" ng-readonly="readonly" value="readonly测试">
+    </div>
+    <div>
+        disabled:
+        <input type="checkbox" ng-model="disable">
+        <input type="text" ng-disabled="disable" value="disable测试">
+    </div>
+    <div>
+        hide:
+        <input type="checkbox" ng-model="hide">
+        <input type="text" ng-hide="hide" value="nghide测试">
+    </div>
+</div>
+
+<script>
+    var app = angular.module('demo', []);
+    app.controller('mainController', function ($scope) {
+
+    })
+</script>
+
+</body>
+</html>

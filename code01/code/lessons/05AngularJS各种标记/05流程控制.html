@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>05流程控制</title>
+    <script src="../js/angular.js"></script>
+</head>
+<!--ng-app指定一个模块名-->
+<body ng-app="demo">
+
+<!--指定一个控制器在什么范围内生效（这里的控制器，指的是AngularJS的控制器）-->
+<div ng-controller="mainController">
+    <input type="checkbox" ng-model="ngIf">
+    <div ng-if="ngIf"> ng-if demo</div>
+
+    <input type="radio" value="a" name="r" ng-model="r">
+    <input type="radio" value="b" name="r" ng-model="r">
+    <input type="radio" value="c" name="r" ng-model="r">
+    <input type="radio" value="d" name="r" ng-model="r">
+    <div ng-switch="r">
+        <div ng-switch-when="a"> a </div>
+        <div ng-switch-when="b"> b </div>
+        <div ng-switch-when="c"> c </div>
+        <div ng-switch-default> abcd </div>
+    </div>
+</div>
+
+<script>
+    var app = angular.module('demo', []);
+    app.controller('mainController', function ($scope) {
+
+    })
+</script>
+
+</body>
+</html>

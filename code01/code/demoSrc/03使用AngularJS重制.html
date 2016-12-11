@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>单页面应用示例</title>
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../node_modules/angular/angular.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap-theme.css">
+    <style>
+        li {
+            float: left;
+        }
+    </style>
+</head>
+<body style="padding-top: 75px;" ng-controller="mainCtrl">
+
+<div class="container">
+
+    <!--上方导航栏-->
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="nav">
+                <li><a class="btn btn-xs" ng-click="action.navTo('zhangsan')">张三</a></li>
+                <li><a class="btn btn-xs" ng-click="action.navTo('lisi')">李四</a></li>
+                <li><a class="btn btn-xs" ng-click="action.navTo('wangwu')">王五</a></li>
+                <li><a class="btn btn-xs" ng-click="action.navTo('zhaoliu')">赵六</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!--下方信息面板-->
+    <div class="row">
+        <div class="col-xs-12">
+            <div id="info-viewer" class="panel panel-default">
+                <!--信息面板标题-->
+                <div class="panel-heading">
+                    <h3 class="panel-title" id="title">{{data.userinfo.name}}</h3>
+                </div>
+                <!--信息面板内容表格-->
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td style="width: 100px;">姓名</td>
+                        <td id="name">{{data.userinfo.name}}</td>
+                    </tr>
+                    <tr>
+                        <td>性别</td>
+                        <td id="sex">{{data.userinfo.sex}}</td>
+                    </tr>
+                    <tr>
+                        <td>年龄</td>
+                        <td id="age">{{data.userinfo.age}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div> 信息显示：</div>
+                    <div style="border: 1px solid grey;padding: 10px;">{{data}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="width: 100%;height: 1000px;"></div>
+
+<script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+
+<script>
+
+
+    var app = angular.module('app', []);
+    app.controller('mainCtrl', function ($scope , $http) {
+        var data = $scope.data = {};
+        var actions = $scope.action = {};
+
+        actions.navTo = function(name){
+            var url = './res/' + name + '.json';
+            $http.get(url)
+                    .success(function(response){
+                        data.userinfo = response;
+                    })
+        }
+
+    });
+
+</script>
+</body>
+</html>

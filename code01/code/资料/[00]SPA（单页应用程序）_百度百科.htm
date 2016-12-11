@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<!--STATUS OK-->
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script src="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/element.js" async=""></script><script src="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/monkey.js" async=""></script><script src="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/dp.js" async=""></script><script src="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/m.js" async=""></script><script src="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/ls.js" async=""></script>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="description" content="单页Web应用（single page web application，SPA），就是只有一张Web页面的应用，是加载单个HTML 页面并在用户与应用程序交互时动态更新该页面的Web应用程序。...">
+<title>SPA（单页应用程序）_百度百科</title>
+
+<meta name="keywords" content="SPA SPA单页Web应用 SPA特点 SPA单页web应用开发流程">
+<meta name="image" content="http://baike.bdimg.com/cms/static/baike.png">
+<script src="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/alog.js" async=""></script><script type="text/javascript">
+  void function(g,f,j,c,h,d,b){g.alogObjectName=h,g[h]=g[h]||function(){(g[h].q=g[h].q||[]).push(arguments)},g[h].l=g[h].l||+new Date,d=f.createElement(j),d.async=!0,d.src=c,b=f.getElementsByTagName(j)[0],b.parentNode.insertBefore(d,b)}(window,document,"script","http://img.baidu.com/hunter/alog/alog.min.js","alog");void function(){function c(){return;}window.PDC={mark:function(a,b){alog("speed.set",a,b||+new Date);alog.fire&&alog.fire("mark")},init:function(a){alog("speed.set","options",a)},view_start:c,tti:c,page_ready:c}}();void function(n){var o=!1;n.onerror=function(n,e,t,c){var i=!0;return!e&&/^script error/i.test(n)&&(o?i=!1:o=!0),i&&alog("exception.send","exception",{msg:n,js:e,ln:t,col:c}),!1},alog("exception.on","catch",function(n){alog("exception.send","exception",{msg:n.msg,js:n.path,ln:n.ln,method:n.method,flag:"catch"})})}(window);
+</script>
+<meta name="csrf-token" content="">
+
+<!--[if lte IE 9]>
+<script>
+    (function() {
+      var e = "abbr,article,aside,audio,canvas,datalist,details,dialog,eventsource,figure,footer,header,hgroup,mark,menu,meter,nav,output,progress,section,time,video".split(","),
+        i = e.length;
+      while (i--) {
+        document.createElement(e[i]);
+      }
+    })();
+  </script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/wiki-lemma_74e1370.css"><link rel="stylesheet" type="text/css" href="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/wiki-common-base_016ba13.css"><link rel="stylesheet" type="text/css" href="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/announcement_b0d7681.css"><link rel="stylesheet" type="text/css" href="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/label_461cbe0.css"><link rel="stylesheet" type="text/css" href="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/sideShare_3e4292c.css"><link rel="stylesheet" type="text/css" href="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/praise_2120cd2.css"><link rel="stylesheet" type="text/css" href="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/toolButtons_a2c470f.css"><link rel="stylesheet" type="text/css" href="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/userInfo_9ba20c1.css"><link rel="stylesheet" type="text/css" href="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/pageMask_ff9a193.css"><link rel="stylesheet" type="text/css" href="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/wiki-lemma-module_b85b14d.css"><link rel="stylesheet" type="text/css" href="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/mainContent_637f952.css"><link rel="stylesheet" type="text/css" href="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/lemmaRelation_9f629f5.css"><link rel="stylesheet" type="text/css" href="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/zhixin_1c34583.css"><link rel="stylesheet" type="text/css" href="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/searchHeader_e786bfb.css"><script type="text/javascript">
+    alog('speed.set', 'ht', +new Date);
+</script><script src="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/lemmaReferenceTip_98e1259.js" type="text/javascript"></script><script src="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/share.js"></script><script id="nstip" src="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/nstip.js" type="text/javascript"></script><link href="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/share_style0_16.css" rel="stylesheet"><link href="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/share_style0_32.css" rel="stylesheet"><script charset="utf-8" type="text/javascript" src="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/qc.php"></script></head>
+
+
+
+<body class="wiki-lemma normal">
+
+
+<div class="header-wrapper">
+<ul class="wgt-userbar"><li class="userbar_user" data-action="showUserMenu">
+<a href="javascript:;"><span>香霖堂的茶叶</span><em class="cmn-inline-block cmn-icon cmn-icons cmn-icons_userbar-up"></em></a>
+</li>
+<li class="userbar_mall">
+<a href="http://baike.baidu.com/mall/" target="_blank"><em class="cmn-inline-block cmn-icon cmn-icons cmn-icons_userbar-shop"></em>商城</a>
+</li>
+<li class="userbar_message newMessage" data-action="showUserMsg">
+<a href="javascript:;"><em class="cmn-inline-block cmn-icon cmn-icons cmn-icons_userbar-message"></em><em class="cmn-icon cmn-icons cmn-icons_userbar-new userbar_message_new"></em>消息</a>
+</li>
+<li class="split">|</li>
+<li>
+<a href="http://www.baidu.com/">百度首页</a>
+</li></ul>
+<div class="header">
+
+<div class="layout">
+<div class="wgt-searchbar wgt-searchbar-main cmn-clearfix">
+<div class="logo-container">
+<a class="logo cmn-inline-block" title="到百科首页" href="http://baike.baidu.com/">
+<span class="cmn-baike-logo">
+<em class="cmn-icon cmn-icons cmn-icons_logo-bai"></em>
+<em class="cmn-icon cmn-icons cmn-icons_logo-du"></em>
+<em class="cmn-icon cmn-icons cmn-icons_logo-baike"></em>
+</span>
+</a>
+</div>
+<div class="search">
+<div class="nav">
+<a href="http://news.baidu.com/" data-href="http://news.baidu.com/ns?tn=news&amp;cl=2&amp;rn=20&amp;ct=1&amp;fr=bks0000&amp;ie=utf-8&amp;word=">新闻</a><a href="http://www.baidu.com/" data-href="http://www.baidu.com/s?ie=utf-8&amp;fr=bks0000&amp;wd=">网页</a><a href="http://tieba.baidu.com/" data-href="http://tieba.baidu.com/f?ie=utf-8&amp;fr=bks0000&amp;kw=">贴吧</a><a href="http://zhidao.baidu.com/" data-href="http://zhidao.baidu.com/search?pn=0&amp;&amp;rn=10&amp;lm=0&amp;fr=bks0000&amp;word=">知道</a><a href="http://music.baidu.com/" data-href="http://music.baidu.com/search?f=ms&amp;ct=134217728&amp;ie=utf-8&amp;rn=&amp;lm=-1&amp;pn=30fr=bks0000&amp;key=">音乐</a><a href="http://image.baidu.com/" data-href="http://image.baidu.com/search/index?tn=baiduimage&amp;ct=201326592&amp;lm=-1&amp;cl=2&amp;nc=1&amp;ie=utf-8&amp;word=">图片</a><a href="http://v.baidu.com/" data-href="http://v.baidu.com/v?ct=301989888&amp;rn=20&amp;pn=0&amp;db=0&amp;s=22&amp;ie=utf-8&amp;fr=bks0000&amp;word=">视频</a><a href="http://map.baidu.com/" data-href="http://map.baidu.com/m?ie=utf-8&amp;fr=bks0000&amp;word=">地图</a><a class="baike">百科</a><a href="http://wenku.baidu.com/" data-href="http://wenku.baidu.com/search?lm=0&amp;od=0&amp;ie=utf-8&amp;fr=bks0000&amp;word=">文库</a>
+</div>
+<div class="form">
+<form id="searchForm" action="/search/word" method="GET" target="_self">
+<input id="query" name="word" autocomplete="off" autocorrect="off" value="SPA" type="text"><button id="search" type="button">进入词条</button><button id="searchLemma" type="button">搜索词条</button><a class="help" href="http://baike.baidu.com/help" target="_blank">帮助</a>
+</form>
+<form id="searchLemmaForm" action="/search" method="GET" target="_self">
+<input id="searchLemmaQuery" name="word" type="hidden">
+<input name="pn" value="0" type="hidden">
+<input name="rn" value="0" type="hidden">
+<input name="enc" value="utf8" type="hidden">
+</form>
+<ul id="suggestion" class="suggestion">
+<div></div>
+<li class="extra">
+<span id="close">关闭</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="announcement">
+<div class="announcement_content">近期有不法分子冒充官方收费编辑词条，百度百科在此严正声明：百科词条人人可编辑，词条创建和修改都是免费，绝不存在官方及代理商付费代编，请勿上当受骗，欢迎<a href="http://help.baidu.com/baike#1" target="_blank">举报</a> 。</div>
+<div class="announcement_close">X</div>
+</div></div></div>
+</div>
+<div class="navbar-wrapper">
+<div class="wgt-navbar">
+<div class="navbar-bg">
+<div class="navbar-bg-top">
+<div class="navbar-content layout">
+<div class="navbar-content-box">
+<dl class="index ">
+<dt><a href="http://baike.baidu.com/">首页</a></dt>
+</dl>
+<dl class="cat ">
+<dt><a>分类</a></dt>
+<dd>
+<div><a href="http://baike.baidu.com/art" target="_blank" class="art">艺术</a></div>
+<div><a href="http://baike.baidu.com/science" target="_blank" class="technology">科技</a></div>
+<div><a href="http://baike.baidu.com/ziran" target="_blank">自然</a></div>
+<div><a href="http://baike.baidu.com/wenhua" target="_blank">文化</a></div>
+<div><a href="http://baike.baidu.com/dili" target="_blank">地理</a></div>
+<div><a href="http://baike.baidu.com/shenghuo" target="_blank">生活</a></div>
+<div><a href="http://baike.baidu.com/shehui" target="_blank">社会</a></div>
+<div><a href="http://baike.baidu.com/renwu" target="_blank">人物</a></div>
+<div><a href="http://baike.baidu.com/jingji" target="_blank">经济</a></div>
+<div><a href="http://baike.baidu.com/tiyu" target="_blank">体育</a></div>
+<div><a href="http://baike.baidu.com/lishi" target="_blank">历史</a></div>
+</dd>
+</dl>
+<dl class="special ">
+<dt><a>特色百科</a></dt>
+<dd>
+<div><a href="http://baike.baidu.com/calendar/" target="_blank">历史上的今天</a></div>
+<div><a href="http://baike.baidu.com/museum/" target="_blank">数字博物馆</a></div>
+<div><a href="http://baike.baidu.com/shiji/2015?fr=navbar" target="_blank">史记·2015</a></div>
+<div><a href="http://baike.baidu.com/city/" target="_blank">城市百科</a></div>
+<div><a href="http://baike.baidu.com/operation/worldwar2" target="_blank">二战百科</a></div>
+<div><a href="http://baike.baidu.com/feiyi?fr=dhlfeiyi" target="_blank">非遗百科</a></div>
+</dd>
+</dl>
+<dl class="user">
+<dt><a>用户</a></dt>
+<dd>
+<div><a href="http://baike.baidu.com/kedou/" target="_blank">蝌蚪团</a></div>
+<div><a href="http://baike.baidu.com/event/ranmeng/" target="_blank">燃梦计划</a></div>
+<div><a href="http://baike.baidu.com/task/" target="_blank">百科任务</a></div>
+<div><a href="http://baike.baidu.com/mall/" target="_blank">百科商城</a></div>
+</dd>
+</dl>
+<dl class="cooperation">
+<dt><a>权威合作</a></dt>
+<dd>
+<div><a href="http://baike.baidu.com/operation/cooperation#joint" target="_blank">合作模式</a></div>
+<div><a href="http://baike.baidu.com/operation/cooperation#issue" target="_blank">常见问题</a></div>
+<div><a href="http://baike.baidu.com/operation/cooperation#connection" target="_blank">联系方式</a></div>
+</dd>
+</dl>
+<dl class="mobile">
+<dt><a>手机百科</a></dt>
+<dd>
+<div><a href="http://baike.baidu.com/m#download" target="_blank">客户端</a></div>
+<div><a href="http://baike.baidu.com/m#wap" target="_blank">网页版</a></div>
+</dd>
+</dl>
+<div class="usercenter">
+<div><a href="http://baike.baidu.com/usercenter" target="_blank"><em class="cmn-icon cmn-icons cmn-icons_navbar-usercenter"></em>个人中心</a></div>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="body-wrapper">
+<div class="before-content">
+<div class="polysemant-list polysemant-list-normal">
+<div class="polysemantList-header">
+<div class="polysemantList-header-title">
+<b>SPA</b>是一个<a href="http://baike.baidu.com/view/10812277.htm" target="_blank">多义词</a>，请在下列<a href="http://baike.baidu.com/view/340519.htm" target="_blank">义项</a>上选择浏览（<a href="http://baike.baidu.com/view/13709.htm?force=1" target="_blank">共4个义项</a>）</div>
+<a class="polysemantList-addButton" target="_blank" href="http://baike.baidu.com/createsub/SPA">添加义项</a>
+</div>
+<ul class="polysemantList-wrapper cmn-clearfix">
+<li class="item">▪<a title="水疗" href="http://baike.baidu.com/subview/13709/16542187.htm#viewPageContent">水疗</a></li>
+<li class="item">▪<a title="葡萄球菌A蛋白" href="http://baike.baidu.com/item/SPA/16554940#viewPageContent">葡萄球菌A蛋白</a></li>
+<li class="item">▪<span class="selected">单页应用程序</span></li>
+<li class="item">▪<a title="比利时小镇" href="http://baike.baidu.com/item/SPA/18751429#viewPageContent">比利时小镇</a></li>
+</ul>
+</div>
+</div>
+<div class="content-wrapper">
+<div class="content">
+<div class="main-content">
+<div class="top-tool">
+<a href="http://baike.baidu.com/divideload/SPA" title="拆分词条" target="_blank" class="split-icon" style="display:none;" nslog-type="50000104"></a>
+<div class="top-collect" nslog="area" nslog-type="50000102">
+<span class="collect-text">收藏</span>
+<div class="collect-tip">查看<a href="http://baike.baidu.com/uc/favolemma" target="_blank">我的收藏</a></div>
+</div>
+<a href="javascript:void(0);" class="top-vote" nslog-type="50000103">
+<span class="vote-count">3041</span>
+<span class="vote-tip">有用+1</span>
+<span class="voted-tip">已投票</span>
+</a>
+<div data-bd-bind="1462892460195" class="bdsharebuttonbox top-share bdshare-button-style0-32" data-tag="top-share">
+<a class="bds_more top-share-icon" data-cmd="more" nslog-type="9067">
+<span title="累计分享3次" class="bds_count share-count" id="j-topShareCount" data-cmd="count">1523</span>
+</a>
+</div>
+</div>
+<div style="width:0;height:0;clear:both"></div><dl class="lemmaWgt-lemmaTitle lemmaWgt-lemmaTitle-">
+<dd class="lemmaWgt-lemmaTitle-title">
+<h1>SPA</h1>
+<h2>（单页应用程序）</h2>
+<a style="display: inline-block;" href="javascript:;" class="edit-lemma cmn-btn-hover-blue cmn-btn-28 j-edit-link"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_edit-lemma"></em>编辑</a>
+<a class="lock-lemma" target="_blank" href="http://baike.baidu.com/view/10812319.htm" title="锁定"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_lock-lemma"></em>锁定</a>
+</dd>
+</dl><div class="edit-prompt">本词条缺少<strong>名片图</strong>，补充相关内容使词条更完整，还能快速升级，赶紧来<a class="edit-prompt-link j-edit-link">编辑</a>吧！</div>
+<div class="lemma-summary" label-module="lemmaSummary">
+<div class="para" label-module="para">单页Web应用（single page web application，SPA），就是只有一张Web页面的应用，是加载单个HTML 页面并在用户与应用程序交互时动态更新该页面的Web应用程序。</div>
+</div>
+<div class="basic-info cmn-clearfix">
+<dl class="basicInfo-block basicInfo-left">
+<dt class="basicInfo-item name">中文名</dt>
+<dd class="basicInfo-item value">
+单页应用程序
+</dd>
+</dl><dl class="basicInfo-block basicInfo-right">
+<dt class="basicInfo-item name">外文名</dt>
+<dd class="basicInfo-item value">
+single page web application
+</dd>
+</dl></div>
+<div class="lemmaWgt-lemmaCatalog">
+<div class="lemma-catalog">
+<h2 class="block-title">目录</h2>
+<div class="catalog-list column-1">
+<ol>
+<li class="level1">
+<span class="index">1</span>
+<span class="text"><a href="#1">单页Web应用</a></span>
+</li>
+<li class="level1">
+<span class="index">2</span>
+<span class="text"><a href="#2">特点</a></span>
+</li>
+<li class="level1">
+<span class="index">3</span>
+<span class="text"><a href="#3">单页web应用开发流程</a></span>
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="anchor-list">
+<a name="1" class="lemma-anchor para-title"></a>
+<a name="sub17611492_1" class="lemma-anchor "></a>
+<a name="单页Web应用" class="lemma-anchor "></a>
+</div><div class="para-title level-2">
+<h2 class="title-text"><span class="title-prefix">SPA</span>单页Web应用</h2>
+<a style="display: block;" class="edit-icon j-edit-link" data-edit-dl="1" href="javascript:;"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_edit-lemma"></em>编辑</a>
+</div>
+<div class="para" label-module="para">单页<a target="_blank" href="http://baike.baidu.com/subview/3912/15992867.htm">Web</a>应用（single page web application，SPA），就是只有一张Web页面的应用。单页应用程序 (SPA) 是加载单个HTML 页面并在用户与应用程序交互时动态更新该页面的Web应用程序。<sup>[1]</sup><a class="sup-anchor" name="ref_[1]_17611492">&nbsp;</a>
+浏览器一开始会加载必需的HTML、CSS和JavaScript，所有的操作都在这张页面上完成，都由JavaScript来控制。因此，对单页应用来说模块化的开发和设计显得相当重要。</div><div class="anchor-list">
+<a name="2" class="lemma-anchor para-title"></a>
+<a name="sub17611492_2" class="lemma-anchor "></a>
+<a name="特点" class="lemma-anchor "></a>
+</div><div class="para-title level-2">
+<h2 class="title-text"><span class="title-prefix">SPA</span>特点</h2>
+<a style="display: block;" class="edit-icon j-edit-link" data-edit-dl="2" href="javascript:;"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_edit-lemma"></em>编辑</a>
+</div>
+<div class="para" label-module="para">速度：更好的用户体验，让用户在web app感受native app的速度和流畅，</div>
+<div class="para" label-module="para">·MVC：经典MVC开发模式，前后端各负其责。</div>
+<div class="para" label-module="para">·ajax：重前端，业务逻辑全部在本地操作，数据都需要通过AJAX同步、提交。</div>
+<div class="para" label-module="para">·路由：在URL中采用#号来作为当前视图的地址,改变#号后的参数，页面并不会重载。</div>
+<div class="para" label-module="para">单页Web应用（single page web 
+application，SPA）是当今网站开发技术的弄潮儿，很多传统网站都在或者已经转型为单页Web应用，新的单页Web应用网站（包括移动平台上
+的）也如雨后春笋般涌现在人们的面前，如Gmail、Evernote、Trello等。如果你是一名Web开发人员，却还没开发过或者甚至是没有听说过
+单页应用，那你已经Out很久了。</div>
+<div class="para" label-module="para">单页Web应用和前端工程师们息息相关，因为主要的变革发生在浏览器端，
+用到的技术其实还是HTML+CSS+JavaScript，所有的浏览器都原生支持，当然有的浏览器因为具备一些高级特性，从而使得单页Web应用的用
+户体验更上一层楼。关于单页应用的优点和缺点，网上讲解的文章有很多，这里就不展开论述了。 
+单页Web应用，顾名思义，就是只有一张Web页面的应用。浏览器一开始会加载必需的HTML、CSS和JavaScript，之后所有的操作都在这张页
+面上完成，这一切都由JavaScript来控制。因此，单页Web应用会包含大量的JavaScript代码，复杂度可想而知，模块化开发和设计的重要
+性不言而喻。<sup>[2]</sup><a class="sup-anchor" name="ref_[2]_17611492">&nbsp;</a>
+</div><div class="anchor-list">
+<a name="3" class="lemma-anchor para-title"></a>
+<a name="sub17611492_3" class="lemma-anchor "></a>
+<a name="单页web应用开发流程" class="lemma-anchor "></a>
+</div><div class="para-title level-2">
+<h2 class="title-text"><span class="title-prefix">SPA</span>单页web应用开发流程</h2>
+<a style="display: block;" class="edit-icon j-edit-link" data-edit-dl="3" href="javascript:;"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_edit-lemma"></em>编辑</a>
+</div>
+<ul class="custom_dot para-list list-paddingleft-1"><li class="list-dot list-dot-paddingleft"><div class="para" label-module="para">用循环的视角审视Web应用开发</div>
+</li><li class="list-dot list-dot-paddingleft"><div class="para" label-module="para">框定一个一致的SPA图形用户界面（GUI）和模型</div>
+</li><li class="list-dot list-dot-paddingleft"><div class="para" label-module="para">将SPA的原则带回服务器端</div>
+</li><li class="list-dot list-dot-paddingleft"><div class="para" label-module="para">聚集于对合适的应用进行早期SPA开发<sup>[3]</sup><a class="sup-anchor" name="ref_[3]_17611492">&nbsp;</a>
+</div>
+</li></ul><div class="para" label-module="para">SPA协调的起点是认识到SPA与脚本和网页编程有
+关，而不是与后端应用有关。SPA的主要目标是围绕着Web 
+2.0页面时间交互原则重构Web应用，以便体验可容易地转化到多个设备中，并对用户有效。这意味着首先要抱着支持这样一个逻辑活动为目标来设计用户交
+互，该活动应该涉及单页面与一套脚本，实现一次加载并执行直到活动完成。</div>
+<div class="para" label-module="para">一旦用户交互设计完成，下一步就是框定一个本地状态或事件模型，该模型应能描述页面处理与用户的交互及与任何后端应用交互。尽管这并非不可能，但是开发与服务器端功能多组件交互的SPA会更加困难。</div>
+<div class="para" label-module="para">这会产生一种要对应用服务器进行重构的诱因，其目的是为了以1:1的比例来支持SPA。就最大程度上而言，该模型应该让自己的变量及命名空间本地化，并通过应用的服务器端与其他SPA交互。这是为了减少对于用本地SPA控制器或模型来在多个SPA之间保留状态的需求。<sup>[3]</sup><a class="sup-anchor" name="ref_[3]_17611492">&nbsp;</a>
+</div>
+<dl class="lemma-reference collapse nslog-area log-set-param" data-nslog-type="2" log-set-param="ext_reference">
+<dt class="reference-title">参考资料<em class="toggle"></em></dt>
+<dd class="reference-list-wrap">
+<ul class="reference-list">
+<li class="reference-item " id="reference-[1]-17611492-wrap">
+<span class="index">1.</span>
+<a class="gotop anchor" name="refIndex_1_17611492" id="refIndex_1_17611492" title="向上跳转" href="#ref_[1]_17611492">&nbsp;&nbsp;</a>
+<a rel="nofollow" href="http://baike.baidu.com/redirect/6f17DyRVqRv7e2pIKxkROHxg-jEnxm6pTg56nWLV6ju0Vg37UpnqkoMHcKJwDHcLcwDpW-mQ96Ez3HdRNWUZwwR2o0EhslA" target="_blank" class="text">Ember.js实现单页面应用程序<span class="linkout">&nbsp;</span></a>
+<span class="site">．博客园</span><span>[引用日期2015-05-6]</span></li><li class="reference-item " id="reference-[2]-17611492-wrap">
+<span class="index">2.</span>
+<a class="gotop anchor" name="refIndex_2_17611492" id="refIndex_2_17611492" title="向上跳转" href="#ref_[2]_17611492">&nbsp;&nbsp;</a>
+<a rel="nofollow" href="http://baike.baidu.com/redirect/d230k0CzmstaEnF0G4g6J1swzedjLka09P0x6cpBB2xwiHw0ML7dJzPt7LVMo-v-5pe3UtlKx3NqTqnSdw18TI85Q9KUF_mleW_AGG_AJwe1gTDw" target="_blank" class="text">单页web应用是什么？它又会给传统网站带来哪些好处?<span class="linkout">&nbsp;</span></a>
+<span class="site">．csdn</span><span>[引用日期2015-05-6]</span></li><li class="reference-item " id="reference-[3]-17611492-wrap">
+<span class="index">3.</span>
+<a class="gotop anchor" name="refIndex_3_17611492" id="refIndex_3_17611492" title="向上跳转" href="#ref_[3]_17611492">&nbsp;&nbsp;</a>
+<a rel="nofollow" href="http://baike.baidu.com/redirect/f2f3zb17vzWajlP34RunIfWECzsUM-ZmtnjoyvAfMvhrGTT8WOin4s7uRo70PauXjUd85NTkqDdMtTv3lt_wH4EJgY1rL-O61A79asZK" target="_blank" class="text">如何掌握单页面应用开发<span class="linkout">&nbsp;</span></a>
+<span class="site">．TechTarget</span><span>[引用日期2015-08-12]</span></li></ul>
+</dd>
+</dl>
+<div id="open-tag">
+<div class="open-tag-title">词条标签：</div>
+<dd id="open-tag-item">
+<span class="taglist">
+软件
+</span>
+，<span class="taglist">
+计算机学
+</span>
+，<span class="taglist">
+互联网
+</span>
+</dd>
+<div style="display: none;" class="open-tag-collapse" id="open-tag-collapse"></div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="side-content">
+<div class="lemmaWgt-promotion-vbaike">
+<div class="promotion_title">V百科<a href="http://baike.baidu.com/vbaike#gallary" target="_blank">往期回顾</a></div>
+<div class="promotion_viewport">
+<dl>
+</dl>
+<div class="promotion_viewport_pager"></div>
+</div>
+</div><div class="lemmaWgt-promotion-rightPreciseAd" data-lemmaid="17536313" data-lemmatitle="SPA"></div><div class="lemmaWgt-promotion-slide">
+<div class="promotion_viewport">
+<dl>
+</dl>
+<div class="promotion_viewport_pager"></div>
+</div>
+</div><div class="lemmaWgt-promotion-rightBigAd">
+</div><dl class="side-box lemma-statistics">
+<dt class="title">词条统计</dt>
+<dd class="description">
+<ul>
+<li>浏览次数：<span id="j-lemmaStatistics-pv">7569</span>次</li>
+<li>编辑次数：7次<a href="http://baike.baidu.com/historylist/SPA/17536313" class="nslog:1021" target="_blank">历史版本</a></li>
+<li>最近更新：<span class="j-modified-time" style="">2015-11-29</span></li>
+<li>创建者：<a class="show-userCard" data-uid="21571291" title="查看此用户资料" target="_blank" href="http://www.baidu.com/p/%E9%9D%92%E8%A1%BF%E9%A3%9E%E6%89%AC" nslog-type="1022">青衿飞扬</a></li>
+</ul>
+</dd>
+</dl>
+<div class="side-catalog" style="visibility: hidden; bottom: 10px;">
+<div class="side-bar">
+<em class="circle start"></em>
+<em class="circle end"></em>
+</div>
+<div class="catalog-scroller">
+<dl class="catalog-list">
+<dt class="catalog-title level1">
+<em class="pointer"></em>
+<span class="text">
+<span class="title-index">1</span>
+<a href="#1" class="title-link" nslog-type="1026">单页Web应用</a>
+</span>
+</dt>
+<dt class="catalog-title level1">
+<em class="pointer"></em>
+<span class="text">
+<span class="title-index">2</span>
+<a href="#2" class="title-link" nslog-type="1026">特点</a>
+</span>
+</dt>
+<dt class="catalog-title level1">
+<em class="pointer"></em>
+<span class="text">
+<span class="title-index">3</span>
+<a href="#3" class="title-link" nslog-type="1026">单页web应用开发流程</a>
+</span>
+</dt>
+<a class="arrow" href="javascript:void(0);"></a>
+</dl>
+</div>
+<div style="display: none;" class="right-wrap">
+<a class="go-up disable" href="javascript:void(0);"></a>
+<a class="go-down" href="javascript:void(0);"></a>
+</div>
+<div class="bottom-wrap">
+<a class="toggle-button" href="javascript:void(0);"></a>
+<a class="gotop-button" href="javascript:void(0);"></a>
+</div>
+</div>
+<div class="unionAd_fromPs side-box" id="unionAd_fromPs">
+<script type="BAIDU_HH">
+    {
+        type : 'pageembed',
+        di   : 'u2140330',
+        rsi0 : 270,
+        rsi1 : 175
+    }
+    </script>
+</div>
+<div style="display: block;" id="side_box_fengchao" class="fengchao side-box" nslog="area" nslog-type="10000902"><style>.ec-ui-tip{margin-left:5px;}.c-icon{background:url(http://s1.bdstatic.com/r/www/cache/biz/ecom/common/api/img/ns-credit/icons.png) no-repeat 0 0;_background-image:url(http://s1.bdstatic.com/r/www/cache/biz/ecom/common/api/img/ns-credit/icons.gif);}.c-frame{margin-bottom:18px;}.c-offset{padding-left:10px;}.c-gray{color:#666;}.c-gap-top-small{margin-top:5px;}.c-gap-top{margin-top:10px;}.c-gap-bottom-small{margin-bottom:5px;}.c-gap-bottom{margin-bottom:10px;}.c-gap-left{margin-left:12px;}.c-gap-left-small{margin-left:6px;}.c-gap-right{margin-right:12px;}.c-gap-right-small{margin-right:6px;}.c-gap-icon-right-small{margin-right:5px;}.c-gap-icon-right{margin-right:10px;}.c-gap-icon-left-small{margin-left:5px;}.c-gap-icon-left{margin-left:10px;}.c-container{width:538px;font-size:13px;line-height:1.54;word-wrap:break-word;word-break:break-all;}.c-container .c-container{width:auto;}.c-container table{border-collapse:collapse;border-spacing:0;}.c-container td{font-size:13px;line-height:1.54;}.c-default{font-size:13px;line-height:1.54;word-wrap:break-word;word-break:break-all;}.c-container .t,.c-default .t{line-height:1.54;}.c-default .t{margin-bottom:0;}.cr-content{width:259px;font-size:13px;line-height:1.54;color:#333;}.cr-content table{border-collapse:collapse;border-spacing:0;}.cr-content td{font-size:13px;line-height:1.54;vertical-align:top;}.cr-offset{padding-left:17px;}.container_l .cr-content{width:351px;}.container_l .cr-content-narrow{width:259px;}.cr-title{font-size:14px;line-height:1.29;font-weight:bold;}.cr-title-sub{float:right;font-size:13px;font-weight:normal;}.c-row{*zoom:1;}.c-row:after{display:block;height:0;content:"";clear:both;visibility:hidden;}.c-span2{width:29px;}.c-span3{width:52px;}.c-span4{width:75px;}.c-span5{width:98px;}.c-span6{width:121px;}.c-span7{width:144px;}.c-span8{width:167px;}.c-span9{width:190px;}.c-span10{width:213px;}.c-span11{width:236px;}.c-span12{width:259px;}.c-span13{width:282px;}.c-span14{width:305px;}.c-span15{width:328px;}.c-span16{width:351px;}.c-span17{width:374px;}.c-span18{width:397px;}.c-span19{width:420px;}.c-span20{width:443px;}.c-span21{width:466px;}.c-span22{width:489px;}.c-span23{width:512px;}.c-span24{width:535px;}.c-span2,.c-span3,.c-span4,.c-span5,.c-span6,.c-span7,.c-span8,.c-span9,.c-span10,.c-span11,.c-span12,.c-span13,.c-span14,.c-span15,.c-span16,.c-span17,.c-span18,.c-span19,.c-span20,.c-span21,.c-span22,.c-span23,.c-span24{float:left;_display:inline;margin-right:17px;list-style:none;}.c-span-last{margin-right:0;}.c-span-last-s{margin-right:0;}.container_l .c-span-last-s{margin-right:17px;}.cr-content-narrow .c-span-last-s{margin-right:0;}.c-border{width:518px;padding:9px;border:1px solid #e3e3e3;border-bottom-color:#e0e0e0;border-right-color:#ececec;box-shadow:1px 2px 1px rgba(0,0,0,0.072);-webkit-box-shadow:1px 2px 1px rgba(0,0,0,0.072);-moz-box-shadow:1px 2px 1px rgba(0,0,0,0.072);-o-box-shadow:1px 2px 1px rgba(0,0,0,0.072);}.c-border .c-gap-left{margin-left:10px;}.c-border .c-gap-left-small{margin-left:5px;}.c-border .c-gap-right{margin-right:10px;}.c-border .c-gap-right-small{margin-right:5px;}.c-border .c-border{width:auto;padding:0;border:none;box-shadow:none;-webkit-box-shadow:none;-moz-box-shadow:none;-o-box-shadow:none;}.c-border .c-span2{width:34px;}.c-border .c-span3{width:56px;}.c-border .c-span4{width:78px;}.c-border .c-span5{width:100px;}.c-border .c-span6{width:122px;}.c-border .c-span7{width:144px;}.c-border .c-span8{width:166px;}.c-border .c-span9{width:188px;}.c-border .c-span10{width:210px;}.c-border .c-span11{width:232px;}.c-border .c-span12{width:254px;}.c-border .c-span13{width:276px;}.c-border .c-span14{width:298px;}.c-border .c-span15{width:320px;}.c-border .c-span16{width:342px;}.c-border .c-span17{width:364px;}.c-border .c-span18{width:386px;}.c-border .c-span19{width:408px;}.c-border .c-span20{width:430px;}.c-border .c-span21{width:452px;}.c-border .c-span22{width:474px;}.c-border .c-span23{width:496px;}.c-border .c-span24{width:518px;}.c-border .c-span2,.c-border .c-span3,.c-border .c-span4,.c-border .c-span5,.c-border .c-span6,.c-border .c-span7,.c-border .c-span8,.c-border .c-span9,.c-border .c-span10,.c-border .c-span11,.c-border .c-span12,.c-border .c-span13,.c-border .c-span14,.c-border .c-span15,.c-border .c-span16,.c-border .c-span17,.c-border .c-span18,.c-border .c-span19,.c-border .c-span20,.c-border .c-span21,.c-border .c-span22,.c-border .c-span23,.c-border .c-span24{margin-right:10px;}.c-border .c-span-last{margin-right:0;}.c-border .c-span-last-s{margin-right:0;}.c-border .container_l .c-span-last-s{margin-right:10px;}.c-loading{display:block;width:50px;height:50px;background:url(http://www.baidu.com/aladdin/img/tools/loading.gif) no-repeat 0 0;}.c-vline{display:inline-block;margin:0 3px;border-left:1px solid #ddd;width:0;height:12px;_vertical-align:middle;_overflow:hidden;}.c-icon{display:inline-block;width:14px;height:14px;vertical-align:text-bottom;font-style:normal;overflow:hidden;}.c-icon-unfold,.c-icon-fold,.c-icon-chevron-unfold,.c-icon-chevron-fold{width:12px;height:12px;}.c-icon-star,.c-icon-star-gray{width:60px;}.c-icon-qa-empty,.c-icon-safeguard,.c-icon-register-empty,.c-icon-zan,.c-icon-location,.c-icon-warning,.c-icon-doc,.c-icon-xls,.c-icon-ppt,.c-icon-pdf,.c-icon-txt,.c-icon-play-black,.c-icon-gift,.c-icon-baidu-share,.c-icon-bear,.c-icon-sfda,.c-icon-bear-border,.c-icon-location-blue,.c-icon-hotAirBall,.c-icon-moon,.c-icon-streetMap,.c-icon-mv{width:16px;height:16px;}.c-icon-bear-circle,.c-icon-warning-circle,.c-icon-warning-triangle{width:18px;height:18px;}.c-icon-tieba,.c-icon-zhidao,.c-icon-bear-p,.c-icon-bear-pn{width:24px;height:24px;}.c-icon-ball-blue,.c-icon-ball-red{width:38px;height:38px;}.c-icon-unfold:hover,.c-icon-fold:hover,.c-icon-chevron-unfold:hover,.c-icon-chevron-fold:hover,.c-icon-download:hover,.c-icon-lyric:hover,.c-icon-v:hover,.c-icon-hui:hover,.c-icon-bao:hover,.c-icon-person:hover,.c-icon-high-v:hover,.c-icon-phone:hover,.c-icon-nuo:hover,.c-icon-med:hover,.c-icon-air:hover,.c-icon-share2:hover,.c-icon-v1:hover,.c-icon-v2:hover,.c-icon-v3:hover{border-color:#388bff;}.c-icon-unfold:active,.c-icon-fold:active,.c-icon-chevron-unfold:active,.c-icon-chevron-fold:active,.c-icon-download:active,.c-icon-lyric:active,.c-icon-v:active,.c-icon-hui:active,.c-icon-bao:active,.c-icon-person:active,.c-icon-high-v:active,.c-icon-phone:active,.c-icon-nuo:active,.c-icon-med:active,.c-icon-air:active,.c-icon-share2:active,.c-icon-v1:active,.c-icon-v2:active,.c-icon-v3:active{border-color:#a2a6ab;background-color:#f0f0f0;box-shadow:inset 1px 1px 1px #c7c7c7;-webkit-box-shadow:inset 1px 1px 1px #c7c7c7;-moz-box-shadow:inset 1px 1px 1px #c7c7c7;-o-box-shadow:inset 1px 1px 1px #c7c7c7;}.c-icon-unfold,.c-icon-fold,.c-icon-chevron-unfold,.c-icon-chevron-fold,.c-icon-download,.c-icon-lyric{border:1px solid #d8d8d8;cursor:pointer;}.c-icon-v,.c-icon-hui,.c-icon-bao,.c-icon-person,.c-icon-high-v,.c-icon-phone,.c-icon-nuo,.c-icon-med,.c-icon-air,.c-icon-share2,.c-icon-v1,.c-icon-v2,.c-icon-v3{border:1px solid #d8d8d8;cursor:pointer;border-color:transparent;_border-color:#ff6347;_filter:chroma(color=#ff6347);}.c-icon-v1,.c-icon-v2,.c-icon-v3,.c-icon-v1-noborder,.c-icon-v2-noborder,.c-icon-v3-noborder,.c-icon-v1-noborder-disable,.c-icon-v2-noborder-disable,.c-icon-v3-noborder-disable{width:19px;}.c-icon-download,.c-icon-lyric{width:16px;height:16px;}.c-icon-play-circle,.c-icon-stop-circle{width:18px;height:18px;}.c-icon-play-circle-middle,.c-icon-stop-circle-middle{width:24px;height:24px;}.c-icon-play-black-large,.c-icon-stop-black-large{width:38px;height:38px;}.c-icon-flag{background-position:0 -144px;}.c-icon-bus{background-position:-24px -144px;}.c-icon-calendar{background-position:-48px -144px;}.c-icon-street{background-position:-72px -144px;}.c-icon-map{background-position:-96px -144px;}.c-icon-bag{background-position:-120px -144px;}.c-icon-money{background-position:-144px -144px;}.c-icon-game{background-position:-168px -144px;}.c-icon-user{background-position:-192px -144px;}.c-icon-globe{background-position:-216px -144px;}.c-icon-lock{background-position:-240px -144px;}.c-icon-plane{background-position:-264px -144px;}.c-icon-list{background-position:-288px -144px;}.c-icon-star-gray{background-position:-312px -144px;}.c-icon-circle-gray{background-position:-384px -144px;}.c-icon-triangle-down{background-position:-408px -144px;}.c-icon-triangle-up{background-position:-432px -144px;}.c-icon-triangle-up-empty{background-position:-456px -144px;}.c-icon-sort-gray{background-position:-480px -144px;}.c-icon-sort-up{background-position:-504px -144px;}.c-icon-sort-down{background-position:-528px -144px;}.c-icon-down-gray{background-position:-552px -144px;}.c-icon-up-gray{background-position:-576px -144px;}.c-icon-download-noborder{background-position:-600px -144px;}.c-icon-lyric-noborder{background-position:-624px -144px;}.c-icon-download-white{background-position:-648px -144px;}.c-icon-close{background-position:-672px -144px;}.c-icon-fail{background-position:-696px -144px;}.c-icon-success{background-position:-720px -144px;}.c-icon-triangle-down-g{background-position:-744px -144px;}.c-icon-fullscreen{background-position:0 -168px;}.c-icon-safe{background-position:-24px -168px;}.c-icon-exchange{background-position:-48px -168px;}.c-icon-chevron-bottom{background-position:-72px -168px;}.c-icon-chevron-top{background-position:-96px -168px;}.c-icon-unfold{background-position:-120px -168px;}.c-icon-fold{background-position:-144px -168px;}.c-icon-chevron-unfold{background-position:-168px -168px;}.c-icon-qa{background-position:-192px -168px;}.c-icon-register{background-position:-216px -168px;}.c-icon-star{background-position:-240px -168px;}.c-icon-star-gray{position:relative;}.c-icon-star-gray .c-icon-star{position:absolute;top:0;left:0;}.c-icon-play-blue{background-position:-312px -168px;}.c-icon-pic{width:16px;background-position:-336px -168px;}.c-icon-chevron-fold{background-position:-360px -168px;}.c-icon-video{width:18px;background-position:-384px -168px;}.c-icon-circle-blue{background-position:-408px -168px;}.c-icon-circle-yellow{background-position:-432px -168px;}.c-icon-play-white{background-position:-456px -168px;}.c-icon-triangle-down-blue{background-position:-480px -168px;}.c-icon-chevron-unfold2{background-position:-504px -168px;}.c-icon-right{background-position:-528px -168px;}.c-icon-right-empty{background-position:-552px -168px;}.c-icon-new-corner{width:15px;background-position:-576px -168px;}.c-icon-horn{background-position:-600px -168px;}.c-icon-right-large{width:18px;background-position:-624px -168px;}.c-icon-wrong-large{background-position:-648px -168px;}.c-icon-circle-blue-s{background-position:-672px -168px;}.c-icon-play-gray{background-position:-696px -168px;}.c-icon-up{background-position:-720px -168px;}.c-icon-down{background-position:-744px -168px;}.c-icon-stable{background-position:-768px -168px;}.c-icon-calendar-blue{background-position:-792px -168px;}.c-icon-triangle-down-blue2{background-position:-816px -168px;}.c-icon-triangle-up-blue2{background-position:-840px -168px;}.c-icon-down-blue{background-position:-864px -168px;}.c-icon-up-blue{background-position:-888px -168px;}.c-icon-ting{background-position:-912px -168px;}.c-icon-v,.c-icon-v-noborder{background-position:0 -192px;}.c-icon-hui{background-position:-24px -192px;}.c-icon-bao{background-position:-48px -192px;}.c-icon-phone{background-position:-72px -192px;}.c-icon-qa-empty{background-position:-96px -192px;}.c-icon-safeguard{background-position:-120px -192px;}.c-icon-register-empty{background-position:-144px -192px;}.c-icon-zan{background-position:-168px -192px;}.c-icon-location{background-position:-240px -192px;}.c-icon-warning{background-position:-264px -192px;}.c-icon-doc{background-position:-288px -192px;}.c-icon-xls{background-position:-312px -192px;}.c-icon-ppt{background-position:-336px -192px;}.c-icon-pdf{background-position:-360px -192px;}.c-icon-txt{background-position:-384px -192px;}.c-icon-play-black{background-position:-408px -192px;}.c-icon-play-black:hover{background-position:-432px -192px;}.c-icon-gift{background-position:-456px -192px;}.c-icon-baidu-share{background-position:-480px -192px;}.c-icon-bear{background-position:-504px -192px;}.c-icon-sfda{width:31px;background-position:-528px -192px;}.c-icon-bear-border{background-position:-576px -192px;}.c-icon-person,.c-icon-person-noborder{background-position:-600px -192px;}.c-icon-location-blue{background-position:-624px -192px;}.c-icon-hotAirBall{background-position:-648px -192px;}.c-icon-moon{background-position:-672px -192px;}.c-icon-streetMap{background-position:-696px -192px;}.c-icon-high-v,.c-icon-high-v-noborder{background-position:-720px -192px;}.c-icon-nuo{background-position:-744px -192px;}.c-icon-mv{background-position:-768px -192px;}.c-icon-med{background-position:-816px -192px;}.c-icon-air{background-position:-840px -192px;}.c-icon-share2{background-position:-864px -192px;}.c-icon-v1,.c-icon-v1-noborder{background-position:-888px -192px;}.c-icon-v2,.c-icon-v2-noborder{background-position:-912px -192px;}.c-icon-v3,.c-icon-v3-noborder{background-position:-936px -192px;}.c-icon-v1-noborder-disable{background-position:-960px -192px;}.c-icon-v2-noborder-disable{background-position:-984px -192px;}.c-icon-v3-noborder-disable{background-position:-1008px -192px;}.c-icon-bear-circle{background-position:0 -216px;}.c-icon-warning-circle{background-position:-24px -216px;}.c-icon-warning-triangle{width:24px;background-position:-48px -216px;}.c-icon-ball-red{background-position:0 -240px;}.c-icon-ball-blue{background-position:-48px -240px;}.c-icon-tieba{background-position:0 -288px;}.c-icon-zhidao{background-position:-48px -288px;}.c-icon-bear-p{background-position:-96px -288px;}.c-icon-bear-pn{background-position:-144px -288px;}.c-icon-download{background-position:0 -336px;}.c-icon-lyric{background-position:-24px -336px;}.c-icon-play-circle{background-position:-48px -336px;}.c-icon-play-circle:hover{background-position:-72px -336px;}.c-icon-stop-circle{background-position:-96px -336px;}.c-icon-stop-circle:hover{background-position:-120px -336px;}.c-icon-play-circle-middle{background-position:0 -360px;}.c-icon-play-circle-middle:hover{background-position:-48px -360px;}.c-icon-stop-circle-middle{background-position:-96px -360px;}.c-icon-stop-circle-middle:hover{background-position:-144px -360px;}.c-icon-play-black-large{background-position:0 -408px;}.c-icon-play-black-large:hover{background-position:-48px -408px;}.c-icon-stop-black-large{background-position:-96px -408px;}.c-icon-stop-black-large:hover{background-position:-144px -408px;}.c-text{display:inline-block;padding:2px;text-align:center;vertical-align:text-bottom;font-size:12px;line-height:100%;font-style:normal;color:#fff;overflow:hidden;}a.c-text{text-decoration:none;}.c-text-new{background-color:#f13f40;}.c-text-info{padding-left:0;padding-right:0;font-weight:bold;color:#2b99ff;*vertical-align:baseline;_position:relative;_top:2px;}.c-text-info b{_position:relative;_top:-1px;}.c-text-info span{padding:0 2px;font-weight:normal;}.c-text-important{background-color:#1cb7fd;}.c-text-public{background-color:#2b99ff;}.c-text-warning{background-color:#ff830f;}.c-text-prompt{background-color:#f5c537;}.c-text-danger{background-color:#f13f40;}.c-text-safe{background-color:#52c277;}.c-text-empty{padding-top:1px;padding-bottom:1px;border:1px solid #d8d8d8;cursor:pointer;color:#23b9fd;background-color:#fff;}.c-text-empty:hover{border-color:#388bff;}.c-text-empty:active{border-color:#a2a6ab;background-color:#f0f0f0;box-shadow:inset 1px 1px 1px #c7c7c7;-webkit-box-shadow:inset 1px 1px 1px #c7c7c7;-moz-box-shadow:inset 1px 1px 1px #c7c7c7;-o-box-shadow:inset 1px 1px 1px #c7c7c7;}.c-text-mult{padding-left:5px;padding-right:5px;}.c-container .vd_newest_main{width:auto;}.c-customicon{display:inline-block;width:16px;height:16px;vertical-align:text-bottom;font-style:normal;overflow:hidden;}.c-tip-icon i{display:inline-block;cursor:pointer;}.c-tip-con{position:absolute;z-index:1;top:22px;left:-35px;background:#fff;border:1px solid #dcdcdc;border:1px solid rgba(0,0,0,0.2);-webkit-transition:opacity .218s;transition:opacity .218s;-webkit-box-shadow:0 2px 4px rgba(0,0,0,0.2);box-shadow:0 2px 4px rgba(0,0,0,0.2);padding:5px 0 5px 0;display:none;font-size:12px;line-height:20px;}.c-tip-arrow{width:0;height:0;font-size:0;line-height:0;display:block;position:absolute;top:-16px;}.c-tip-arrow em,.c-tip-arrow ins{width:0;height:0;font-size:0;line-height:0;display:block;position:absolute;border:8px solid #000;border-style:dashed dashed solid dashed;}.c-tip-arrow em{border-color:transparent transparent #d8d8d8 transparent;}.c-tip-arrow ins{border-color:transparent transparent #fff transparent;top:2px;}.c-tip-con h3{font-size:12px;}.c-tip-con .c-tip-title{margin:0 10px;display:inline-block;width:239px;}.c-tip-con .c-tip-info{color:#666;margin:0 10px 1px 10px;width:239px;}.c-tip-con .c-tip-cer{width:354px;color:#666;margin:0 10px 1px 10px;}.c-tip-con .c-tip-cer ul{margin:0;padding:0;list-style:none;}.c-tip-con .c-tip-title{width:auto;_width:354px;}.c-tip-con .c-tip-item-i{padding:3px 0 3px 20px;line-height:14px;}.c-tip-con .c-tip-item-i .c-tip-item-icon{margin-left:-20px;}.c-tip-con .c-tip-menu ul{width:74px;}.c-tip-con .c-tip-menu ul{text-align:center;}.c-tip-con .c-tip-menu li a{display:block;text-decoration:none;cursor:pointer;background-color:#fff;padding:3px 0;color:#0000d0;}.c-tip-con .c-tip-menu li a:hover{display:block;background-color:#ebebeb;}.c-tip-con .c-tip-notice{width:239px;padding:0 10px;}.c-tip-con .c-tip-notice .c-tip-notice-succ{color:#4cbd37;}.c-tip-con .c-tip-notice .c-tip-notice-fail{color:#f13f40;}.c-tip-con .c-tip-notice .c-tip-item-succ{color:#444;}.c-tip-con .c-tip-notice .c-tip-item-fail{color:#aaa;}.c-tip-con .c-tip-notice .c-tip-item-faila{color:#aaa;}.c-tip-close{right:10px;position:absolute;cursor:pointer;}.c-tools{display:inline;}.c-tools-share{width:239px;padding:0 10px;}.icp_info{color:#666;margin-top:2px;font-size:13px;}.icon-gw,.icon-unsafe-icon{background:#2c99ff;vertical-align:text-bottom;*vertical-align:baseline;height:16px;padding-top:0;padding-bottom:0;padding-left:6px;padding-right:6px;line-height:16px;_padding-top:2px;_height:14px;_line-height:14px;font-size:12px;font-family:simsun;margin-left:10px;overflow:hidden;display:inline-block;-moz-border-radius:1px;-webkit-border-radius:1px;border-radius:1px;color:#fff;}a.icon-gw{color:#fff;background:#2196ff;text-decoration:none;cursor:pointer;}a.icon-gw:hover{background:#1e87ef;}a.icon-gw:active{height:15px;_height:13px;line-height:15px;_line-height:13px;padding-left:5px;background:#1c80d9;border-left:1px solid #145997;border-top:1px solid #145997;}.icon-unsafe-icon{background:#e54d4b;}#con-at{margin-bottom:15px;}#con-ar{margin-bottom:40px;}#con-at .result-op{margin-bottom:15px;font-size:13px;line-height:1.52em;}#con-ar .result-op{margin-bottom:28px;font-size:13px;line-height:1.52em;}#content_left .result-op,#content_left .result{margin-bottom:14px;border-collapse:collapse;}#content_left .c-border .result-op,#content_left .c-border .result{margin-bottom:25px;}#content_left .c-border .result-op:last-child,#content_left .c-border .result:last-child{margin-bottom:12px;}#content_left .result .f,#content_left .result-op .f{padding:0;}.subLink_factory{border-collapse:collapse;}.subLink_factory td{padding:0;}.subLink_factory td.middle,.subLink_factory td.last{color:#666;}.subLink_factory td a{text-decoration:underline;}.subLink_factory td.rightTd{text-align:right;}.subLink_factory_right{width:100%;}.subLink_factory_left td{padding-right:26px;}.subLink_factory_left td.last{padding:0;}.subLink_factory_left td.first{padding-right:75px;}.subLink_factory_right td{width:90px;}.subLink_factory_right td.first{width:auto;}.general_image_pic{margin-top:2px;}.general_image_pic a{background:#fff no-repeat center center;text-decoration:none;display:block;overflow:hidden;text-align:center;}.c-icon-v1,.c-icon-v2,.c-icon-v3{border:1px solid #d8d8d8;cursor:pointer;border-color:transparent;_border-color:#ff6347;_filter:chroma(color=#ff6347);}.c-icon-v1:active,.c-icon-v2:active,.c-icon-v3:active{border-color:#a2a6ab;background-color:#f0f0f0;box-shadow:inset 1px 1px 1px #c7c7c7;-webkit-box-shadow:inset 1px 1px 1px #c7c7c7;-moz-box-shadow:inset 1px 1px 1px #c7c7c7;-o-box-shadow:inset 1px 1px 1px #c7c7c7;}.c-icon-v1:hover,.c-icon-v2:hover,.c-icon-v3:hover{border-color:#388bff;}@-moz-document url-prefix(){.result,.f{width:538px;}}.opui-honourCard{font-size:12px;color:#666;line-height:1.5em;width:354px;}.opui-honourCard-score{width:60px;padding:4px 2px 4px 2px;text-align:center;float:left;}.opui-honourCard-score em{width:63px;display:block;font-size:37px;line-height:37px;color:#8e8d8d;font-family:arial;font-style:normal;}.opui-honourCard-info{background:#f5f5f5;overflow:hidden;zoom:1;}.opui-honourCard-title a{*font-family:Microsoft YaHei;}.opui-honourCard-title a i{position:relative;left:-65px;*left:-68px;}.opui-honourCard ol{list-style:none;margin:0;padding:0;float:left;_padding-top:5px;}.opui-honourCard li{height:20px;line-height:20px;padding-left:20px;_vertical-align:bottom;}.opui-honourCard li i{vertical-align:middle;_vertical-align:bottom;}.opui-honourCard-selected{color:#2b2a2a;font-weight:bold;background:url(http://s1.bdstatic.com/r/www/cache/biz/ecom/common/api/img/ns-credit/honourCard.png) no-repeat 3px 5px;*background-position:3px 2px;}</style><div id="ec_im_container" style="word-wrap:break-word;word-break:break-all;"><div style="font-size:12px;text-align:right;margin-bottom:15px;"><font color="#666666">推广链接</font></div><div style="cursor:pointer;"><a href="http://www.baidu.com/baidu.php?url=OfCK00jYHJ3fCF9bzfR6xYUBmlu76oJkhArQ7rzkCeTh0pE4IdsLJcCbyVChO6-OU3mOS09wXij5zJjHF3n_NcSgAnm2MOwSePuR9Zyi7ha2-lUdE7-nFaq3Oo_Q8nyN5XZnuV0.DY_j2qhQf1N6xZ6T9HXzOVHz3qis1f_TTheIYJ0.U1Yk0ZDqRdKK0Zfq_UASJgPsmfKGUHYzn1m0u1d3Xj00Iybq0ZKGujYk0APGujY1rjR0UgfqnH0kPsKopHYs0ZFY5Hfdr0K-pyfqrj0s0AFG5H00UynqrHDzrjT4rjc0TgKGujYs0Z7Wpyfqn0KzuLw9u1Ys0AqvUjYzPWDvQywlg1nknjmVnfKVpyfqn0KGTgfqn0K9mWYsg100ugFM5H00TZ0qn0K8IM0qna3snj0snj0sn0KVIZ0qn0KbuAqs5H00ThCqn0KhIjYs0ZKC5H00ULnqn0KBI1Ys0A4Y5H00TLCq0ZwdT1Y3njmvnWRsPj64rHTLrHDvrHbs0ZF-TgfqnHfvnW64nWfvnWTYP6K1pyfqmvFWuhw-PvnzPyF-PWTYmfK9m1Yk0ZGY5H00mLFW5HfzPjfz" target="_blank" style="line-height:18px;"><font style="font-size:14px;">北京北京spa 保健按摩北京..</font></a><br><a href="http://www.baidu.com/baidu.php?url=OfCK00jYHJ3fCF9bzfR6xYUBmlu76oJkhArQ7rzkCeTh0pE4IdsLJcCbyVChO6-OU3mOS09wXij5zJjHF3n_NcSgAnm2MOwSePuR9Zyi7ha2-lUdE7-nFaq3Oo_Q8nyN5XZnuV0.DY_j2qhQf1N6xZ6T9HXzOVHz3qis1f_TTheIYJ0.U1Yk0ZDqRdKK0Zfq_UASJgPsmfKGUHYzn1m0u1d3Xj00Iybq0ZKGujYk0APGujY1rjR0UgfqnH0kPsKopHYs0ZFY5Hfdr0K-pyfqrj0s0AFG5H00UynqrHDzrjT4rjc0TgKGujYs0Z7Wpyfqn0KzuLw9u1Ys0AqvUjYzPWDvQywlg1nknjmVnfKVpyfqn0KGTgfqn0K9mWYsg100ugFM5H00TZ0qn0K8IM0qna3snj0snj0sn0KVIZ0qn0KbuAqs5H00ThCqn0KhIjYs0ZKC5H00ULnqn0KBI1Ys0A4Y5H00TLCq0ZwdT1Y3njmvnWRsPj64rHTLrHDvrHbs0ZF-TgfqnHfvnW64nWfvnWTYP6K1pyfqmvFWuhw-PvnzPyF-PWTYmfK9m1Yk0ZGY5H00mLFW5HfzPjfz" target="_blank" style="font-size:13px;line-height:18px;text-decoration:none;color:#ffffff;"><font color="#000000">北京朝皇北京spa 为您倾力打造 北京北京spa!奢华高端北京spaSPA..</font><br><font style="margin-right:8px;" color="#008000">www.jianyahuisuo.com</font></a><a style="cursor:pointer;text-decoration:none;" href="https://www.baidu.com/s?wd=www.jianyahuisuo.com@v&amp;vmp_ec=1462587076&amp;vmp_ectm=a33260d1a1e9ac09ca49fjMXNDd0bEl754499bQ7Ibe5z4dkmz0clw6NXcf60f0225d199ab&amp;from=fc&amp;url=OfCK00jYHJ3fCF9bzfR6xYUBmlu76oJkhArQ7rzkCeTh0pE4IdsLJcCbyVChO6-OU3mOS09wXij5zJjHF3n_NcSgAnm2MOwSePuR9Zyi7ha2-lUdE7-nFaq3Oo_Q8nyN5XZnuV0.DY_j2qhQf1N6xZ6T9HXzOVHz3qis1f_TTheIYJ0.U1Yk0ZDqRdKK0Zfq_UASJgPsmfKGUHYzn1m0u1d3Xj00Iybq0ZKGujYk0APGujY1rjR0UgfqnH0kPsKopHYs0ZFY5Hfdr0K-pyfqrj0s0AFG5H00UynqrHDzrjT4rjc0TgKGujYs0Z7Wpyfqn0KzuLw9u1Ys0AqvUjYzPWDvQywlg1nknjmVnfKVpyfqn0KGTgfqn0K9mWYsg100ugFM5H00TZ0qn0K8IM0qna3snj0snj0sn0KVIZ0qn0KbuAqs5H00ThCqn0KhIjYs0ZKC5H00ULnqn0KBI1Ys0A4Y5H00TLCq0ZwdT1Y3njmvnWRsPj64rHTLrHDvrHbs0ZF-TgfqnHfvnW64nWfvnWTYP6K1pyfqmvFWuhw-PvnzPyF-PWTYmfK9m1Yk0ZGY5H00mLFW5HfzPjfz&amp;dataTime=92" target="_blank"><i data-renzheng="{title: '北京慧心阁盲人保健按摩有限公司：',favorite: {fm: '',rsvMt: '',p1: '',url: 'http://i.baidu.com/myfavorite/set?url=OfCK00jYHJ3fCF9bzfR6xYUBmlu76oJkhArQ7rzkCeTh0pE4IdsLJcCbyVChO6-OU3mOS09wXij5zJjHF3n_NcSgAnm2MOwSePuR9Zyi7ha2-lUdE7-nFaq3Oo_Q8nyN5XZnuV0.DY_j2qhQf1N6xZ6T9HXzOVHz3qis1f_TTheIYJ0.U1Yk0ZDqRdKK0Zfq_UASJgPsmfKGUHYzn1m0u1d3Xj00Iybq0ZKGujYk0APGujY1rjR0UgfqnH0kPsKopHYs0ZFY5Hfdr0K-pyfqrj0s0AFG5H00UynqrHDzrjT4rjc0TgKGujYs0Z7Wpyfqn0KzuLw9u1Ys0AqvUjYzPWDvQywlg1nknjmVnfKVpyfqn0KGTgfqn0K9mWYsg100ugFM5H00TZ0qn0K8IM0qna3snj0snj0sn0KVIZ0qn0KbuAqs5H00ThCqn0KhIjYs0ZKC5H00ULnqn0KBI1Ys0A4Y5H00TLCq0ZwdT1Y3njmvnWRsPj64rHTLrHDvrHbs0ZF-TgfqnHfvnW64nWfvnWTYP6K1pyfqmvFWuhw-PvnzPyF-PWTYmfK9m1Yk0ZGY5H00mLFW5HfzPjfz'},appraise: {fm: '',rsvMt: '',p1: '',url: 'http://trust.baidu.com/womc/comt/?url=OfCK00jYHJ3fCF9bzfR6xYUBmlu76oJkhArQ7rzkCeTh0pE4IdsLJcCbyVChO6-OU3mOS09wXij5zJjHF3n_NcSgAnm2MOwSePuR9Zyi7ha2-lUdE7-nFaq3Oo_Q8nyN5XZnuV0.DY_j2qhQf1N6xZ6T9HXzOVHz3qis1f_TTheIYJ0.U1Yk0ZDqRdKK0Zfq_UASJgPsmfKGUHYzn1m0u1d3Xj00Iybq0ZKGujYk0APGujY1rjR0UgfqnH0kPsKopHYs0ZFY5Hfdr0K-pyfqrj0s0AFG5H00UynqrHDzrjT4rjc0TgKGujYs0Z7Wpyfqn0KzuLw9u1Ys0AqvUjYzPWDvQywlg1nknjmVnfKVpyfqn0KGTgfqn0K9mWYsg100ugFM5H00TZ0qn0K8IM0qna3snj0snj0sn0KVIZ0qn0KbuAqs5H00ThCqn0KhIjYs0ZKC5H00ULnqn0KBI1Ys0A4Y5H00TLCq0ZwdT1Y3njmvnWRsPj64rHTLrHDvrHbs0ZF-TgfqnHfvnW64nWfvnWTYP6K1pyfqmvFWuhw-PvnzPyF-PWTYmfK9m1Yk0ZGY5H00mLFW5HfzPjfz'},report: {fm: '',rsvMt: '',p1: '',url: 'http://baozhang.baidu.com/guarantee/accu/?url=OfCK00jYHJ3fCF9bzfR6xYUBmlu76oJkhArQ7rzkCeTh0pE4IdsLJcCbyVChO6-OU3mOS09wXij5zJjHF3n_NcSgAnm2MOwSePuR9Zyi7ha2-lUdE7-nFaq3Oo_Q8nyN5XZnuV0.DY_j2qhQf1N6xZ6T9HXzOVHz3qis1f_TTheIYJ0.U1Yk0ZDqRdKK0Zfq_UASJgPsmfKGUHYzn1m0u1d3Xj00Iybq0ZKGujYk0APGujY1rjR0UgfqnH0kPsKopHYs0ZFY5Hfdr0K-pyfqrj0s0AFG5H00UynqrHDzrjT4rjc0TgKGujYs0Z7Wpyfqn0KzuLw9u1Ys0AqvUjYzPWDvQywlg1nknjmVnfKVpyfqn0KGTgfqn0K9mWYsg100ugFM5H00TZ0qn0K8IM0qna3snj0snj0sn0KVIZ0qn0KbuAqs5H00ThCqn0KhIjYs0ZKC5H00ULnqn0KBI1Ys0A4Y5H00TLCq0ZwdT1Y3njmvnWRsPj64rHTLrHDvrHbs0ZF-TgfqnHfvnW64nWfvnWTYP6K1pyfqmvFWuhw-PvnzPyF-PWTYmfK9m1Yk0ZGY5H00mLFW5HfzPjfz'},identity: {a: {fm: '',rsvMt: '1017',p1:'',url: 'https://www.baidu.com/s?wd=www.jianyahuisuo.com@v&amp;vmp_ec=1462587076&amp;vmp_ectm=a33260d1a1e9ac09ca49fjMXNDd0bEl754499bQ7Ibe5z4dkmz0clw6NXcf60f0225d199ab&amp;from=fc&amp;url=OfCK00jYHJ3fCF9bzfR6xYUBmlu76oJkhArQ7rzkCeTh0pE4IdsLJcCbyVChO6-OU3mOS09wXij5zJjHF3n_NcSgAnm2MOwSePuR9Zyi7ha2-lUdE7-nFaq3Oo_Q8nyN5XZnuV0.DY_j2qhQf1N6xZ6T9HXzOVHz3qis1f_TTheIYJ0.U1Yk0ZDqRdKK0Zfq_UASJgPsmfKGUHYzn1m0u1d3Xj00Iybq0ZKGujYk0APGujY1rjR0UgfqnH0kPsKopHYs0ZFY5Hfdr0K-pyfqrj0s0AFG5H00UynqrHDzrjT4rjc0TgKGujYs0Z7Wpyfqn0KzuLw9u1Ys0AqvUjYzPWDvQywlg1nknjmVnfKVpyfqn0KGTgfqn0K9mWYsg100ugFM5H00TZ0qn0K8IM0qna3snj0snj0sn0KVIZ0qn0KbuAqs5H00ThCqn0KhIjYs0ZKC5H00ULnqn0KBI1Ys0A4Y5H00TLCq0ZwdT1Y3njmvnWRsPj64rHTLrHDvrHbs0ZF-TgfqnHfvnW64nWfvnWTYP6K1pyfqmvFWuhw-PvnzPyF-PWTYmfK9m1Yk0ZGY5H00mLFW5HfzPjfz&amp;dataTime=92'}, img: '', text: '',credit: '5',process: '73',process_level: '1'}}" class="c-icon icon-certify c-icon-v1 c-icon-v efc-cert vtip-inited" data-tip-limite="true" data-tooltips="bc"></i>
+</a></div><br><div style="cursor:pointer;"><a href="http://www.baidu.com/baidu.php?url=OfCK00aPvDOD5Ep1HdneC3dLTvjnxo2jSENttFGbXjDG9w1xZ_2lm0k4S9J0FX2665oJAknY83dFTBUDy2HvMteyCu5EfaNGD9BvOYUf-vuk3lC5S53gP6Vv9MlfR1btily6SWC.7R_iUqqMH4XhrFQbfuInZXSeNo1tjr5OOTT5OOntnx7HXzOVHz3qis1f_NtIv1mC.U1Yz0ZDqRdKK0ZfqTLK9stjcLIilEP5jzsKGUHYzn1m0u1d3Xj00Iybq0ZKGujYk0APGujY1rjR0UgfqnH0kPsKopHYs0ZFY5Hfdr0K-pyfqrj0s0AFG5H00Uynqrjb3PWTYrHD0TgKGujYs0Z7Wpyfqn0KzuLw9u1Ys0AqvUjYzPWDvQywlg1nknjmVnfKVpyfqn0KGTgfqn0K9mWYsg100ugFM5H00TZ0qn0K8IM0qna3snj0snj0sn0KVIZ0qn0KbuAqs5H00ThCqn0KhIjYs0ZKC5H00ULnqn0KBI1Ys0A4Y5H00TLCq0ZwdT1YvPWT4nH03Pjn4Pjm1nHmYPjbd0ZF-TgfqnHfvnW64nWfvnWTYP6K1pyfqmvFWuhw-PvnzPyF-PWTYmfK9m1Yk0ZGY5H00mLFW5HRvnHRv" target="_blank" style="line-height:18px;"><font style="font-size:14px;">spa美容院加盟-您是否还停..</font></a><br><a href="http://www.baidu.com/baidu.php?url=OfCK00aPvDOD5Ep1HdneC3dLTvjnxo2jSENttFGbXjDG9w1xZ_2lm0k4S9J0FX2665oJAknY83dFTBUDy2HvMteyCu5EfaNGD9BvOYUf-vuk3lC5S53gP6Vv9MlfR1btily6SWC.7R_iUqqMH4XhrFQbfuInZXSeNo1tjr5OOTT5OOntnx7HXzOVHz3qis1f_NtIv1mC.U1Yz0ZDqRdKK0ZfqTLK9stjcLIilEP5jzsKGUHYzn1m0u1d3Xj00Iybq0ZKGujYk0APGujY1rjR0UgfqnH0kPsKopHYs0ZFY5Hfdr0K-pyfqrj0s0AFG5H00Uynqrjb3PWTYrHD0TgKGujYs0Z7Wpyfqn0KzuLw9u1Ys0AqvUjYzPWDvQywlg1nknjmVnfKVpyfqn0KGTgfqn0K9mWYsg100ugFM5H00TZ0qn0K8IM0qna3snj0snj0sn0KVIZ0qn0KbuAqs5H00ThCqn0KhIjYs0ZKC5H00ULnqn0KBI1Ys0A4Y5H00TLCq0ZwdT1YvPWT4nH03Pjn4Pjm1nHmYPjbd0ZF-TgfqnHfvnW64nWfvnWTYP6K1pyfqmvFWuhw-PvnzPyF-PWTYmfK9m1Yk0ZGY5H00mLFW5HRvnHRv" target="_blank" style="font-size:13px;line-height:18px;text-decoration:none;color:#ffffff;"><font color="#000000">spa美容院加盟?传统美容院的时代已经结束!瑞士高端品牌&lt;依思佩..</font><br><font style="margin-right:8px;" color="#008000">9906.prosneo.com</font></a><a style="cursor:pointer;text-decoration:none;" href="https://www.baidu.com/s?wd=www.prosneo.com@v&amp;vmp_ec=1461037779&amp;vmp_ectm=0d08d6c68bf0880cdef58az0NTQ4l2ccXe16008cQ=wfaebN3dzMakaXmce2la198864854f&amp;from=fc&amp;url=OfCK00aPvDOD5Ep1HdneC3dLTvjnxo2jSENttFGbXjDG9w1xZ_2lm0k4S9J0FX2665oJAknY83dFTBUDy2HvMteyCu5EfaNGD9BvOYUf-vuk3lC5S53gP6Vv9MlfR1btily6SWC.7R_iUqqMH4XhrFQbfuInZXSeNo1tjr5OOTT5OOntnx7HXzOVHz3qis1f_NtIv1mC.U1Yz0ZDqRdKK0ZfqTLK9stjcLIilEP5jzsKGUHYzn1m0u1d3Xj00Iybq0ZKGujYk0APGujY1rjR0UgfqnH0kPsKopHYs0ZFY5Hfdr0K-pyfqrj0s0AFG5H00Uynqrjb3PWTYrHD0TgKGujYs0Z7Wpyfqn0KzuLw9u1Ys0AqvUjYzPWDvQywlg1nknjmVnfKVpyfqn0KGTgfqn0K9mWYsg100ugFM5H00TZ0qn0K8IM0qna3snj0snj0sn0KVIZ0qn0KbuAqs5H00ThCqn0KhIjYs0ZKC5H00ULnqn0KBI1Ys0A4Y5H00TLCq0ZwdT1YvPWT4nH03Pjn4Pjm1nHmYPjbd0ZF-TgfqnHfvnW64nWfvnWTYP6K1pyfqmvFWuhw-PvnzPyF-PWTYmfK9m1Yk0ZGY5H00mLFW5HRvnHRv&amp;dataTime=92" target="_blank"><i data-renzheng="{title: '深圳博诗尼澳生物科技有限公司：',favorite: {fm: '',rsvMt: '',p1: '',url: 'http://i.baidu.com/myfavorite/set?url=OfCK00aPvDOD5Ep1HdneC3dLTvjnxo2jSENttFGbXjDG9w1xZ_2lm0k4S9J0FX2665oJAknY83dFTBUDy2HvMteyCu5EfaNGD9BvOYUf-vuk3lC5S53gP6Vv9MlfR1btily6SWC.7R_iUqqMH4XhrFQbfuInZXSeNo1tjr5OOTT5OOntnx7HXzOVHz3qis1f_NtIv1mC.U1Yz0ZDqRdKK0ZfqTLK9stjcLIilEP5jzsKGUHYzn1m0u1d3Xj00Iybq0ZKGujYk0APGujY1rjR0UgfqnH0kPsKopHYs0ZFY5Hfdr0K-pyfqrj0s0AFG5H00Uynqrjb3PWTYrHD0TgKGujYs0Z7Wpyfqn0KzuLw9u1Ys0AqvUjYzPWDvQywlg1nknjmVnfKVpyfqn0KGTgfqn0K9mWYsg100ugFM5H00TZ0qn0K8IM0qna3snj0snj0sn0KVIZ0qn0KbuAqs5H00ThCqn0KhIjYs0ZKC5H00ULnqn0KBI1Ys0A4Y5H00TLCq0ZwdT1YvPWT4nH03Pjn4Pjm1nHmYPjbd0ZF-TgfqnHfvnW64nWfvnWTYP6K1pyfqmvFWuhw-PvnzPyF-PWTYmfK9m1Yk0ZGY5H00mLFW5HRvnHRv'},appraise: {fm: '',rsvMt: '',p1: '',url: 'http://trust.baidu.com/womc/comt/?url=OfCK00aPvDOD5Ep1HdneC3dLTvjnxo2jSENttFGbXjDG9w1xZ_2lm0k4S9J0FX2665oJAknY83dFTBUDy2HvMteyCu5EfaNGD9BvOYUf-vuk3lC5S53gP6Vv9MlfR1btily6SWC.7R_iUqqMH4XhrFQbfuInZXSeNo1tjr5OOTT5OOntnx7HXzOVHz3qis1f_NtIv1mC.U1Yz0ZDqRdKK0ZfqTLK9stjcLIilEP5jzsKGUHYzn1m0u1d3Xj00Iybq0ZKGujYk0APGujY1rjR0UgfqnH0kPsKopHYs0ZFY5Hfdr0K-pyfqrj0s0AFG5H00Uynqrjb3PWTYrHD0TgKGujYs0Z7Wpyfqn0KzuLw9u1Ys0AqvUjYzPWDvQywlg1nknjmVnfKVpyfqn0KGTgfqn0K9mWYsg100ugFM5H00TZ0qn0K8IM0qna3snj0snj0sn0KVIZ0qn0KbuAqs5H00ThCqn0KhIjYs0ZKC5H00ULnqn0KBI1Ys0A4Y5H00TLCq0ZwdT1YvPWT4nH03Pjn4Pjm1nHmYPjbd0ZF-TgfqnHfvnW64nWfvnWTYP6K1pyfqmvFWuhw-PvnzPyF-PWTYmfK9m1Yk0ZGY5H00mLFW5HRvnHRv'},report: {fm: '',rsvMt: '',p1: '',url: 'http://baozhang.baidu.com/guarantee/accu/?url=OfCK00aPvDOD5Ep1HdneC3dLTvjnxo2jSENttFGbXjDG9w1xZ_2lm0k4S9J0FX2665oJAknY83dFTBUDy2HvMteyCu5EfaNGD9BvOYUf-vuk3lC5S53gP6Vv9MlfR1btily6SWC.7R_iUqqMH4XhrFQbfuInZXSeNo1tjr5OOTT5OOntnx7HXzOVHz3qis1f_NtIv1mC.U1Yz0ZDqRdKK0ZfqTLK9stjcLIilEP5jzsKGUHYzn1m0u1d3Xj00Iybq0ZKGujYk0APGujY1rjR0UgfqnH0kPsKopHYs0ZFY5Hfdr0K-pyfqrj0s0AFG5H00Uynqrjb3PWTYrHD0TgKGujYs0Z7Wpyfqn0KzuLw9u1Ys0AqvUjYzPWDvQywlg1nknjmVnfKVpyfqn0KGTgfqn0K9mWYsg100ugFM5H00TZ0qn0K8IM0qna3snj0snj0sn0KVIZ0qn0KbuAqs5H00ThCqn0KhIjYs0ZKC5H00ULnqn0KBI1Ys0A4Y5H00TLCq0ZwdT1YvPWT4nH03Pjn4Pjm1nHmYPjbd0ZF-TgfqnHfvnW64nWfvnWTYP6K1pyfqmvFWuhw-PvnzPyF-PWTYmfK9m1Yk0ZGY5H00mLFW5HRvnHRv'},identity: {a: {fm: '',rsvMt: '1017',p1:'',url: 'https://www.baidu.com/s?wd=www.prosneo.com@v&amp;vmp_ec=1461037779&amp;vmp_ectm=0d08d6c68bf0880cdef58az0NTQ4l2ccXe16008cQ=wfaebN3dzMakaXmce2la198864854f&amp;from=fc&amp;url=OfCK00aPvDOD5Ep1HdneC3dLTvjnxo2jSENttFGbXjDG9w1xZ_2lm0k4S9J0FX2665oJAknY83dFTBUDy2HvMteyCu5EfaNGD9BvOYUf-vuk3lC5S53gP6Vv9MlfR1btily6SWC.7R_iUqqMH4XhrFQbfuInZXSeNo1tjr5OOTT5OOntnx7HXzOVHz3qis1f_NtIv1mC.U1Yz0ZDqRdKK0ZfqTLK9stjcLIilEP5jzsKGUHYzn1m0u1d3Xj00Iybq0ZKGujYk0APGujY1rjR0UgfqnH0kPsKopHYs0ZFY5Hfdr0K-pyfqrj0s0AFG5H00Uynqrjb3PWTYrHD0TgKGujYs0Z7Wpyfqn0KzuLw9u1Ys0AqvUjYzPWDvQywlg1nknjmVnfKVpyfqn0KGTgfqn0K9mWYsg100ugFM5H00TZ0qn0K8IM0qna3snj0snj0sn0KVIZ0qn0KbuAqs5H00ThCqn0KhIjYs0ZKC5H00ULnqn0KBI1Ys0A4Y5H00TLCq0ZwdT1YvPWT4nH03Pjn4Pjm1nHmYPjbd0ZF-TgfqnHfvnW64nWfvnWTYP6K1pyfqmvFWuhw-PvnzPyF-PWTYmfK9m1Yk0ZGY5H00mLFW5HRvnHRv&amp;dataTime=92'}, img: '', text: '',credit: '5',process: '82',process_level: '2'}}" class="c-icon icon-certify c-icon-v2 c-icon-v efc-cert vtip-inited" data-tip-limite="true" data-tooltips="bc"></i>
+</a></div><br><br></div><script>(function(){function c(){var e={statistics:{identity:{url:"http://trustrcv.baidu.com/v.php",query:{tag:"vshenfenhover"}}}};window.__nsTip__.init(e)}if(window.__nsTip__){c()}else{function b(j){var g=false;var f=document.getElementsByTagName("script");for(var h=0,e=f.length;h<e;h++){if(f[h].getAttribute("id")===j){g=true;break}}return g}function a(i,f,h){if(!b(i)){var g=document.getElementsByTagName("head")[0]||document.body;var e=document.createElement("script");e.setAttribute("type","text/javascript");e.setAttribute("src",f);e.setAttribute("id",i);if(h!=null){e.onload=e.onreadystatechange=function(){if(e.ready){return false}if(!e.readyState||e.readyState=="loaded"||e.readyState=="complete"){e.ready=true;h()}}}g.appendChild(e)}}var d="http://s1.bdstatic.com/r/www/cache/biz/ecom/common/api/v-nstip/20151117/nstip.js";a("nstip",d,c)}})();</script></div>
+<div id="side_box_unionAd" class="unionAd side-box">
+<p>推广链接</p>
+<div class="union-content"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="after-content">
+<div class="fc-guess-like" id="fc_guess_like">
+<h6>猜你喜欢</h6>
+<div>
+<ul class="cmn-clearfix">
+</ul>
+</div>
+</div>
+<div style="display: block;" class="bottom-promotion" id="bottom-promotion">
+<div id="BOTTOM_PRO_AD"></div>
+</div></div>
+</div>
+
+<div class="wgt-footer-main">
+<div class="content">
+<dl class="fresh">
+<dt><em class="cmn-icon cmn-icons cmn-icons_footer-fresh"></em>新手上路</dt>
+<dd>
+<div><a target="_blank" href="http://baike.baidu.com/usercenter/tasks#guide">成长任务</a></div>
+<div><a target="_blank" href="http://baike.baidu.com/help#main01">编辑入门</a></div>
+<div><a target="_blank" href="http://baike.baidu.com/help#main06">编辑规则</a></div>
+<div><a target="_blank" href="http://baike.baidu.com/help#main05">百科术语</a></div>
+</dd>
+</dl>
+<dl class="question">
+<dt><em class="cmn-icon cmn-icons cmn-icons_footer-question"></em>我有疑问</dt>
+<dd>
+<div><a target="_blank" href="http://baike.baidu.com/wikiui/doubt?lemmaId=17536313&amp;fr=lemma">我要质疑</a></div>
+<div><a target="_blank" href="http://ikefu.baidu.com/baidubaike/chat.html" nslog-type="10000003">我要提问</a></div>
+<div><a target="_blank" href="http://tieba.baidu.com/f?ie=utf-8&amp;fr=bks0000&amp;kw=%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91">参加讨论</a></div>
+<div><a target="_blank" href="http://baike.baidu.com/feedback">意见反馈</a></div>
+</dd>
+</dl>
+<dl class="suggestion">
+<dt><em class="cmn-icon cmn-icons cmn-icons_footer-suggestion"></em>投诉建议</dt>
+<dd>
+<div><a target="_blank" href="http://tousu.baidu.com/baike/add?word=SPA&amp;&amp;submit_link=http%3A%2F%2Fbaike.baidu.com%2Flink%3Furl%3D9mvipY5Kbv9wDkIumqbi7U0-Xy_sSGLmGXvImqDFx-Zu-LckVtzuEeZqpjdP9jjxkplCslt9B3LUiTaWA8Pl6a#1">举报不良信息</a></div>
+<div><a target="_blank" href="http://tousu.baidu.com/baike/add?word=SPA&amp;&amp;submit_link=http%3A%2F%2Fbaike.baidu.com%2Flink%3Furl%3D9mvipY5Kbv9wDkIumqbi7U0-Xy_sSGLmGXvImqDFx-Zu-LckVtzuEeZqpjdP9jjxkplCslt9B3LUiTaWA8Pl6a#2">未通过词条申诉</a></div>
+<div><a target="_blank" href="http://tousu.baidu.com/baike/add?word=SPA&amp;&amp;submit_link=http%3A%2F%2Fbaike.baidu.com%2Flink%3Furl%3D9mvipY5Kbv9wDkIumqbi7U0-Xy_sSGLmGXvImqDFx-Zu-LckVtzuEeZqpjdP9jjxkplCslt9B3LUiTaWA8Pl6a#4">投诉侵权信息</a></div>
+<div><a target="_blank" href="http://tousu.baidu.com/baike/add?word=SPA&amp;&amp;submit_link=http%3A%2F%2Fbaike.baidu.com%2Flink%3Furl%3D9mvipY5Kbv9wDkIumqbi7U0-Xy_sSGLmGXvImqDFx-Zu-LckVtzuEeZqpjdP9jjxkplCslt9B3LUiTaWA8Pl6a#3">封禁查询与解封</a></div>
+</dd>
+</dl>
+</div>
+<div class="copyright">©2016Baidu&nbsp;<a href="http://www.baidu.com/duty/" target="_blank">使用百度前必读</a>&nbsp;|&nbsp;<a href="http://help.baidu.com/question?prod_en=baike&amp;class=159&amp;id=1047" target="_blank">百科协议</a>&nbsp;|&nbsp;<a href="http://baike.baidu.com/operation/cooperation" target="_blank">百度百科合作平台</a></div>
+</div>
+
+<div style="display: none; opacity: 0;" class="lemmaWgt-searchHeader">
+<div class="layout">
+<div class="logo-container">
+<a class="logo cmn-inline-block" title="到百科首页" href="http://baike.baidu.com/">
+<span class="cmn-baike-logo">
+<em class="cmn-icon cmn-icons cmn-icons_logo-bai"></em>
+<em class="cmn-icon cmn-icons cmn-icons_logo-du"></em>
+<em class="cmn-icon cmn-icons cmn-icons_logo-baike"></em>
+</span>
+</a>
+</div>
+<div class="search">
+<div class="form">
+<form id="searchForm" action="/search/word" method="GET" target="_self">
+<input id="query" name="word" autocomplete="off" autocorrect="off" value="SPA" type="text"><a id="search" href="javascript:;"><em class="cmn-icon wiki-lemma-icons wiki-lemma-icons_search"></em></a>
+</form>
+<ul style="display: none;" id="suggestion" class="suggestion">
+<div></div>
+<li class="extra">
+<span id="close">关闭</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="tool-buttons">
+<a class="toolButtons-edit button j-edit-link" href="javascript:;" nslog-type="10010001"></a>
+<a class="toolButtons-collect button" href="javascript:;" nslog-type="10010002"></a>
+<a class="toolButtons-vote button" href="javascript:;" nslog-type="10010003"></a>
+</div>
+<div class="user-info">
+<a class="user-link unlogin" href="http://baike.baidu.com/usercenter" target="_blank">香霖堂的茶叶</a>
+</div>
+</div></div>
+<div class="new-bdsharebuttonbox new-side-share" id="side-share">
+<span class="title">分享</span>
+<div class="side-border">
+<div class="triangle"></div>
+<a class="bds_qzone" href="javascript:void(0);" nslog-type="10060101">
+<em class="cmn-icon cmn-icons cmn-icons_logo-qzone"></em>
+</a>
+<a class="bds_tsina" href="javascript:void(0);" nslog-type="10060301">
+<em class="cmn-icon cmn-icons cmn-icons_logo-sina-weibo"></em>
+</a>
+<a class="bds_wechat" href="javascript:void(0);" nslog-type="10060001">
+<em class="cmn-icon cmn-icons cmn-icons_logo-wechat"></em>
+</a>
+<a class="bds_tqq" href="javascript:void(0);" nslog-type="10060201">
+<em class="cmn-icon cmn-icons cmn-icons_logo-qq"></em>
+</a>
+</div>
+</div>
+<div class="qrcode-wrapper" id="layer" style="display: none">
+<div class="bd_weixin_popup_head">
+<em class="cmn-icon cmn-icons cmn-icons_close"></em>
+<span>分享到微信朋友圈</span>
+</div>
+<div id="wechat-qrcode-img"></div>
+<div class="bd_weixin_popup_foot">打开微信“扫一扫”即可将网页分享至朋友圈</div>
+</div>
+<script src="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/qzopensl.js" charset="utf-8"></script>
+
+<script type="text/javascript" src="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/wiki-common_sync_js_0_dbe6227.js"></script>
+<script type="text/javascript">require.resourceMap({"res":{"wiki-lemma:widget/lemma_content/mainContent/lemmaRelation/lemmaInsert.js":{"url":"http://baike.bdimg.com/static/wiki-lemma/widget/lemma_content/mainContent/lemmaRelation/lemmaInsert_17d225d.js","pkg":"wiki-lemma:p5","deps":["wiki-common:widget/component/nslog/nslog.js"]},"wiki-lemma:widget/lemma_content/mainContent/lemmaRelation/tangram.js":{"url":"http://baike.bdimg.com/static/wiki-lemma/widget/lemma_content/mainContent/lemmaRelation/tangram_67429c3.js","pkg":"wiki-lemma:p5"},"wiki-lemma:widget/lemma_content/mainContent/lemmaReference/lemmaReferenceTip/lemmaReferenceTip.js":{"url":"http://baike.bdimg.com/static/wiki-lemma/widget/lemma_content/mainContent/lemmaReference/lemmaReferenceTip/lemmaReferenceTip_98e1259.js","deps":["wiki-common:widget/lib/jquery/jquery.js"]}},"pkg":{"wiki-lemma:p5":{"url":"http://baike.bdimg.com/static/wiki-lemma/pkg/wiki-lemma-module-lemmaRelation_49e0809.js"}}});</script><script type="text/javascript" src="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/PHPJS_3347e0a.js"></script>
+<script type="text/javascript" src="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/wiki-common_sync_js_1_56bd75b.js"></script>
+<script type="text/javascript" src="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/wiki-common_sync_js_2_7a24e62.js"></script>
+<script type="text/javascript" src="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/wiki-common_sync_js_5_62d9343.js"></script>
+<script type="text/javascript" src="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/wiki-lemma_9ef64c9.js"></script>
+<script type="text/javascript" src="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/zhixin_d2befc8.js"></script>
+<script type="text/javascript">!function(){  var $ = require('wiki-common:widget/lib/jquery/jquery.js'),
+    userbar = require('wiki-common:widget/component/userbar/userbar.js');
+    
+  $(function() {
+    userbar.buildUserbar($('.wgt-userbar'), null);
+  });
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js'),
+      initSearchbar = require('wiki-common:widget/component/searchbar/searchbar.js');  
+    initSearchbar($('.wgt-searchbar-main'));
+  }();
+!function(){  var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+
+  var timer = '';
+
+  $('.wgt-navbar').on('mouseenter', 'dl', function() {
+  clearTimeout(timer);
+  timer = setTimeout(function() {
+  $('.wgt-navbar').addClass('wgt-navbar-hover');
+}, 300);
+}).on('mouseleave', function() {
+clearTimeout(timer);
+$('.wgt-navbar').removeClass('wgt-navbar-hover');
+}).on('click', 'a', function() {
+clearTimeout(timer);
+$('.wgt-navbar').removeClass('wgt-navbar-hover');
+});
+}();
+!function(){        require('wiki-lemma:widget/lemma_content/mainContent/polysemantList/polysemantList.js')();
+    }();
+!function(){        var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+        var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+        // 展现策略
+        rightCheck.editView('17536313', function(res) {
+            if (!res.errno) {
+                if (res.data.divide) {
+                    $('.top-tool .split-icon').css('display', 'block');
+                }
+            }
+        });
+    }();
+!function(){    var nslog = require('wiki-common:widget/component/nslog/nslog.js');
+	require.async("wiki-lemma:widget/basicElement/collect/collect.js",function(collect){
+		collect({
+            newLemmaId:"17536313",
+			lemmaId:"13709",
+			subLemmaId:"17611492"
+		});
+	});
+}();
+!function(){    var nslog = require('wiki-common:widget/component/nslog/nslog.js');
+	require.async("wiki-lemma:widget/basicElement/vote/vote.js",function(vote){
+		vote({
+			lemmaId:"13709",
+            subLemmaId:"17611492"
+		});
+	});
+}();
+!function(){    var nslog = require('wiki-common:widget/component/nslog/nslog.js');
+	!!window.BKShare && window.BKShare.regist({
+		"tag" : "top-share",
+		"bdSize" : 32,
+		"bdMini":1
+	});
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+    // 展现策略
+    rightCheck.editView('17536313', function(res) {
+        if (!res.errno) {
+            if (res.data.edit) {
+                $('.lemmaWgt-lemmaTitle .edit-lemma').css('display', 'inline-block');
+            } else {
+                $('.lemmaWgt-lemmaTitle .lock-lemma').show();
+            }
+        } else {
+            if ('1') {
+                $('.lemmaWgt-lemmaTitle .edit-lemma').css('display', 'inline-block');
+            } else {
+                $('.lemmaWgt-lemmaTitle .lock-lemma').show();
+            }
+        }
+    });
+}();
+!function(){	require('wiki-lemma:widget/lemma_content/mainContent/basicInfo/basicInfo.js')();
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+    // 展现策略
+    rightCheck.editView('17536313', function(res) {
+        if (!res.errno) {
+            if (res.data.edit) {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        } else {
+            if ('1') {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        }
+    });
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+    // 展现策略
+    rightCheck.editView('17536313', function(res) {
+        if (!res.errno) {
+            if (res.data.edit) {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        } else {
+            if ('1') {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        }
+    });
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+    // 展现策略
+    rightCheck.editView('17536313', function(res) {
+        if (!res.errno) {
+            if (res.data.edit) {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        } else {
+            if ('1') {
+                $('.para-title .edit-icon').css('display', 'block');
+            }
+        }
+    });
+}();
+!function(){		require.async(["wiki-lemma:widget/lemma_content/mainContent/lemmaReference/lemmaReference.js", "wiki-lemma:widget/lemma_content/mainContent/lemmaReference/lemmaReferenceTip/lemmaReferenceTip.js"],function(Reference,ReferenceTip){
+			new Reference({
+				subLemmaId:"17611492"
+			});
+			new ReferenceTip({
+				subLemmaId:"17611492"
+			});
+		});
+	}();
+!function(){        require.async("wiki-common:widget/lib/jquery/jquery.js",function($){
+            function openTagToggle(node) {
+                if ($(node).hasClass("collapse")) {
+                    $(node).removeClass("collapse");
+                    $("#open-tag").css("height", '22px');
+                } else {
+                    $(node).addClass("collapse");
+                    $("#open-tag").css("height", $("#open-tag-item").css("height"));
+                }
+            }
+            if (parseInt($("#open-tag-item").css("height")) <= 30) {
+                $('#open-tag-collapse').hide();
+            }
+            $("#open-tag-collapse").on("click", function () {
+                openTagToggle($("#open-tag")[0]);
+            });
+        });
+    }();
+!function(){        require('wiki-lemma:widget/lemma_content/configModule/zhixin/zhixin.js')(
+            17536313,
+            'SPA'
+        );
+    }();
+!function(){    require.async("wiki-lemma:widget/lemma_content/mainContent/lemmaStatistics/lemmaStatistics.js",function(init){
+        init({
+            newLemmaIdEnc:"45bd8fd32aa1a0b4b7d810b3"
+        });
+    });
+}();
+!function(){	require.async("wiki-lemma:widget/lemma_content/mainContent/sideCatalog/sideCatalog.js",function(SideCatalog){
+		new SideCatalog();
+	});
+}();
+!function(){        require.async(['wiki-lemma:widget/promotion/unionAdFromPs/unionAdFromPs.js'], function (init) {
+            init({
+                adManager: null
+            });
+        });
+    }();
+!function(){    require.async(["wiki-lemma:widget/promotion/fengchao/fengchao.js", "wiki-lemma:widget/promotion/unionAd/unionAd.js"], function (init, unionAd) {
+        init({
+            newLemmaId: "17536313",
+            lemmaTitle: "SPA",
+            encodeLemmaTitle: "SPA",
+            adManager: null
+        }, {
+            errFn: unionAd,
+            dom: $('#side_box_unionAd')
+        });
+    });
+}();
+!function(){    require.async('wiki-lemma:widget/promotion/guessLike/guessLike.js', function (app) {
+        app.init({
+            lemmaTitle: 'SPA',
+            adManager: null
+        });
+    });
+}();
+!function(){        require.async('wiki-lemma:widget/promotion/bottomAd/bottomAd.js', function (init) {
+            init({
+                sId: 'BOTTOM_PRO_AD',
+                adManager: null
+            });
+        });
+    }();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var Dialog = require("wiki-common:widget/ui/dialog/dialog.js");
+    var userLogin = require('wiki-common:widget/component/userLogin/userLogin.js');
+    var unameFiller = require('wiki-common:widget/component/unameFiller/unameFiller.js');
+    var rightCheck = require('wiki-lemma:widget/tools/rightCheck/rightCheck.js');
+
+
+    var editUrl = '/edit/' + encodeURIComponent('SPA') + '/' + '17536313';
+
+    function gotoEdit(url, isMidNight) {
+        if (isMidNight) {
+            Dialog.alert({
+                title: '编辑提示',
+                subMsg: '晚23:00至次日8:00，因审核系统例行维护，您提交的版本可能需要较长时间才能通过，望您谅解。',
+                onConfirm: function() {
+                    window.location.href = url;
+                }
+            });
+        } else {
+            window.location.href = url;
+        }    
+    }
+
+    $(document.body).on('click', '.j-edit-link', function() {
+        var dl = $(this).attr('data-edit-dl');
+        if (dl) {
+            var url = editUrl + '?dl=' + dl;
+        } else {
+            var url = editUrl;
+        }
+
+        rightCheck.preeditCheck('17536313', 'SPA', '单页应用程序', '94888607', function(res) {
+            if (res.errno) {
+                switch (res.errno) {
+                    case 100001:
+                        userLogin.showLoginPop();
+                        break;
+                    case 100006: 
+                        unameFiller.show();
+                        break;
+                    case 100005:
+                        alert('对不起，您目前被封禁');
+                        break;
+                    case 110001:
+                        alert('对不起，该词条被锁定');
+                        break;
+                    case 110007:
+                        alert('对不起，消歧页无法编辑');
+                        break;
+                    case 110005:
+                        Dialog.alert({
+                            title: '编辑提示',
+                            mainMsg: '对不起，您暂时没有权限编辑该词条。',
+                            subMsg: '<p>您好，该词条内容已较丰富，现仅对百科等级达到<b>四级</b>且通过率达到<b>85%</b>的科友开放编辑。</p><p>当您通过努力达到以上要求，就可以参与编辑该词条了。</p><p><img src="http://img.baidu.com/img/baike/usercenter/growuptask/star.gif" class="star" />参加<a target="_blank" href="/usercenter#guide">成长任务</a>，更快掌握百科编辑技巧，加速升级！</p>'
+                        });
+                        break;
+                    case 110008:
+                        Dialog.alert({
+                            title: '编辑提示',
+                            mainMsg: '对不起，您暂时没有权限编辑该词条。',
+                            subMsg: '<p>您好，该词条内容已较丰富，现仅对百科等级达到<b>六级</b>且通过率达到<b>85%</b>的科友开放编辑。</p><p>当您通过努力达到以上要求，就可以参与编辑该词条了。</p><p><img src="http://img.baidu.com/img/baike/usercenter/growuptask/star.gif" class="star" />参加<a target="_blank" href="/usercenter#guide">成长任务</a>，更快掌握百科编辑技巧，加速升级！</p>'
+                        });
+                        break;
+                    case 470001:
+                        alert('系统错误，请刷新重试');
+                        break;
+                }
+            } else {
+                if (!res.data.right.noAudit) {
+                    Dialog.alert({
+                        title: '编辑提示',
+                        subMsg: '很抱歉，该词条有其他用户编辑的版本正在提交，您暂时无法编辑。<br/>百科建议您晚些时候再编辑该词条，或者尝试编辑其他的词条。'
+                    });
+                    return;
+                }
+                gotoEdit(url, res.data.notice.isMidNight);
+            }
+        });
+    });
+}();
+!function(){    require.async("wiki-lemma:widget/tools/searchHeader/toolButtons/toolButtons.js",function(init){
+        init({
+            newLemmaId:"17536313",
+            lemmaId:"13709",
+            subLemmaId:"17611492"
+        });
+    });
+}();
+!function(){    require('wiki-lemma:widget/tools/searchHeader/toolButtons/userInfo.js')();
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js'),
+      animation = require('wiki-common:widget/util/animation.js'),
+      initSearchbar = require('wiki-common:widget/component/searchbar/searchbar.js');
+
+    var isFadeIn = false,
+        isFadeOut = false;
+
+    var fadeInAni, fadeOutAni;
+
+    $(window).on('scroll', function(e) {
+        var scrollTop = $(this).scrollTop();
+
+        if (scrollTop > 200 && !isFadeIn && $('.lemmaWgt-searchHeader').css('display') == 'none') {
+            fadeOutAni && fadeOutAni.stop();
+            fadeInAni = animation({
+                duration: 200,
+                easing: 'linear',
+                onStart: function() {
+                    isFadeOut = false;
+                    isFadeIn = true;
+                    $('.lemmaWgt-searchHeader').css('display', 'block');
+                },
+                onStep: function(progress) {
+                    $('.lemmaWgt-searchHeader').css('opacity', progress)
+                },
+                onComplete: function(progress) {
+                    isFadeIn = false;
+                }
+            });
+        } else if (scrollTop <= 200 && !isFadeOut && $('.lemmaWgt-searchHeader').css('display') == 'block') {
+            fadeInAni && fadeInAni.stop();
+            fadeOutAni = animation({
+                duration: 300,
+                easing: 'linear',
+                onStart: function() {
+                    $('.lemmaWgt-searchHeader #suggestion').hide();
+                    isFadeIn = false;
+                    isFadeOut = true;
+                },
+                onStep: function(progress) {
+                    $('.lemmaWgt-searchHeader').css('opacity', 1 - progress);
+                },
+                onComplete: function(progress) {
+                    isFadeOut = false;
+                    $('.lemmaWgt-searchHeader').css('display', 'none');
+                }
+            });
+        }
+    });
+
+    initSearchbar($('.lemmaWgt-searchHeader'));
+}();
+!function(){    require.async("wiki-lemma:widget/tools/newSideShare/taskSideShare.js",function(taskShare){
+        taskShare.init({
+            title: 'SPA',
+            desc: '单页Web应用（single page web application，SPA），就是只有一张Web页面的应用，是加载单个HTML 页面并在用户与应用程序交互时动态更新该页面的Web应用程序。',
+            pic: '',
+            url: '',
+            qqPic: ''
+        });
+    });
+}();
+!function(){    var $ = require('wiki-common:widget/lib/jquery/jquery.js');
+    var nslog = require("wiki-common:widget/component/nslog/nslog.js");
+    var testElem = require('wiki-common:widget/component/testElem/testElem.js');
+    var cmsModuleLoader = require('wiki-common:widget/component/cmsModuleLoader/cmsModuleLoader.js');
+
+    function requireAsync() {
+        require.async('wiki-lemma:widget/tools/announcement/announcement.js');
+    }
+
+    cmsModuleLoader('/cms/global/lemma_config.json', [{
+        name: 'announcement',
+        script: 'wiki-lemma:widget/tools/announcement/announcement.js'
+    }]);
+
+    require.async("wiki-lemma:widget/tools/lazyLoad/lazyLoad.js", function(LazyLoad) {
+        new LazyLoad();
+    });
+
+    require.async(['wiki-common:widget/component/nslog/nslog.js', 'wiki-common:widget/lib/jquery/jquery.js'], function(nslog, $) {
+        nslog().setGlobal({
+            lemmaId: "13709",
+            newLemmaId: "17536313",
+            subLemmaId: "17611492",
+            lemmaTitle: "SPA"
+        });
+
+        // 词条页 pv
+        nslog(9322);
+
+        // 链接点击 pv
+        var lemmaPageRegExp = new RegExp(/\/subview\/\d+|\/view\/\d+|\/item\//i);
+        $('body').on('mousedown', 'a', function() {
+            var href = $(this).attr('href');
+            if (href && href.indexOf('/') >= 0 && href.indexOf('#') !== 0) {
+                // 链接点击 pv
+                nslog(10000001);
+                if (lemmaPageRegExp.test(href)) {
+                    // 词条页链接点击 pv
+                    nslog(10000002);
+                }
+            }
+        });
+
+        /****** 词条页站内流转需求统计 start ******/
+        (function () {
+            // 各种统计配置
+            var circulationLinkCfg = {
+                innerLink: [ // 内链
+                    '.para',
+                    '.lemmaWgt-baseInfo-simple-largeMovie',
+                    '.lemmaWgt-baseInfo-simple-largeStar',
+                    '.basic-info .basicInfo-block',
+                    '.lemma-summary',
+                    '.lemmaWgt-lemmaSummary',
+                    '.view-tip-panel',
+                    '.horizontal-module',
+                    '.lemmaWgt-roleIntroduction',
+                    '.dramaSeries .dramaSerialList',
+                    '.module-music',
+                    '.table-view',
+                    '[log-set-param="table_view"]',
+                    '.list-module',
+                    '.cell-module',
+                    '.baseBox .dl-baseinfo', // 配置后台字段
+                    '.pvBtn-box .leadPVBtnWrapper',
+                    '.drama-actor',
+                    '#staffList',
+                    '.starMovieAndTvplay',
+                    '.main_tab:not(.main_tab-defaultTab)' // 除去词条tab外的tab
+                ],
+                relationTable: '.rs-container-foot', // 关系表
+                peopleRelation: '.star-info-block.relations, .lemmaWgt-focusAndRelation', // 人物关系（明星+普通）
+                moduleActors: '.featureBaseInfo .actors, .lemmaWgt-majorActors', // 主要演员、嘉宾、主持人
+                moduleWorks: '.featureBaseInfo .works, .large-feature .works', // 代表作品
+                moduleQuarterly: '.featureBaseInfo .po_quarterly, .mian_quarterly', // 分季介绍
+                rankStar: '.rank-list.stars-rank', // 明星榜
+                rankDrama: '.drama-rank-list', // 电视剧榜
+                specialTopic: '.special-topic', // 专题模块
+                modDetailTable: '#modDetailTable', // 关系表出图
+                chuizhitu: '.chuizhitu', // 垂直化模块
+                polysemantList: '.polysemantList-wrapper' // 义项切换
+            };
+            /****** 连接统计 ******/
+            function clickNslogFn() {
+                for (var k in circulationLinkCfg) {
+                    if (k === 'innerLink') {
+                        // 词条内链到词条页
+                        var tempArr = circulationLinkCfg[k];
+                        for (var i = 0, l = tempArr.length; i < l; i++) {
+                            tempArr[i] += ' a';
+                        }
+                        var sSelector = tempArr.join(', ');
+
+                        $('body').on('mousedown', sSelector, {key: k},function(e) {
+                            var key = e.data.key;
+                            var href = $(this).attr('href');
+                            var tar = $(this).attr('target') || '';
+                            if (href && href.indexOf('/') >= 0 && href.indexOf('#') !== 0
+                            && tar === '_blank' && lemmaPageRegExp.test(href)) {
+                                // 词条页普通内链点击 pv
+                                nslog(10000004, null ,{division: key});
+                            }
+                        });
+                    } else {
+                        // 模块到词条页链接
+                        $(circulationLinkCfg[k]).on('mousedown', 'a', {key: k}, function (e) {
+                            var key = e.data.key;
+                            var href = $(this).attr('href');
+                            if (href && href.indexOf('#') !== 0 && lemmaPageRegExp.test(href)) {
+                                // 词条页配置模块链接点击 pv
+                                nslog(10000004, null, {division: key});
+                            }
+                        });
+                    }
+                }
+            }
+            // 发起统计请求
+            clickNslogFn();
+
+            /****** 各模块展现量pv ******/
+            function checkModuleIsShow() {
+                var result = [];
+                for (var k in circulationLinkCfg) {
+                    if (k !== 'innerLink' && k !== 'relationTable') {
+                        !!$(circulationLinkCfg[k]).html() && result.push(k);
+                    }
+                }
+                if (result.length > 0) {
+                    nslog(10000005, null, {showModules: result.join(',')});
+                }
+            }
+            checkModuleIsShow();
+
+        })();
+        /****** 词条页站内流转需求统计 end ******/
+
+    });
+
+    // 广告接入 wikiad 统一加载
+    // log 词条页广告被拦截情况（此处 log 请求行为）
+    nslog(70000101, window.location.href, {
+        api: 'lemma-ad',
+        action: 'request'
+    });
+    $.ajax({
+        type: 'GET',
+        url: '/api/wikiad/getsquirrels',
+        data: {
+            lemmaId: 17536313
+        },
+        cache: false,
+        dataType: 'JSON',
+        success: function (res) {
+            // log 词条页广告被拦截情况（此处 log 请求成功）
+            nslog(70000101, window.location.href, {
+                api: 'lemma-ad',
+                action: 'success'
+            });
+
+            if (!res.errno) {
+                if (res.data[5]) {
+                    require.async(['wiki-lemma:widget/promotion/rightPreciseAd/rightPreciseAd.js'], function(rightPreciseAd) {
+                        rightPreciseAd(res.data[5]);
+                        nslog(10002201, location.href, {
+                            adId: res.data[5][0].adId,
+                            adTitle: res.data[5][0].name,
+                            adPos: 5
+                        });
+                    });
+                } else if (res.data[1]) {
+                    require.async(['wiki-lemma:widget/promotion/vbaike/vbaike.js'], function(vbaike) {
+                        vbaike(res.data[1]);
+                        for(var i in res.data[1]) {
+                            nslog(10002201, location.href, {
+                                adId: res.data[1][i].adId,
+                                adTitle: res.data[1][i].name,
+                                adPos: 1
+                            });
+                        }
+                    });
+                }
+                if (res.data[9]) {
+                    require.async(['wiki-lemma:widget/promotion/rightBigAd/rightBigAd.js'], function(rightBigAd) {
+                        rightBigAd(res.data[9]);
+                            nslog(10002201, location.href, {
+                                adId: res.data[9][0].adId,
+                                adTitle: res.data[9][0].name,
+                                adPos: 9
+                            });
+                    });
+                } else if(res.data[2]) {
+                    require.async(['wiki-lemma:widget/promotion/slide/slide.js'], function(slide) {
+                        slide(res.data[2]);
+                        for(var i in res.data[2]) {
+                            nslog(10002201, location.href, {
+                                adId: res.data[2][i].adId,
+                                adTitle: res.data[2][i].name,
+                                adPos: 2
+                            });
+                        }
+                    });
+                }
+                if (res.data[3]) {
+                    require.async(['wiki-lemma:widget/promotion/topAd/topAd.js'], function(topAd) {
+                        topAd(res.data[3]);
+                        nslog(10002201, location.href, {
+                            adId: res.data[3][0].adId,
+                            adTitle: res.data[3][0].name,
+                            adPos: 3
+                        });
+                    });
+                }
+                if (res.data[4]) {
+                    require.async(['wiki-lemma:widget/promotion/rightAd/rightAd.js'], function(rightAd) {
+                        rightAd(res.data[4]);
+                        nslog(10002201, location.href, {
+                            adId: res.data[4][0].adId,
+                            adTitle: res.data[4][0].name,
+                            adPos: 4
+                        });
+                    });
+                }
+            } else {
+                return;
+            }
+
+            setTimeout(function () {
+                var elemArr = {};
+                res.data[1] && res.data[1].length > 0 && (elemArr['lemma-vbaike-ad'] = $('.lemmaWgt-promotion-vbaike .promotion_viewport a:eq(0) img').get(0));
+                res.data[2] && res.data[2].length > 0 && (elemArr['lemma-slide-ad'] = $('.lemmaWgt-promotion-slide .promotion_viewport a:eq(0) img').get(0));
+                res.data[3] && res.data[3].length > 0 && (elemArr['lemma-navbar-ad'] = {
+                    node: $('.header [nslog-type="10002202"]').get(0),
+                    validations: {
+                        'noBackgroundImage': function() {
+                            return $('.header [nslog-type="10002202"]').css('background-image').indexOf(res.data[3][0].picUrl) < 0
+                        }
+                    }
+                });
+                res.data[4] && res.data[4].length > 0 && (elemArr['lemma-side-ad'] = {
+                    node: $('.right-ad img').get(0),
+                    validations: {
+                        'noBackgroundImage': function() {
+                            return $('.right-ad img').attr('src').indexOf(res.data[4][0].picUrl) < 0
+                        }
+                    }
+                });
+
+                testElem.log(elemArr, 70000102);
+            }, 1000);
+        },
+        error: function () {
+            // log 词条页广告被拦截情况（此处 log 请求失败）
+            nslog(70000101, window.location.href, {
+                api: 'lemma-ad',
+                action: 'error'
+            });
+        }
+    });
+
+    // 设置分享内容
+    window.BKShare.setCommon({
+        bdText: '【SPA_百度百科】单页Web应用（single page web application，SPA），就是只有一张Web页面的应用，是加载单个HTML 页面并在用户与应用程序交互时动态更新该页面的Web应用程序。.....（分享自@百度百科）',
+        bdDesc: '',
+        bdUrl: 'http:\/\/baike.baidu.com\/item\/SPA\/17536313',
+        bdPic: ''
+    });
+
+    // 底部投诉带入当前页面 url
+    var map = [1, 2, 4, 3];
+    $('.wgt-footer-main .suggestion').find('a').each(function(i) {
+        $(this).attr('href', 'http://tousu.baidu.com/baike/add?word=SPA' + '&&submit_link=' + encodeURIComponent(window.location.href) + '#' + map[i]);
+    });
+}();
+!function(){      require('wiki-common:widget/component/psLink/psLink.js');
+    }();</script><div style="opacity: 0; position: fixed;" class="wgt_overlay"></div><div class="reference-tip"><table><tbody><tr><td class="content"></td><td class="title" valign="middle">参考资料</td></tr></tbody></table><em class="triangle-bg"></em><em class="triangle-border"></em></div>
+<script type="text/javascript">
+  var Hunter = window.Hunter || {};
+  Hunter.userConfig = Hunter.userConfig || [];
+  </script>
+<script type="text/javascript" src="[00]SPA%EF%BC%88%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91_files/baike.js" defer="defer"></script><script type="text/javascript">
+  // DOM Ready时，统计用户可操作时间。
+  alog('speed.set', 'drt', +new Date);
+
+  // 配置 PD 监控。
+  window.alogObjectConfig = {
+    product: '103',
+    page: '103_1',
+    monkey_page: '',
+    speed_page: '',
+    speed: {
+      sample: '0.008'
+    },
+    monkey: {
+      sample: '1',
+      hid: '1533'
+    },
+    exception: { 
+      sample: '0.004'
+    },
+    feature: {
+      sample: '0.004'
+    },
+    csp: {
+      sample: '0.008',
+      'default-src': [
+        {match: '*.baidu.com,*.bdimg.com,localhost', target: 'Accept'},
+        {match: '*', target: 'Accept,Warn'}
+      ]
+    }
+  };
+
+  void function(a,b,c,d,e,f){function g(b){a.attachEvent?a.attachEvent("onload",b,!1):a.addEventListener&&a.addEventListener("load",b)}function h(a,c,d){d=d||15;var e=new Date;e.setTime((new Date).getTime()+1e3*d),b.cookie=a+"="+escape(c)+";path=/;expires="+e.toGMTString()}function i(a){var c=b.cookie.match(new RegExp("(^| )"+a+"=([^;]*)(;|$)"));return null!=c?unescape(c[2]):null}function j(){var a=i("PMS_JT");if(a){h("PMS_JT","",-1);try{a=a.match(/{["']s["']:(\d+),["']r["']:["']([\s\S]+)["']}/),a=a&&a[1]&&a[2]?{s:parseInt(a[1]),r:a[2]}:{}}catch(c){a={}}a.r&&b.referrer.replace(/#.*/,"")!=a.r||alog("speed.set","wt",a.s)}}if(a.alogObjectConfig){var k=a.alogObjectConfig.sample,l=a.alogObjectConfig.rand;if("https:"===a.location.protocol){if(d="https://gss2.bdstatic.com/70cFsjip0QIZ8tyhnq"+d,!k||!l)return}else d="http://img.baidu.com"+d;k&&l&&l>k||(g(function(){alog("speed.set","lt",+new Date),e=b.createElement(c),e.async=!0,e.src=d+"?v="+~(new Date/864e5),f=b.getElementsByTagName(c)[0],f.parentNode.insertBefore(e,f)}),j())}}(window,document,"script","/hunter/alog/dp.min.js");
+</script>
+<div style="display: none;" class="wgt_bubble wgt-bubble-userMenu"><ul>
+<li class="top"><a href="http://baike.baidu.com/usercenter" target="_blank">我的百科</a></li>
+<li><a href="http://baike.baidu.com/usercenter/tasks#mine" target="_blank">我的任务</a></li>
+<li><a href="http://baike.baidu.com/usercenter/lemmas" target="_blank">我的词条</a></li>
+<li><a href="http://passport.baidu.com/center" target="_blank">账号设置</a></li>
+<li class="bottom logout"><a data-action="logout" href="javascript:;">退出</a></li>
+</ul><em class="tail"></em></div><div style="display: none;" class="wgt_bubble wgt-bubble-userMsg"><ul>
+<li class="top"><a href="http://baike.baidu.com/messages" target="_blank"><span class="userMsgType">通知</span></a></li><li class="bottom"><a href="http://msg.baidu.com/" target="_blank"><span class="userMsgType">私信</span><span class="userMsgCount">2</span></a></li>
+</ul><em class="tail"></em></div><div class="c-tips-container" id="c-tips-container"></div></body></html>

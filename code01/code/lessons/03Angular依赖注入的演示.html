@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>03AngularJS的作用域</title>
+    <!--引入AngularJS包-->
+    <script src="./js/angular.js"></script>
+</head>
+<!--用ng-app指定AngularJS运行于哪个标签上：需要指定一个模块名，用于启动AngularJS这个库-->
+<body ng-app="app">
+
+<!--指定哪一组数据在哪个标签上有效-->
+<div ng-controller="mainController">
+
+    {{ name }}
+
+
+    <!-- ng-click这样的AngularJS自带的属性 也会被称作是“指令”（directive） -->
+    <button onclick="clickHandler()">click me</button>
+</div>
+
+
+<script>
+    // 创建一个AngularJS的模块：
+    // 1 把各种功能组织到一起去
+    // 2 把其他模块要用得到的功能暴露出去
+    // 3 引入其他模块的各种功能
+    var app = angular.module('app', []); // 第一个参数是模块名 第二个参数是要依赖的其他模块的模块名
+
+    var scope;
+
+    // AngularJS用于提供数据的“功能组件”
+    app.controller('mainController', function ($http, $scope) {
+
+        scope = $scope;
+
+        $scope.name = 'Angular';
+        $scope.click = function () {
+            // 当我们在用AngularJS的方式绑定事件之后，
+            // AngularJS是知道我们操作过数据的，并且会自动帮我们更新我们的界面
+            $scope.name = 'hello world'
+        };
+
+        $http.get('lisi.json')
+                .success(function (data) {
+                    console.log(data);
+                })
+    });
+
+    function clickHandler() {
+        console.log(scope);
+        console.log('1')
+        scope.name = 'hello world'
+    }
+</script>
+
+</body>
+</html>
