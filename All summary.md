@@ -102,7 +102,8 @@
 
 样式绑定：
 ng-class="classDefine" classDefine是一个对象，和我们css类名绑定到一起了 加css的类
-ng-style   样式 也可以写到一个对象里面
+ng-style="styleDefine"  样式 也可以写到一个对象里面
+style="{{styleStr}}" 这种写法不推荐($scope.styleStr = "width:100px;height:100px;background:black";)
 这样可以通过js对象去操作设置这样样式 不用麻烦的去修改css样式了 
 
 <!DOCTYPE html>
@@ -135,17 +136,19 @@ ng-style   样式 也可以写到一个对象里面
     <div ng-style="styleDefine"></div>
 
 
-    <!--两种并不推荐 但是有效果的写法-->
+    <!--这种并不推荐 但是有效果的写法 这种插值的方式可以放到我们的属性里面-->
     <div  style="{{styleStr}}" ></div>
 
+    <!--下面的这种写法是无效的 angular 并不是一个真正的模版引擎 没有做模版替换 本身没有对这做模版替换 
+    替换的是-他会读所有标签的属性内容 和所有标签内部的文本节点进行替换 并不会读标签本身去替换 并不会读innerhtml去替换-->
     <!--<div {{style}} = 'width:100px;height:100px;background-color:red'></div>-->
 </div>
 
 <script>
     var app = angular.module('demo', []);
     app.controller('mainController', function ($scope) {
-        $scope.classDefine = {
-            red:true,
+        $scope.classDefine = { 
+            red:true,  //使用那个class 设置哪个为true
             green:false,
             "bd-yellow":true
         }
@@ -163,3 +166,73 @@ ng-style   样式 也可以写到一个对象里面
 
 </body>
 </html>
+
+
+样式属性扩展：
+只读：ng-readonly 区别在于提交数据的时候readonly数据是可以提交的 disable的数据是不可以提交的
+不可用：ng-disable
+隐藏：ng-hide
+
+
+<div ng-controller="mainController">
+    <div>
+        readonly:
+    <input type="checkbox" ng-model="readonly">  $scope 上没有readonly这个， 当我们点击的时候 readonly会挂到scope上 自动创建出readonly
+    <input type="text" ng-readonly="readonly" value="readonly测试"> 取消check readonly变为false
+    </div>
+    <div>
+        disabled:
+        <input type="checkbox" ng-model="disable">
+        <input type="text" ng-disabled="disable" value="disable测试">
+    </div>
+    <div>
+        hide:
+        <input type="checkbox" ng-model="hide">
+        <input type="text" ng-hide="hide" value="nghide测试">
+    </div>
+</div>
+
+<script>
+    var app = angular.module('demo', []);
+    app.controller('mainController', function ($scope) {
+
+    })
+</script>
+
+
+事件绑定
+点击：ng-click		
+双击：ng-dblclick		
+获得焦点：ng-focus	
+失去焦点：ng-blur	
+数据改变：ng-change  使用这个之前 必须在这个标签上设置ng-model  数据改变的监听 ng-modele绑定数据 数据改变触发change事件
+
+<div ng-controller="mainController">
+    <button ng-click="clickHandler()">click me</button>
+    <button onclick="clickHandler()">click me _ window</button>
+    <button ng-dblclick="clickHandler()">click me!</button>
+
+    <input type="text" ng-blur="handler('blur')">
+    <input type="text" ng-focus="handler('focus')">
+
+    <!--当用ng-model绑定的数据发生改变时，触发ng-change-->
+    <input type="text" ng-change="handler('change')" ng-model="change">
+
+</div>
+
+<script>
+    var app = angular.module('demo', []);
+    app.controller('mainController', function ($scope) {
+        $scope.clickHandler = function () {
+            alert('btn has been clicked');
+        }
+        $scope.handler = function (str) {
+            alert(str);
+        }
+        $scope.change = 'change demo'
+    })
+
+    function clickHandler() {
+        alert('btn has benn clicked __ window')
+    }
+</script>
