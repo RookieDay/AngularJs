@@ -6,7 +6,7 @@
 
 var app = angular.module('app', []);
 app.controller('mainController', function($scope) {
-    $scope.data = {};
+    $scope.data = {}; //data里面没有数据 会在输入的时候出来数据
     $scope.action = {
         test: 1
     };

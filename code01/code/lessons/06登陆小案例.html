@@ -1,34 +1,76 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="app">
+
 <head>
     <meta charset="UTF-8">
-    <title>06登陆小案例</title>
-    <script src="./js/angular.js"></script>
+    <title>用户登录页面</title>
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../node_modules/angular/angular.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap-theme.css">
+    <style>
+        li {
+            float: left;
+        }
+    </style>
 </head>
-<body ng-controller="mainController">
 
-<form ng-submit="action.send()">
-    <table>
-        <tr>
-            <td>用户名</td>
-            <td><input type="text" name="username" ng-model="data.username"></td>
-        </tr>
-        <tr>
-            <td>密码</td>
-            <td><input type="password" name="password" ng-model="data.password"></td>
-        </tr>
-        <tr>
-            <td colspan="2"><input type="submit" value="登陆"></td>
-        </tr>
-    </table>
-</form>
+<body style="padding-top: 75px;" ng-controller="login">
 
-<script src="./js/06.js">
-    
+    <div class="container">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <!--//提交的时候执行这个-->
+                <form name="loginForm" ng-submit="action.send()">
+                    <table class="table">
+                        <tr>
+                            <td>用户名:</td>
+                            <td><input type="text" name="username" ng-model="data.username"></td>
+                        </tr>
+                        <tr>
+                            <td>密码:</td>
+                            <td><input type="password" name="password" ng-model="data.password"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="submit" value="登陆">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
 
 
-</script>
+        <div class="row">
+            <div class="col-xs-12">
+                <div>{{data}}</div>
+            </div>
+        </div>
 
 
+    </div>
+
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="ngHelper.js"></script>
+
+
+    <script>
+        var actions = {};
+
+        actions.send = function() {
+            alert('已发送登陆请求:\r\n' + data.username + '\r\n' + data.password)
+        };
+
+        // 创建模块，模块名是"app"
+        angular.module('app', [])
+            // 在这个模块上创建一个控制器，控制器的名字是“login”
+            .controller('login', function($scope) { // 控制器的数据存在$scope
+                $scope.data = {}; // 数据
+                $scope.action = actions; // 动作（行为）
+            });
+    </script>
 </body>
+
 </html>
