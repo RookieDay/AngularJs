@@ -171,7 +171,7 @@ style="{{styleStr}}" 这种写法不推荐($scope.styleStr = "width:100px;height
 样式属性扩展：
 只读：ng-readonly 区别在于提交数据的时候readonly数据是可以提交的 disable的数据是不可以提交的
 不可用：ng-disable
-隐藏：ng-hide
+隐藏：ng-hide  这个是隐藏了  没有删除
 
 
 <div ng-controller="mainController">
@@ -208,8 +208,8 @@ style="{{styleStr}}" 这种写法不推荐($scope.styleStr = "width:100px;height
 数据改变：ng-change  使用这个之前 必须在这个标签上设置ng-model  数据改变的监听 ng-modele绑定数据 数据改变触发change事件
 
 <div ng-controller="mainController">
-    <button ng-click="clickHandler()">click me</button>
-    <button onclick="clickHandler()">click me _ window</button>
+    <button ng-click="clickHandler()">click me</button> 这里click的作用域是scope
+    <button onclick="clickHandler()">click me _ window</button>这里click的作用域是window
     <button ng-dblclick="clickHandler()">click me!</button>
 
     <input type="text" ng-blur="handler('blur')">
@@ -235,4 +235,31 @@ style="{{styleStr}}" 这种写法不推荐($scope.styleStr = "width:100px;height
     function clickHandler() {
         alert('btn has benn clicked __ window')
     }
+</script>
+
+
+流程控制
+如果：ng-if	 控制是否显示
+选项：ng-switch
+<div ng-controller="mainController">
+    <input type="checkbox" ng-model="ngIf">
+    <div ng-if="ngIf"> ng-if demo</div>
+    <!--<div ng-if="false"> ng-if demo</div> 会不显示 这个dom是被被删掉了-->
+    <input type="radio" value="a" name="r" ng-model="r">
+    <input type="radio" value="b" name="r" ng-model="r">
+    <input type="radio" value="c" name="r" ng-model="r">
+    <input type="radio" value="d" name="r" ng-model="r">
+    <div ng-switch="r">
+        <div ng-switch-when="a"> a </div>
+        <div ng-switch-when="b"> b </div>
+        <div ng-switch-when="c"> c </div>
+        <div ng-switch-default> abcd </div>
+    </div>
+</div>
+
+<script>
+    var app = angular.module('demo', []);
+    app.controller('mainController', function ($scope) {
+
+    })
 </script>
