@@ -1,6 +1,6 @@
 数据绑定：
     ng-bind 是去修改一个标签内部的innerHTML 会把里面的内容覆盖掉
-    {{}} 插值表达式
+    {{}} 插值表达式  里面放的都是表达式
     ng-model 
 
     <div ng-bind="name">abcdefg</div>
@@ -280,8 +280,58 @@ angular 优势：
     a.AngularJS把作用域绑定到HTML元素上，在对应HTML元素上的各种指令就会与这个作用域进行关联，实现数据（或者样式）的绑定（ng-bind、{{}}、ng-style、ng-class）、双向绑定（ng-model）、事件绑定（ng-click）等等。
     b.前端模板和双向数据绑定：
 2.依赖注入：在回调函数里面写指定的参数名就能获得指定的对象。（写$scope就能获得$scope，写$http就能获得$http，哪怕参数的位置改变都不会出问题，AngularJS知道调用这个函数时自己应该怎么传值）
-3.数据从哪儿来？用户输入、网络访问等等，Model。
+3.MVC“程序三问”：
+    数据从哪儿来？用户输入、网络访问等等，Model。
     数据去哪儿了？渲染到界面上了，View。
     发生了什么？各种事件监听和事件处理函数，Controller。但是AngularJS的Controller和标准的MVC概念有些不同，AngularJS的Controller给人一种“专门用于组织$scope的内容的”的感觉。
-    MVC“程序三问”：
 4.指令：在HTML文本上打的各种供AngularJS识别并进行绑定的标记。
+
+
+
+作用域scope不止绑在controller上
+首先纠正一个误解：作用域并不是AngularJS的Controller独有的东西。实际上很多指令都有自己的作用域，只不过Controller专门用于把作用域和HTML标签绑定到一起去。
+那么，作用域到底是用来做什么的呢？我们需要把作用域与AngularJS表达式结合来看：
+AngularJS作用域，通常来说，它的作用就是给AngularJS表达式提供一个执行环境的。
+实际上，无论是插值语法{{}}、AngularJS专有属性ng-bind ng-model ng-click，它们内部放着的都是AngularJS表达式，AngularJS在需要值的时候，
+会根据这些表达式的值做各种操作：替换、数据绑定、事件绑定等等。那么，这些AngularJS表达想要运行起来，必须怎样？当然是必须有一个它运行起来的环境了。这就是AngularJS的作用域。
+
+
+由于settimeout 使用改变scope数据，作用域上的数据变更未被AngularJS框架知晓 处理 可以使用$apply()
+<div ng-controller="outerController">
+    {{num}}
+</div>
+<script src="jquery.js"></script>
+<script>
+    var app = angular.module('demo.main', []);
+    app.controller('outerController', function ($scope, $window) { //function ($scope, $timeout) function ($scope, $interval) function ($scope, $window)
+        $scope.num = 0;
+
+//        setTimeout(function () {
+//            $scope.num = 10;
+//            // 通知AngularJS应用我们的数据变更，然后更新视图
+//            $scope.$apply();
+//        },1000)
+
+//        $timeout(function(){
+//            $scope.num = 10;
+//        },1000)
+
+//        $interval(function(){
+//            $scope.num ++
+//        },100)
+
+//        console.log($window);
+//
+         下面这段代码好像不可以，但是$window是存在的  
+//        $window.setTimeout(function(){
+//            $scope.num = 10;
+//        },100)
+
+        $.get('data.json', function (data) {
+            console.log(data);
+            $scope.num = data.num;
+            $scope.$apply();
+        })
+    });
+
+</script>
