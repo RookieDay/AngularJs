@@ -287,7 +287,37 @@ angular 优势：
 4.指令：在HTML文本上打的各种供AngularJS识别并进行绑定的标记。
 
 
+A. angularjs 表达式
+这样：{{ AngularJS Expression}}
+或者这样：ng-click = "AngularJS Expression"
+这样：ng-bind="AngularJS Expression"
+这些指令内部输入的，其实都是AngularJS表达式。
+任何AngularJS表达式在执行之后都有值，所以才能进行绑定。
+AngularJS表达式执行时，通常来说会需要一个作用域。（或者是表达式总是在作用域上执行）
+AngularJS的表达式可以写什么？
 
+比如说我们有$scope = {
+    num : 1,
+array:[1,2,3,4,5]
+data:{
+},
+sendMsg : function( … ){ … },
+getNum:function(){ return 1}
+action:{
+}
+}
+表达式类型  书写方法                值  
+取值       data.num                1
+取值       action.sendMsg          function( … ){ … }
+算数       data.num+1              2 
+函数执行   action.getNum()         1（函数执行之后返回的值）
+数组取值   data.array[3]           4
+三联运算符  data.num == 1 ? 1 : 2  1
+……         ……                     其他许多和JavaScript表达式类似的语法，但是不包括自增、if
+
+
+
+B.作用域
 作用域scope不止绑在controller上
 首先纠正一个误解：作用域并不是AngularJS的Controller独有的东西。实际上很多指令都有自己的作用域，只不过Controller专门用于把作用域和HTML标签绑定到一起去。
 那么，作用域到底是用来做什么的呢？我们需要把作用域与AngularJS表达式结合来看：
@@ -295,7 +325,19 @@ AngularJS作用域，通常来说，它的作用就是给AngularJS表达式提�
 实际上，无论是插值语法{{}}、AngularJS专有属性ng-bind ng-model ng-click，它们内部放着的都是AngularJS表达式，AngularJS在需要值的时候，
 会根据这些表达式的值做各种操作：替换、数据绑定、事件绑定等等。那么，这些AngularJS表达想要运行起来，必须怎样？当然是必须有一个它运行起来的环境了。这就是AngularJS的作用域。
 
+C.作用域： 表达式求值
+之前提到过AngularJS的表达式必须依附于作用域运行。那么AngularJS内部到底是怎么做的呢？
+可以关注一下AngularJS框架内部的$parse服务，通过依赖注入拿到的$parse实际上是一个函数。用法很简单：
+var parseFn = $parse('damo.name')
+var nameOnScope = parseFn($scope)
 
+D.作用域嵌套问题
+AngularJS的作用域是可以互相嵌套的，内部作用域可以访问外部的数据，当内部作用域和外部作用域名称冲突时，使用的是内部作用域上的数值。
+观察作用域对象，你会发现它其实利用了JavaScript的原型机制。
+
+E.作用域：通知作用域数据发生了改变
+使用$scope.$apply()来通知AngularJS数据发生了变化，去更新视图
+$apply()
 由于settimeout 使用改变scope数据，作用域上的数据变更未被AngularJS框架知晓 处理 可以使用$apply()
 <div ng-controller="outerController">
     {{num}}
@@ -322,7 +364,7 @@ AngularJS作用域，通常来说，它的作用就是给AngularJS表达式提�
 
 //        console.log($window);
 //
-         下面这段代码好像不可以，但是$window是存在的  
+         下面这段代码好像不可以，但是$window是存在的  可以访问$window下一些数据
 //        $window.setTimeout(function(){
 //            $scope.num = 10;
 //        },100)
@@ -335,3 +377,66 @@ AngularJS作用域，通常来说，它的作用就是给AngularJS表达式提�
     });
 
 </script>
+
+
+F.作用域：监视数据变化
+$watcher 监视的是angular的表达式 他会在scope上运行
+var unregisterWatch = $scope.$watch(
+'data.name',
+// Todo : 数据发生变化时做什么
+function( newValue, oldValue, scope){
+})
+这样可以监视这个作用域上的数据的变化。
+其本质是，监听这个作用域上执行这个表达式后，获得的值有没有发生变化。
+小实验：用$location获取当前的网址，并利用$scope监视网址的变化。
+
+watcher:
+    1.AngularJS表达式
+    2.上一次对这个表达式求出来值
+    3.如果和上一次表达式的值有变化，则执行我们传进去的回调函数。
+
+    var app = angular.module('demo.main', []);
+    app.controller('outerController', function ($scope, $window) {
+        $scope.num = 0;
+        console.log($scope);  里面有一个$$watchers属性
+        var releaseFn = $scope.$watch('num', function (newValue, oldValue, scope) {
+            console.log(newValue, oldValue, scope);
+        });   返回一个释放watch的函数
+        
+        // releaseFn();  // 释放自己注册的watcher
+    });    
+
+
+G.监听hash变化  其实就是锚点  下面就是一个类似路由的设计
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>复习</title>
+    <script src="../angular.js"></script>
+</head>
+<body ng-app="demo.main">
+<div ng-controller="outerController">
+    <a href="#/a">goto a</a>
+    <a href="#/b">goto b</a>
+    <a href="#/c">goto c</a>
+
+    {{name}}
+</div>
+<script>
+    var app = angular.module('demo.main', []);
+    app.controller('outerController', function ($scope, $location) {
+        console.log($location);
+        // 用$location.path()能够拿到当前的路径，我们把$location放到$scope上，以便监听
+        $scope.location = $location; 挂载到location上
+        $scope.name = 'index';
+        // 监听AngularJS表达式“location.path()” 直接上locatio.path()执行了一下  说明ng wathch监听的是表达式 而不是他的值
+        $scope.$watch('location.path()', function (newValue, oldValue, scope) {
+            console.log(newValue, oldValue);
+            $scope.name = newValue;
+        })
+
+    });
+</script>
+</body>
+</html>
