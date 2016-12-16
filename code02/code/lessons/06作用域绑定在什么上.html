@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>06作用域的绑定</title>
+    <script src="../angular.js"></script>
+</head>
+<body ng-app="demo.main">
+
+<div ng-controller="outerController">
+    <div ng-controller="innerController">
+        {{num}}
+        {{name}}
+    </div>
+</div>
+<script>
+    var app = angular.module('demo.main', []);
+    app.controller('outerController', function ($scope, $parse, $rootScope) {
+        $scope.num = 1;
+        $scope.name = 'outer';
+        // 输出一下我们的模块上的“根作用域”
+        console.log($rootScope);
+        console.log($scope)
+    });
+
+    app.controller('innerController',function($scope){
+        $scope.num = 2;
+    })
+
+
+</script>
+</body>
+</html>

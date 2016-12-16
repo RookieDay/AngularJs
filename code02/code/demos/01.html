@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="angular.js"></script>
+<body>
+
+<div ng-app="demo.main">
+    <div ng-controller="mainController">
+
+    </div>
+    <script>
+        var app = angular.module('demo.main', []);
+        app.provider('demoService', function () {
+            var demoStr = 'demo';
+            return {
+                setStr: function (val) {
+                    demoStr = val;
+                },
+                $get: function () {
+                    return demoStr;
+                }
+            }
+        });
+
+        app.config(function (demoServiceProvider) {
+            demoServiceProvider.setStr('hello world aaa')
+        });
+
+        app.controller("mainController", function ($scope, $parse, demoService) {
+            $scope.name = demoService;
+            console.log(demoService);
+        })
+
+    </script>
+</div>
+</body>
+</html>

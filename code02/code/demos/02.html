@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="angular.js"></script>
+<body>
+
+<div ng-app="demo.main">
+    <div ng-controller="mainController">
+
+    </div>
+    <script>
+        var app = angular.module('demo.main', []);
+        app.controller("mainController", function ($scope, $http) {
+            $http({
+                method: "POST",
+                url: "data.json1",
+                params: {username: 'ted', age: 14},
+                data:{password:"123456"}
+            }).success(function (data, status) {
+                console.log('post', arguments);
+            }).error(function(data,status){
+                console.log('err',data,status)
+            })
+        })
+
+    </script>
+</div>
+</body>
+</html>

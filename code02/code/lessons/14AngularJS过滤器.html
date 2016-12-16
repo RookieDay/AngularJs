@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>11ng-repeat</title>
+    <script src="../angular.js"></script>
+    <style>
+        .bg-blue {
+            background-color: lightblue;
+        }
+    </style>
+</head>
+<body>
+<div ng-app="demo.main">
+    <div ng-controller="mainController">
+        <div ng-repeat="item in array | filter:{state:'已接受'}">
+            {{item.name}},{{item.state}}
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = angular.module('demo.main', []);
+
+    app.controller('mainController', function ($scope) {
+       $scope.array =  [
+           {name: "张三", phone: "18612345678", state: "邀请中"},
+           {name: "李四", phone: "18612345678", state: "已接受"}
+       ];
+    })
+</script>
+</body>
+</html>

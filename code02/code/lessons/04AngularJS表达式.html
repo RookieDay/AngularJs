@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>04AngularJS表达式</title>
+    <script src="../angular.js"></script>
+</head>
+<body ng-app="demo.main">
+
+<div ng-controller="nameController">
+    {{ num + 1 }}
+    <div>
+        取值表达式：{{data.num}}
+        <br>
+        取函数：{{fn}}
+        <br>
+        取对象：{{data}}
+    </div>
+    <div>
+        运算表达式：{{data.num + 2}}
+    </div>
+    <div>
+        函数执行：{{fn()}}
+    </div>
+    <div>
+        取数组的内容：{{data.arr[2]}}
+    </div>
+</div>
+
+<script>
+    var app = angular.module('demo.main', []);
+    app.controller('nameController', function ($scope, $parse) {
+        $scope.num = 1;
+        $scope.fn = function () {
+            console.log('函数执行了');
+            return 'run';
+        };
+
+        $scope.data = {
+            num: 1,
+            str: 'hello world',
+            arr:[1,2,3,4,5]
+
+        };
+
+        var parseFn = $parse('fn()'); // fn()是一个AngularJS表达式
+        var value = parseFn($scope);
+        console.log(value);
+
+    })
+</script>
+</body>
+</html>

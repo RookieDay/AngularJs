@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="angular.js"></script>
+<body>
+
+<div ng-app="demo.main">
+    <div ng-controller="mainController">
+
+    </div>
+    <script>
+        var app = angular.module('demo.main',[]);
+        app.controller("mainController",function($scope, $parse){
+            $scope.name = 'main123';
+            var fn = $parse('name');
+            console.log(fn($scope))
+        })
+
+    </script>
+</div>
+</body>
+</html>

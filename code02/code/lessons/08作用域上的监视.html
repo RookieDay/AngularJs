@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>07作用域上的数据变更未被AngularJS框架知晓</title>
+    <script src="../angular.js"></script>
+</head>
+<body ng-app="demo.main">
+<div ng-controller="outerController">
+    {{num}}
+    <input type="text" ng-model="num">
+</div>
+<script src="jquery.js"></script>
+<script>
+    var app = angular.module('demo.main', []);
+    app.controller('outerController', function ($scope, $window) {
+        $scope.num = 0;
+        console.log($scope);
+        var releaseFn = $scope.$watch('num', function (newValue, oldValue, scope) {
+            console.log(newValue, oldValue, scope);
+        });
+        // 释放自己注册的watcher
+//        releaseFn();
+    });
+
+</script>
+</body>
+</html>

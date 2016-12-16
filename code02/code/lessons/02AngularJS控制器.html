@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01AngularJS控制器</title>
+    <script src="../angular.js"></script>
+</head>
+<body ng-app="demo.main">
+
+<div ng-controller="nameController">
+    {{name}}
+    {{age}}
+    <button ng-click="fn()">btn</button>
+</div>
+
+<script>
+    var app = angular.module('demo.main',['demo.sub']);
+
+    var sub = angular.module('demo.sub',[]);
+
+    // 控制器的名字 + Controller
+    sub.controller('nameController',function($scope){
+        $scope.name = 'this is sub'
+        $scope.age = 23
+        $scope.fn = function(){ console.log('run')}
+    })
+</script>
+</body>
+</html>

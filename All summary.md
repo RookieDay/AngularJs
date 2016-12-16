@@ -249,7 +249,7 @@ style="{{styleStr}}" 这种写法不推荐($scope.styleStr = "width:100px;height
     <input type="radio" value="b" name="r" ng-model="r">
     <input type="radio" value="c" name="r" ng-model="r">
     <input type="radio" value="d" name="r" ng-model="r">
-    <div ng-switch="r">
+    <div ng-switch="r">  会在我们的scope加上一个r的变量
         <div ng-switch-when="a"> a </div>
         <div ng-switch-when="b"> b </div>
         <div ng-switch-when="c"> c </div>
@@ -263,3 +263,25 @@ style="{{styleStr}}" 这种写法不推荐($scope.styleStr = "width:100px;height
 
     })
 </script>
+
+
+
+循环：ng-repeat
+
+
+
+angular 优势：
+无DOM操作，而是利用双向绑定的形式，让数据直接与DOM相关联。实现程序员只操作数据就可以更新视图的效果。
+简化了开发的流程。DOM选择器越复杂，性能越低。
+
+简单概念：
+单页面应用特征：数据频繁发生变动，需要用JavaScript来更新界面的显示。在不适用框架时，这会要求程序员对DOM十分熟悉，编写非常复杂的代码，使用很多效率低的选择器。
+1.AngularJS把HTML文件视作模板，程序员用AngularJS指令的方式在HTML上打标记，然后把数据等内容交给AngularJS，AngularJS帮我们把数据填到对应的位置上、帮我们把各种行为的响应函数绑定到各种控件上。
+    a.AngularJS把作用域绑定到HTML元素上，在对应HTML元素上的各种指令就会与这个作用域进行关联，实现数据（或者样式）的绑定（ng-bind、{{}}、ng-style、ng-class）、双向绑定（ng-model）、事件绑定（ng-click）等等。
+    b.前端模板和双向数据绑定：
+2.依赖注入：在回调函数里面写指定的参数名就能获得指定的对象。（写$scope就能获得$scope，写$http就能获得$http，哪怕参数的位置改变都不会出问题，AngularJS知道调用这个函数时自己应该怎么传值）
+3.数据从哪儿来？用户输入、网络访问等等，Model。
+    数据去哪儿了？渲染到界面上了，View。
+    发生了什么？各种事件监听和事件处理函数，Controller。但是AngularJS的Controller和标准的MVC概念有些不同，AngularJS的Controller给人一种“专门用于组织$scope的内容的”的感觉。
+    MVC“程序三问”：
+4.指令：在HTML文本上打的各种供AngularJS识别并进行绑定的标记。

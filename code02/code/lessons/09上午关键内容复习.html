@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>复习</title>
+    <script src="../angular.js"></script>
+</head>
+<body ng-app="demo.main">
+<div ng-controller="outerController">
+    {{num + 1}}
+</div>
+<script>
+    var app = angular.module('demo.main', []);
+    app.controller('outerController', function ($scope) {
+        $scope.num = 0;
+    });
+</script>
+</body>
+</html>

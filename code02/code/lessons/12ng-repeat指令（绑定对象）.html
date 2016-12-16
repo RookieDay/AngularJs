@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>11ng-repeat</title>
+    <script src="../angular.js"></script>
+    <style>
+        .bg-blue {
+            background-color: lightblue;
+        }
+    </style>
+</head>
+<body>
+<div ng-app="demo.main">
+    <div ng-controller="mainController">
+        <table>
+            <tr>
+                <th>编号</th>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>性别</th>
+            </tr>
+            <tr ng-repeat="(key,item) in infoes" ng-class="{'bg-blue':$even}">
+                <td>{{key}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.age}}</td>
+                <td>{{item.sex}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script>
+    var app = angular.module('demo.main', []);
+    app.controller('mainController', function ($scope) {
+        $scope.infoes = {
+            "zhangsan": {name: "张三", age: 18, sex: "男"},
+            "lisi": {name: "李四", age: 28, sex: "男"},
+            "wangwu": {name: "王五", age: 38, sex: "女"},
+            "zhaoliu": {name: "赵六", age: 8, sex: "男"},
+        }
+    })
+</script>
+</body>
+</html>

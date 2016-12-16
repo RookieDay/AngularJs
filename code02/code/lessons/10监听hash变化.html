@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>复习</title>
+    <script src="../angular.js"></script>
+</head>
+<body ng-app="demo.main">
+<div ng-controller="outerController">
+    <a href="#/a">goto a</a>
+    <a href="#/b">goto b</a>
+    <a href="#/c">goto c</a>
+
+    {{name}}
+</div>
+<script>
+    var app = angular.module('demo.main', []);
+    app.controller('outerController', function ($scope, $location) {
+        console.log($location);
+        // 用$location.path()能够拿到当前的路径，我们把$location放到$scope上，以便监听
+        $scope.location = $location;
+        $scope.name = 'index';
+        // 监听AngularJS表达式“location.path()”
+        $scope.$watch('location.path()', function (newValue, oldValue, scope) {
+            console.log(newValue, oldValue);
+            $scope.name = newValue;
+        })
+
+    });
+</script>
+</body>
+</html>
