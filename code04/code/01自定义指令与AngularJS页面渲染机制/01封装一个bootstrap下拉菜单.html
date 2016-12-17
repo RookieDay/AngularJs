@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo.main">
+
+<head>
+    <meta charset="UTF-8">
+    <title>01bootstrap下来菜单</title>
+    <script src="angular.js"></script>
+    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css">
+    <script src="../../../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+</head>
+
+<body>
+
+    <demo-select demo-options="getOptions()"></demo-select>
+
+    <script>
+        var template = `
+<div class="dropdown" ng-controller="mainController">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Dropdown
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li ng-repeat="(key,value) in options"><a ng-href="{{value}}">{{key}}</a></li>
+    </ul>
+</div>
+    `;
+
+        var app = angular.module('demo.main', []);
+
+        app.controller('mainController', function($scope) {
+            $scope.options = {
+                "主页": "#/index",
+                "关于": "#/about"
+            };
+
+            $scope.getOptions = function() {
+                return {
+                    "主页": "#/index",
+                    "关于": "#/about"
+                };
+            }
+
+        });
+
+        app.directive('demoSelect', function() {
+
+            // 描述我们的指令的对象
+            return {
+                restrict: "E", // 要作为一个自定义标签来使用
+                template: template,
+                scope: { // 定义内部的作用域和外部作用域怎样交互
+                    demoOptions: "<", //单向的 因为它可以绑定angularjs的表达式 数据可以赋值 但表达式不可以 
+                    //双向 ng-model 只能接受作用域上的名字 不能接受angular表达式 因为表达式只能取值 不能赋值
+                    //指令内部想要更改外部传进来的作用域的属性 数据..
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
