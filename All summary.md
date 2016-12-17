@@ -934,15 +934,19 @@ replace：替换，用模板中的元素，替换指令所指定的那个元素�
 
 
 
-实现ng-bind的方法：
-<div my-bind="fn()" my-demo = 'demo'></div>
-
+实现ng-bind的方法：  重要    line1129---> link
+<div my-bind="fn()" my-demo = 'demo'></div> 
+<button ng-click="clickFn()">click me</button>  // 点击以后scope上变成了'he' 但是上面的my-bind还是demo没有改变 angular已经知道改变了
+                                                // 让他通知变化了就可以 watch
 <script>
     var app = angular.module('my.main', []);
     app.controller('mainController', function ($scope) {
         $scope.name = 'demo';
         $scope.fn = function(){
-            return 'hello world'
+            return $scope.name;
+        }
+        $scope.clickFn = function(){
+            $scope.name = "he"
         }
     });
 
@@ -955,6 +959,9 @@ replace：替换，用模板中的元素，替换指令所指定的那个元素�
             controller: function ($scope, $element,$attrs) {
                 console.log($scope, $element,$attrs); //可以进行dom操作
                 $element.html($scope.myBind)   //可以使用这个controller操作 他是属于指令的 
+                $scope.$watch('myBind',function(newValue,oldValue,scope){   //监听到数据变化时的回调函数
+                    $element.html(newValue);   
+                })
             }
         }
     })
@@ -1008,3 +1015,173 @@ angular 自定义指令链接 require link
     })
 </script>
 
+bootstrap 下拉菜单封装
+<!DOCTYPE html>
+<html lang="en" ng-app="demo.main">
+
+<head>
+    <meta charset="UTF-8">
+    <title>01bootstrap下来菜单</title>
+    <script src="angular.js"></script>
+    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css">
+    <script src="../../../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+</head>
+
+<body>
+
+    <demo-select demo-options="getOptions()"></demo-select>
+
+    <script>
+        var template = `
+<div class="dropdown" ng-controller="mainController">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Dropdown
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li ng-repeat="(key,value) in options"><a ng-href="{{value}}">{{key}}</a></li>
+    </ul>
+</div>
+    `;
+
+        var app = angular.module('demo.main', []);
+
+        app.controller('mainController', function($scope) {
+            $scope.options = {
+                "主页": "#/index",
+                "关于": "#/about"
+            };
+
+            $scope.getOptions = function() {
+                return {
+                    "主页": "#/index",
+                    "关于": "#/about"
+                };
+            }
+
+        });
+
+        app.directive('demoSelect', function() {
+
+            // 描述我们的指令的对象
+            return {
+                restrict: "E", // 要作为一个自定义标签来使用
+                template: template,
+                scope: { // 定义内部的作用域和外部作用域怎样交互
+                    demoOptions: "<", //单向的 因为它可以绑定angularjs的表达式 数据可以赋值 但表达式不可以 
+                    //双向 ng-model 只能接受作用域上的名字 不能接受angular表达式 因为表达式只能取值 不能赋值
+                    //指令内部想要更改外部传进来的作用域的属性 数据..
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
+
+
+
+scope属性
+<div ng-controller="mainController">
+
+    <demo-select demo-message="fn()"
+                 demo-at="{{name}}"
+                 demo-equal="name"></demo-select>
+
+</div>
+
+<script>
+
+    var app = angular.module('demo.main', []);
+
+    app.controller('mainController', function ($scope) {
+        $scope.name = 'main controller';
+        $scope.fn = function () {
+            return "main controller's fn";
+        }
+
+    });
+
+    app.directive('demoSelect', function () {
+
+        // 描述我们的指令的对象
+        return {
+            restrict: "E", // 要作为一个自定义标签来使用
+            template: "<div>{{demoMessage}}<br>{{demoAt}}<br>{{demoEqual}}</div>",
+            scope: { // 定义内部的作用域和外部作用域怎样交互
+                demoMessage: "<",// 单向绑定：可以使用AngularJS表达式
+                demoAt: "@", // 字符串绑定：用{{}}来使用AngularJS表达式，但是也可以直接输入一个字符串
+                demoEqual:"=" // 双向绑定：直接输入AngularJS作用域上的字段名，让指令内部和外部的作用域对应字段双向的绑定起来
+            },
+            link:function( scope, elem, attrs ){
+                console.log('first',scope.demoAt,scope.demoEqual);
+                scope.demoEqual = '已经被指令修改';
+                console.log('second',scope.demoAt,scope.demoEqual);
+            }
+        }
+    })
+
+</script>
+
+
+
+**重要** scope 属性的设置以及理解
+<!DOCTYPE html>
+<html lang="en" ng-app="demo.main">
+
+<head>
+    <meta charset="UTF-8">
+    <title>02关于scope属性</title>
+    <script src="angular.js"></script>
+    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css">
+    <script src="../../../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+</head>
+
+<body>
+    <div ng-controller="mainController">
+
+        <demo-select demo-message="fn()" demo-at="{{name}}" demo-equal="name"></demo-select>
+        //demo-equal 双向数据绑定修改了name 导致demo-at那里的name也变了
+    </div>
+
+    <script>
+        var app = angular.module('demo.main', []);
+
+        app.controller('mainController', function($scope) {
+            $scope.name = 'main controller';
+            $scope.fn = function() {
+                return "main controller's fn";
+            }
+
+        });
+
+        app.directive('demoSelect', function() {
+
+            // 描述我们的指令的对象
+            return {
+                restrict: "E", // 要作为一个自定义标签来使用
+                template: "<div>{{demoMessage}}<br>{{demoAt}}<br>{{demoEqual}}</div>",
+                scope: { // 定义内部的作用域和外部作用域怎样交互
+                    demoMessage: "<", // 单向绑定：可以使用AngularJS表达式
+                    demoAt: "@", // 字符串绑定：用{{}}来使用AngularJS表达式，但是也可以直接输入一个字符串
+                    demoEqual: "=" // 双向绑定：直接输入AngularJS作用域上的字段名，
+                        //让指令内部和外部的作用域对应字段双向的绑定起来 指令内部操作 外部也能修改 
+                        //两种方法操作scope内部的数据 1.controller 2.link
+                },
+                link: function(scope, elem, attrs) {    
+                    console.log('first', scope.demoAt, scope.demoEqual);
+                    scope.demoEqual = '已经被指令修改';
+                    console.log('second', scope.demoAt, scope.demoEqual);
+                }
+            }
+        })
+    </script>
+</body>
+</html>
+
+
+
+
+angular内部如何实现 从自定义元素 指令  一直到编译到用户显示的的过程
