@@ -1,8 +1,8 @@
-数据绑定：
-    ng-bind 是去修改一个标签内部的innerHTML 会把里面的内容覆盖掉
-    {{}} 插值表达式  里面放的都是表达式
-    ng-model 
-
+var app = angular.module('app.main', []);
+// 自定义服务
+app.service('dataService', function() {
+    this.name = ' from service'
+});
     <div ng-bind="name">abcdefg</div>
     <div>名字：{{name}}</div>
     <input type="text" ng-model="name">  输入框和我们scope上的name绑定到了一起 这里类型是字符串我们什么都可以输入 性能强大 假如有下面的
@@ -601,3 +601,154 @@ angular 的过滤器
        ];
     })
 </script>
+
+
+
+所以angular创建服务的三种方法：
+1.factory
+    在模块上指定服务名和服务对象（可以是对象、函数、数值等等任意JavaScript变量），
+    在AngularJS框架中其它用得到回调函数的地方，可以使用依赖注入的方式获得这个服务对象。用法：
+    module.factory( 'demoService', function(){  
+    })
+    module.controller('demoController' , function( $scope, demoService ){
+    })
+2.service  
+service和factory唯一的区别就是，service的回调函数不返回一个对象，而是把自身当做一个构造函数使用，创建出来的对象作为服务对象。
+module.service(
+    'demoService',
+    function(){
+        this.name = "demo";
+        this.xxx = xxx
+    }
+)
+3.provider  其回调函数返回的对象中 $get就是我们的服务对象 至于其他字段 我们可以在module.config里访问
+module.provider('demoService',function(){
+    var name = 'demo';
+    return {
+        $get:function(){
+            return name;
+        },
+        setName:function(newName){
+            name = newName;
+        }
+    }
+})   
+
+
+
+apply的内部使用  bind call
+    function fn(){
+        console.log(this.dataStr);
+    }
+
+    fn() 输出undefined 因为依附与window
+    如果var dataStr = 'from window' fn()  输出from window 
+    var obj = {dataStr：'from obj'} fn.apply(obj); -- from obj
+
+
+
+<div ng-controller="mainController">
+    {{name}}
+    <br>
+    {{name2}}
+</div>
+
+<script>
+    var app = angular.module('app.main', []);
+    // 自定义服务
+    app.service('dataService', function () {
+        this.name = ' from service'   会当作构造函数来使用 内部实现使用了apply
+    });
+
+    app.provider('data2Service', function () {
+        var data = {
+            name: 'from provider',
+            url:""
+        };
+        return {
+            // 服务在被依赖注入时，真正提供的对象放到$get里面
+            $get: function () {
+                return {
+                    name: data.name,
+                    url:data.url,
+                }
+            },
+            // 剩下的东西都可以在AngularJS服务提供给其他组件之前对这个服务做设置
+            setName: function (nameStr) {
+                data.name = nameStr;
+            },
+            setUrl:function(url){
+                data.url = url;
+            }
+
+        }
+    });
+
+    // 在把这个服务提供给其他AngularJS功能组件之前，我可以对这个服务做一次配置
+    // 这个是Provider写法特有的功能
+    app.config(function(data2ServiceProvider){
+        console.log(data2ServiceProvider);
+        data2ServiceProvider.setName('provider 2');
+    })
+
+    app.controller('mainController', function ($scope, dataService, data2Service) {
+        $scope.name = dataService.name;
+        $scope.name2 = data2Service.name;
+    })
+</script>
+
+
+
+<body ng-app="app.main">
+<div ng-controller="mainController">
+    {{name}}
+    <br>
+    {{name2}}
+</div>
+
+<script>
+    var app = angular.module('app.main', []);
+    // 自定义服务
+    app.service('dataService', function () {
+        this.name = ' from service'
+    });
+
+    app.provider('data2Service', function () {
+        var data = {
+            name: 'from provider',
+            url:""
+        };
+        return {
+            // 服务在被依赖注入时，真正提供的对象放到$get里面
+            $get: function () {
+                return {
+                    name: data.name,
+                    url:data.url,
+                }
+            },
+            // 剩下的东西都可以在AngularJS服务提供给其他组件之前对这个服务做设置
+            setName: function (nameStr) {
+                data.name = nameStr;
+            },
+            setUrl:function(url){
+                data.url = url;
+            }
+
+        }
+    });
+
+    // 在把这个服务提供给其他AngularJS功能组件之前，我可以对这个服务做一次配置
+    // 这个是Provider写法特有的功能  依赖注入 必须有provider
+    app.config(function(data2ServiceProvider){   
+        console.log(data2ServiceProvider);  输出的是Object 包含data2Service 返回出来的对象
+        data2ServiceProvider.setName('provider 2');
+    })
+
+    app.controller('mainController', function ($scope, dataService, data2Service) {
+        $scope.name = dataService.name;
+        $scope.name2 = data2Service.name;
+    })
+</script>
+
+
+
