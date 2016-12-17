@@ -267,6 +267,114 @@ style="{{styleStr}}" 这种写法不推荐($scope.styleStr = "width:100px;height
 
 
 循环：ng-repeat
+<div ng-app="demo.main">
+    <div ng-controller="mainController">
+        <table>
+            <tr>
+                <th>编号</th>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>性别</th>
+            </tr>
+            <tr ng-repeat="item in infoes" ng-class="{'bg-blue':$even}">
+                <td>{{$index + 1}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.age}}</td>
+                <td>{{item.sex}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script>
+    var app = angular.module('demo.main', []);
+    app.controller('mainController', function ($scope) {
+        $scope.infoes = [
+            {name: "张三", age: 18, sex: "男"},
+            {name: "李四", age: 28, sex: "男"},
+            {name: "王五", age: 38, sex: "女"},
+            {name: "赵六", age: 8, sex: "男"},
+        ]
+    })
+</script>
+item: 数组里面的每一个元素（每一个ng-repeat生成$scope中,item都不同）item来自于"item in array"的写法，实际上item可以随便自定义它的名字。
+$index:这个元素在数组里的索引
+$first: 这个元素是不是数组里的第一个元素
+$last:这个元素是不是数组里最后一个元素
+$middle:……是不是中间的元素
+$even:索引值是不是偶数
+$odd:索引值是不是奇数
+
+<trng-repeat="itemininfoes"ng-class="{'bg-blue':$even}">
+绑定的数组，语法是item in array
+
+<trng-repeat="(key,item)ininfoes"ng-class="{'bg-blue':$even}">
+绑定对象，语法是(key , value) in object
+
+如果你的repeat所绑定的数组经常发生变化，最好也加一个track by $index
+<div ng-app="demo.main">
+    <div ng-controller="mainController">
+        <table>
+            <tr>
+                <th>编号</th>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>性别</th>
+            </tr>
+            <tr ng-repeat="item in infoes track by $index">
+                <td>{{$index}}</td>
+                <td>{{item}}</td>
+                <td>{{item.age}}</td>
+                <td>{{item.sex}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script>
+    var app = angular.module('demo.main', []);
+    app.controller('mainController', function ($scope) {
+        $scope.infoes = [1,1,2,3,4,5]
+    })
+</script>
+
+
+ng-app 作用域
+ng-controller 作用域
+ng-repeat 作用域也能绑定到元素上 因为重复的元素在item上
+绑定键值对的时候
+<div ng-app="demo.main">
+    <div ng-controller="mainController">
+        <table>
+            <tr>
+                <th>编号</th>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>性别</th>
+            </tr>
+            <tr ng-repeat="(key,item) in infoes" ng-class="{'bg-blue':$even}">
+                <td>{{key}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.age}}</td>
+                <td>{{item.sex}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script>
+    var app = angular.module('demo.main', []);
+    app.controller('mainController', function ($scope) {
+        $scope.infoes = {
+            "zhangsan": {name: "张三", age: 18, sex: "男"},
+            "lisi": {name: "李四", age: 28, sex: "男"},
+            "wangwu": {name: "王五", age: 38, sex: "女"},
+            "zhaoliu": {name: "赵六", age: 8, sex: "男"},
+        }
+    })
+</script>
+
+
 
 
 
