@@ -558,3 +558,46 @@ G.监听hash变化  其实就是锚点  下面就是一个类似路由的设计
         视图上要显示的数据
         受邀请人的姓名 电话 以及邀请按钮的事件处理
     4.view模版
+
+angular factory： 自定义一个服务
+
+var app = angular.module('demo.main', []);
+app.factory('modelService', function() {
+    var arr = [
+        { name: "张三", phone: "18612345678", state: "邀请中" },
+        { name: "李四", phone: "18612345678", state: "已接受" }
+    ];
+    return {
+        nameList: arr,
+        invite: function(userinfo) {
+            arr.push(userinfo)
+        }
+    }
+});
+
+
+app.controller('mainController', function($scope, modelService) {
+    console.log(modelService);
+    modelService.invite({})
+})
+
+
+angular 的过滤器
+<div ng-app="demo.main">
+    <div ng-controller="mainController">
+        <div ng-repeat="item in array | filter:{state:'已接受'}">
+            {{item.name}},{{item.state}}
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = angular.module('demo.main', []);
+
+    app.controller('mainController', function ($scope) {
+       $scope.array =  [
+           {name: "张三", phone: "18612345678", state: "邀请中"},
+           {name: "李四", phone: "18612345678", state: "已接受"}
+       ];
+    })
+</script>
