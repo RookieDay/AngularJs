@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="nameList.main">
+
+<head>
+    <meta charset="UTF-8">
+    <title>名单</title>
+    <script src="../../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../../node_modules/angular/angular.js"></script>
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap-theme.css">
+    <style>
+        li {
+            float: left;
+        }
+        
+        body {
+            padding-top: 50px;
+        }
+    </style>
+</head>
+
+<body ng-controller="mainController">
+
+    <div class="container">
+        <div class="row">
+            <h1>邀请名单</h1>
+        </div>
+        <div class="row" style="padding-top: 30px;">
+            <div class="col-xs-3">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                      姓名
+                  </span>
+                    <input type="text" ng-model="name" class="form-control" placeholder="输入姓名">
+                </div>
+            </div>
+            <div class="col-xs-8">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                      电话
+                  </span>
+                    <input type="text" ng-model="phone" class="form-control" placeholder="输入电话">
+                </div>
+            </div>
+            <div class="col-xs-1">
+                <button class="btn btn-success" ng-click="invite()">邀请</button>
+            </div>
+        </div>
+
+        <div class="row" style="padding-top: 30px;">
+            <a class="btn btn-success btn-xs " href="#/all">显示全部</a>
+            <a class="btn btn-success btn-xs " href="#/invite">显示邀请中</a>
+            <a class="btn btn-success btn-xs " href="#/accept">显示已接受</a>
+            <a class="btn btn-success btn-xs " href="#/refuse">显示已拒绝</a>
+        </div>
+
+        <div class="row" style="padding-top: 30px;">
+            <table class="table table-bordered">
+                <tr>
+                    <th style="width: 50px">id</th>
+                    <th style="width: 100px">姓名</th>
+                    <th style="width: 150px">电话</th>
+                    <th style="width: 100px">状态</th>
+                    <th>操作</th>
+
+                </tr>
+                <tr ng-repeat="userinfo in nameList">
+                    <td>{{$index + 1}}</td>
+                    <td>{{userinfo.name}}</td>
+                    <td>{{userinfo.phone}}</td>
+                    <td>{{userinfo.state}}</td>
+                    <td>
+                        <!--哪种方式好呢？-->
+                        <button class="btn btn-xs btn-success" ng-if="userinfo.state == '邀请中'" ng-click="accept(userinfo)">
+                        接受邀请
+                    </button>
+                        <button class="btn btn-xs btn-danger" ng-if="userinfo.state == '邀请中'" ng-click="refuse(userinfo)">
+                        拒绝邀请
+                    </button>
+                        <button class="btn btn-xs btn-default" ng-click="remove(userinfo)">删除</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script src="../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="vm.js"></script>
+    <script src="modelService1.js"></script>
+</body>
+
+</html>
