@@ -1185,3 +1185,8 @@ scope属性
 
 
 angular内部如何实现 从自定义元素 指令  一直到编译到用户显示的的过程
+outer 模版替换上去 把整个模版复制过去
+inner complie 替换demoinner内容
+
+
+
