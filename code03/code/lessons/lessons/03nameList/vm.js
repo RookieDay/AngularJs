@@ -13,12 +13,24 @@
      }
      $scope.remove = function(userinfo) {
          modelService.remove(userinfo);
-         $scope.nameList = modelService.getAll(); //务必进行一次
+         $scope.nameList = modelService.getAll(); //务必进行一次获取新的数据
      }
      $scope.accept = function(userinfo) {
          userinfo.accept();
      }
      $scope.refuse = function(userinfo) {
          userinfo.refuse();
+     }
+ })
+
+ app.directive("nlItem", function() {
+     return {
+         restrict: 'A',
+         templateUrl: 'nl_item_tmpl1.html',
+         scope: {
+             nlUserinfo: "=",
+             nlRemoveFn: "=",
+             nlId: "@" //@绑定的是字符串
+         }
      }
  })

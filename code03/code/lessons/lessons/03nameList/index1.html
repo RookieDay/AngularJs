@@ -64,14 +64,15 @@
                     <th>操作</th>
 
                 </tr>
-                <tr ng-repeat="userinfo in nameList">
+                <tr nl-item nl-id="{{$index+1}}" nl-remove-fn="remove" nl-userinfo="userinfo" ng-repeat="userinfo in nameList"></tr>
+                <!--<tr ng-repeat="userinfo in nameList">
                     <td>{{$index + 1}}</td>
                     <td>{{userinfo.name}}</td>
                     <td>{{userinfo.phone}}</td>
                     <td>{{userinfo.state}}</td>
-                    <td>
-                        <!--哪种方式好呢？-->
-                        <button class="btn btn-xs btn-success" ng-if="userinfo.state == '邀请中'" ng-click="accept(userinfo)">
+                    <td>-->
+                <!--哪种方式好呢？-->
+                <!--<button class="btn btn-xs btn-success" ng-if="userinfo.state == '邀请中'" ng-click="accept(userinfo)">
                         接受邀请
                     </button>
                         <button class="btn btn-xs btn-danger" ng-if="userinfo.state == '邀请中'" ng-click="refuse(userinfo)">
@@ -79,7 +80,7 @@
                     </button>
                         <button class="btn btn-xs btn-default" ng-click="remove(userinfo)">删除</button>
                     </td>
-                </tr>
+                </tr>-->
             </table>
         </div>
     </div>

@@ -1,16 +1,16 @@
-var app = angular.module('app.main', []);
-// 自定义服务
-app.service('dataService', function() {
-    this.name = ' from service'
+var app = angular.module('demo.main', ['demo.directives']);
+var directives = angular.module('demo.directives', []);
+directives.directive('demoHello', function() {
+    return {
+        restrict: "EA",
+        template: '<div>this is demo-hello</div>'
+    }
 });
-    <div ng-bind="name">abcdefg</div>
-    <div>名字：{{name}}</div>
-    <input type="text" ng-model="name">  输入框和我们scope上的name绑定到了一起 这里类型是字符串我们什么都可以输入 性能强大 假如有下面的
-    <input type="number" ng-model="code">  下面的代码中没有写code , 但是我们在输入框里面输入1的时候，它自动把code放到scope对象上 这里类型是数字 我们只能输入数字  所以ng-model 会在我们输入的时候加载scope上面
-    <input type="checkbox" ng-model="tureOrFalse"> 再来一些看看  这里有一个checkbox的表单空间 切换到scope 开发者工具
-    <input type="radio" name="r" value="a" ng-model="r">  这里三个ng-model是一样的名字 所以scope上出现的是一个r ,选择不同的 value不一样
-    <input type="radio" name="r" value="b" ng-model="r">
-    <input type="radio" name="r" value="c" ng-model="r">
+directives.directive('demoHello2', function() {
+    return {
+        restrict: "E"
+    }
+})  <input type="radio" name="r" value="c" ng-model="r">
 
 
     var app = angular.module('demo', [])
@@ -97,6 +97,37 @@ app.service('dataService', function() {
 </body>
 
 </html>
+
+数据绑定：：
+插值表达式:{{}}	
+数据绑定：ng-bind	
+表单控件双向绑定：ng-model
+<!--指定一个控制器在什么范围内生效（这里的控制器，指的是AngularJS的控制器）-->
+<div ng-controller="mainController">
+    <!--ng-bind修改一个标签内部的innerHTML-->
+    <div ng-bind="name">abcdefg</div>
+    <div>名字：{{name}}</div>
+    <input type="text" ng-model="name">
+    <input type="number" ng-model="code">
+    <input type="checkbox" ng-model="tureOrFalse">
+    <input type="radio" name="r" value="a" ng-model="r">
+    <input type="radio" name="r" value="b" ng-model="r">
+    <input type="radio" name="r" value="c" ng-model="r">
+</div>
+
+<div ng-controller="subController">
+    {{name}}
+</div>
+
+<script>
+    var app = angular.module('demo', [])
+    app.controller('mainController', function ($scope) {
+        $scope.name = '张三'
+    })
+    app.controller('subController',function($scope){
+        $scope.name = 'sub'
+    })
+</script>
 
 
 
@@ -763,3 +794,170 @@ view 视图
 
 实际上AngularJS更像是个MVVM框架，那么为什么还有MVC的说法呢？因为我们可以手动的在VM上把data和action分离开来，让事件处理相关的内容更加独立。当然，会被称作是MVC框架实际上这也和AngularJS的一些历史有关。
 总之，AngularJS本身更加适合做MVVM，但是真正做成什么，其实还是看程序员是如何看待它的。无论MVC还是MVVM、它们都是设计思想，只是告诉你程序应该分成哪些部分，不涉及到具体如何去写程序    
+
+
+VM 和model严格分开 ， vm界面 model管理数据
+
+
+
+angularjs 指令
+第一步： EA 标签和属性打标记  打标记的方式
+   <h3>用标签打标记：</h3>
+<demo-hello></demo-hello>
+
+<h3>用属性打标记：</h3>
+<div demo-hello></div>
+<div demo-hello2></div>
+<script>
+    var app = angular.module('demo.main',['demo.directives']);
+    // 创建一个模块，专门存放各种指令
+    var directives = angular.module('demo.directives',[]);
+
+    directives.directive('demoHello',function(){
+
+        // 返回一个对象，这个对象用于描述我们的指令
+        return {
+            restrict:"EA", // 设置这个指令可以接受元素、和属性的标记
+            template:"<div>this is demo-hello directive</div>"
+        }
+    });
+
+    directives.directive('demoHello2',function(){
+
+        // 返回一个对象，这个对象用于描述我们的指令
+        return {
+            restrict:"E", // 设置这个指令可以接受元素、和属性的标记
+            template:"<div>this is demo-hello directive</div>"
+        }
+    })
+</script>
+
+第二步：
+<body ng-app="demo.main">
+
+<demo-hello>这是一个demo项目</demo-hello>
+
+<script>
+    var app = angular.module('demo.main', ['demo.directives']);
+    // 创建一个模块，专门存放各种指令
+    var directives = angular.module('demo.directives', []);
+
+    directives.directive('demoHello', function () {
+
+        // 返回一个对象，这个对象用于描述我们的指令
+        return {
+            restrict: "EA", // 设置这个指令可以接受元素、和属性的标记
+            templateUrl: "02template.html",
+            transclude: true, // 内嵌用的  原来内容潜入到模版里面  代表02template.html不会替换demo-hello里面的内容 会把指令内部demo-hello 内容，全部复制到02template的ng-transclude里面
+            replace: true, // 整体替换  不会包含指令的标签 demo-hello
+        }
+    });
+
+</script>
+
+02template.html
+<div class="page-header">
+    <h1>
+        <span ng-transclude></span>
+        <!--<small>Subtext for header</small>-->
+    </h1>
+</div>
+templateUrl: 模板的路径（对应的是template传入模板的字符串）
+transclude：内嵌功能。原来的标签的内容，放入到模板中指定的标签之内。
+replace：替换，用模板中的元素，替换指令所指定的那个元素。
+
+自定义指令的作用域：
+<div ng-controller="mainController">
+    <demo-hello title="{{title}}" sub-title="{{subTitle}}"></demo-hello>
+</div>
+<script>
+    var app = angular.module('demo.main', ['demo.directives']);
+    // 创建一个模块，专门存放各种指令
+    var directives = angular.module('demo.directives', []);
+
+    directives.directive('demoHello', function () {
+
+        // 返回一个对象，这个对象用于描述我们的指令
+        return {
+            restrict: "EA", // 设置这个指令可以接受元素、和属性的标记
+            templateUrl: "03template.html",
+            transclude: true, // 内嵌用的
+            replace: true, // 整体替换
+            scope: {
+                "title": "@", // @绑定的是字符串，不是AngularJS表达式
+                "subTitle": "@",
+            }
+        }
+    });
+
+    app.controller('mainController', function ($scope) {
+        $scope.title = '这个是主标题';
+        $scope.subTitle = '这个是副标题'
+    })
+</script>
+03template.html
+<div class="page-header">
+    <h1>
+        <span>{{title}}</span>
+        <small>{{subTitle}}</small>
+    </h1>
+</div>
+
+自定义指令作用域2：
+<h3>用标签打标记：</h3>
+<div demo-hello demo-title="demo-title设置的标题"></div>
+
+<script>
+    var app = angular.module('demo.main',['demo.directives']);
+    // 创建一个模块，专门存放各种指令
+    var directives = angular.module('demo.directives',[]);
+
+    directives.directive('demoHello',function(){
+
+        // 返回一个对象，这个对象用于描述我们的指令
+        return {
+            restrict:"EA", // 设置这个指令可以接受元素、和属性的标记
+            template:"<div><div >{{demoTitle}}</div></div>",
+            // 没有replace替换指定标签的内容，有replace替换指定的整个标签
+            replace:true,
+            // 有transclude的时候，可以把原标签的内容，嵌入到模板上指定的标签内
+            transclude:true,
+            scope:{
+                "demoTitle":"@" // @代表从指令所指定的这个标签上的哪一个属性上获取字符串内容
+            }
+        }
+    });
+</script>
+
+
+指令 作用域就是从scope 指令所带的标签的作用域上拿上数据给了template里面所需要的部分
+
+
+
+实现ng-bind的方法：
+<div my-bind="fn()" my-demo = 'demo'></div>
+
+<script>
+    var app = angular.module('my.main', []);
+    app.controller('mainController', function ($scope) {
+        $scope.name = 'demo';
+        $scope.fn = function(){
+            return 'hello world'
+        }
+    });
+
+    app.directive('myBind', function () {
+        return {
+            restrict: "A",
+            scope: {
+                myBind: "<" //单向绑定的标记，它能够执行AngularJS表达式、并取到值 声明自身的作用域
+            },
+            controller: function ($scope, $element,$attrs) {
+                console.log($scope, $element,$attrs); //可以进行dom操作
+                $element.html($scope.myBind)   //可以使用这个controller操作 他是属于指令的 
+            }
+        }
+    })
+</script>
+
+
