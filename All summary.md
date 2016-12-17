@@ -961,3 +961,50 @@ replace：替换，用模板中的元素，替换指令所指定的那个元素�
 </script>
 
 
+angular 自定义指令链接 require link
+<div my-bind-outer>
+    <div my-bind="fn()" my-demo='demo'></div>
+</div>
+
+<!--需要一个ngmodel的 依赖-->
+<input type="text" ng-change="changeHandler()" />
+
+<script>
+    var app = angular.module('my.main', []);
+    app.controller('mainController', function ($scope) {
+        $scope.name = 'demo';
+        $scope.fn = function () {
+            return 'hello angular'
+        };
+        $scope.changeHandler = function(data){
+            console.log(data)
+        }
+    });
+
+    app.directive('myBind', function () {
+        return {
+            restrict: "A",
+            scope: {
+                myBind: "<" //单向绑定的标记，它能够执行AngularJS表达式、并取到值
+            },
+            require:"^myBindOuter",
+            link: function (scope, elem, attrs, ctrl) {
+                elem.html(scope.myBind);
+                console.log(ctrl);
+            }
+        }
+    })
+
+
+    app.directive('myBindOuter', function () {
+        return {
+            restrict: "A",
+            controller: function () {
+                return {
+                    name: 'outer'
+                }
+            }
+        }
+    })
+</script>
+
