@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01指令入门</title>
+    <script src="../angular.js"></script>
+</head>
+<body ng-app="demo.main">
+<h3>用标签打标记：</h3>
+<demo-hello></demo-hello>
+
+<h3>用属性打标记：</h3>
+<div demo-hello></div>
+<div demo-hello2></div>
+<script>
+    var app = angular.module('demo.main',['demo.directives']);
+    // 创建一个模块，专门存放各种指令
+    var directives = angular.module('demo.directives',[]);
+
+    directives.directive('demoHello',function(){
+
+        // 返回一个对象，这个对象用于描述我们的指令
+        return {
+            restrict:"EA", // 设置这个指令可以接受元素、和属性的标记
+            template:"<div>this is demo-hello directive</div>"
+        }
+    });
+
+    directives.directive('demoHello2',function(){
+
+        // 返回一个对象，这个对象用于描述我们的指令
+        return {
+            restrict:"E", // 设置这个指令可以接受元素、和属性的标记
+            template:"<div>this is demo-hello directive</div>"
+        }
+    })
+</script>
+</body>
+</html>

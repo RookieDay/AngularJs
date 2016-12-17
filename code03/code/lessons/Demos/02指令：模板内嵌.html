@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo.main">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularJS指令：内嵌</title>
+    <script src="angular.js"></script>
+</head>
+<body>
+
+<div demo-hello="">
+    <div>world</div>
+</div>
+
+<div demo-hello="">
+    <div>AngularJs</div>
+</div>
+
+<script>
+    var app = angular.module('demo.main',['demo.directives']);
+    var directives = angular.module('demo.directives',[]);
+
+    directives.directive('demoHello',function(){
+        return {
+            restrict:"EA", // 指令生效的方式：E代表作为元素名，A代表作为属性名，可以重复
+            template:"<div><h1>hello,</h1> <div ng-transclude style='padding-left: 50px;font-size: 40px'></div> </div>",
+            transclude:true
+        }
+    });
+</script>
+
+</body>
+</html>

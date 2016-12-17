@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01指令入门</title>
+    <script src="../angular.js"></script>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap-theme.css">
+</head>
+<body ng-app="demo.main">
+<div ng-controller="mainController">
+    <demo-hello title="{{title}}" sub-title="{{subTitle}}"></demo-hello>
+</div>
+<script>
+    var app = angular.module('demo.main', ['demo.directives']);
+    // 创建一个模块，专门存放各种指令
+    var directives = angular.module('demo.directives', []);
+
+    directives.directive('demoHello', function () {
+
+        // 返回一个对象，这个对象用于描述我们的指令
+        return {
+            restrict: "EA", // 设置这个指令可以接受元素、和属性的标记
+            templateUrl: "03template.html",
+            transclude: true, // 内嵌用的
+            replace: true, // 整体替换
+            scope: {
+                "title": "@", // @绑定的是字符串，不是AngularJS表达式
+                "subTitle": "@",
+            }
+        }
+    });
+
+    app.controller('mainController', function ($scope) {
+        $scope.title = '这个是主标题';
+        $scope.subTitle = '这个是副标题'
+    })
+
+</script>
+</body>
+</html>

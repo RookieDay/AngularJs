@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo.main">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularJS指令：入门</title>
+    <script src="angular.js"></script>
+</head>
+<body>
+
+<div demo-hello="">this is a div</div>
+<br>
+<div demo-hello-e="">this is a div</div>
+<br>
+
+<demo-hello>this is a div</demo-hello>
+<br>
+<demo-hello-e>this is a div</demo-hello-e>
+<script>
+    var app = angular.module('demo.main',['demo.directives']);
+    // 创建一个模块，专门存放各种指令
+    var directives = angular.module('demo.directives',[]);
+
+    // 必须使用驼峰命名法
+    directives.directive('demoHello',function(){
+        return {
+            restrict:"EA", // 指令生效的方式：E代表作为元素名，A代表作为属性名，可以重复
+            template:"<span>hello world</span>"
+        }
+    });
+
+    directives.directive('demoHelloE',function(){
+
+        return {
+            restrict:"E", // 指令生效的方式：E代表作为元素名，A代表作为属性名，可以重复
+            template:"<span>hello world</span>",
+            replace:true // 是否替换指令所指定的那个HTML标签，真为替换，假为替换其内容
+        }
+    });
+</script>
+
+</body>
+</html>

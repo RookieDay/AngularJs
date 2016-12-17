@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01指令入门</title>
+    <script src="../angular.js"></script>
+</head>
+<body ng-app="demo.main">
+<h3>用标签打标记：</h3>
+<demo-hello>
+    你好，这里是标题
+</demo-hello>
+
+<script>
+    var app = angular.module('demo.main',['demo.directives']);
+    // 创建一个模块，专门存放各种指令
+    var directives = angular.module('demo.directives',[]);
+
+    directives.directive('demoHello',function(){
+
+        // 返回一个对象，这个对象用于描述我们的指令
+        return {
+            restrict:"EA", // 设置这个指令可以接受元素、和属性的标记
+            template:"<div>this is demo-hello directive<div ng-transclude></div><div ng-transclude></div></div>",
+            // 没有replace替换指定标签的内容，有replace替换指定的整个标签
+            replace:true,
+            // 有transclude的时候，可以把原标签的内容，嵌入到模板上指定的标签内
+            transclude:true,
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo.main">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularJS指令：控制器</title>
+    <script src="angular.js"></script>
+</head>
+<body ng-controller="mainController">
+
+带双向绑定的属性(=)的指令改变了外侧作用域的equal值：{{equal}}
+<br>
+<br>
+<div demo-hello="hello" at="this is @" and="sayHello()" equal="equal" expr="sayHello()">
+</div>
+
+<script>
+    var app = angular.module('demo.main',['demo.directives']);
+    app.controller('mainController', function ($scope) {
+        $scope.name = 'main controller';
+        $scope.hello = 'hello world';
+        window.scope = $scope;
+        $scope.sayHello = function(){
+            return $scope.hello;
+        }
+    });
+
+    var directives = angular.module('demo.directives',[]);
+
+    // 独立作用域
+    directives.directive('demoHello',function(){
+        return {
+            restrict:"EA", // 指令生效的方式：E代表作为元素名，A代表作为属性名，可以重复
+            template:`
+            <div>
+                <div>at:{{at}}</div>
+                <div>and:{{and()}}</div>
+                <div>expr:{{expr}}</div>
+                <div>equal:{{equal}}</div>
+                <div>demo-hello:{{demoHello}}</div>
+            </div>
+            `,
+            transclude:true,
+            replace:true,
+            scope:{
+                "at":"@", // 绑定一个字符串
+                "and":"&", // 单向绑定一个表达式，获得一个函数可以取得到值
+                "expr":"<", // 单向绑定一个表达式，直接得到值（AngularJS后加的）
+                "equal":"=", // 和指定的字段进行双向绑定
+                "demoHello":"@"
+            },
+            controller:function($scope,$attrs,$element){
+                console.log($scope,$attrs,$element);
+                $scope.equal = "在指令里";
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

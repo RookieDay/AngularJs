@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="my.main">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义指令：my-bind</title>
+    <script src="../angular.js"></script>
+</head>
+<body ng-controller="mainController">
+
+<div my-bind="fn()" my-demo = 'demo'></div>
+
+<script>
+    var app = angular.module('my.main', []);
+    app.controller('mainController', function ($scope) {
+        $scope.name = 'demo';
+        $scope.fn = function(){
+            return 'hello world'
+        }
+    });
+
+    app.directive('myBind', function () {
+        return {
+            restrict: "A",
+            scope: {
+                myBind: "<" //单向绑定的标记，它能够执行AngularJS表达式、并取到值
+            },
+            controller: function ($scope, $element,$attrs) {
+                console.log($scope, $element,$attrs);
+                $element.html($scope.myBind)
+            }
+        }
+    })
+</script>
+</body>
+</html>
