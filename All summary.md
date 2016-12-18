@@ -1189,4 +1189,15 @@ outer 模版替换上去 把整个模版复制过去
 inner complie 替换demoinner内容
 
 
+豆瓣API
+https://developers.douban.com/wiki/?title=guide
 
+调试数据接口是否可用：
+http://api.douban.com/v2/movie/in_theaters?city=北京&count=1
+Object
+    count:1
+    start:0
+    subjects:Array[1]
+    title:"正在上映的电影-北京"
+    total:27
+    __proto__:Object
