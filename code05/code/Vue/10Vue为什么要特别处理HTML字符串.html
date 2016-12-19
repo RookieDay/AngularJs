@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+比如我们有一个论坛，论坛发帖的地方可以输入文本。
+<br>
+那么，考虑一下，如果用户输入了这样的字符串，你怎么办？
+<br>
+&lt;script&gt; window.location.href = 'www.baidu.com'&lt;/script&gt;
+<br>
+给其他用户显示这个帖子里面的内容时，直接就执行了用户写入的脚本。
+如果这个用户是恶意的，可以：<br>
+1. 伪造一个登录框，告诉用户，你的信息已经过期，请重新登录 <br>
+2. 跳转到一个奇怪的网站上 <br>
+3. 把你的cookie读取出来，传到他们的服务器上 <br>
+
+这些事情发生之后很可怕，所以vue、AngularJS等框架，在绑定html字符串时，会默认的进行转意。
+
+
+
+</body>
+</html>

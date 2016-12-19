@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="container">
+    <div>当前的值：{{value}}</div>
+    <div>
+        <button v-on:click="plusOne">点击加一</button>
+    </div>
+</div>
+<script>
+    var data = {
+        value:0
+    };
+    new Vue({
+        el:"#container",
+        data: data,
+        methods:{
+            plusOne:function(){
+                data.value ++;
+            }
+        }
+    })
+</script>
+</body>
+</html>

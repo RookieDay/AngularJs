@@ -1,0 +1,33 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-10">
+            <ul class="nav nav-tabs">
+                <li ><a href="#/list/in_theaters/1">正在热映</a></li>
+                <li ><a href="#/list/coming_soon/1">即将上映</a></li>
+                <li ><a href="#/list/top250/1">top250</a></li>
+            </ul>
+        </div>
+        <div class="col-xs-2">
+            <span style="font-size: 35px;float: right;">电影列表</span>
+        </div>
+    </div>
+    <div class="row">
+        <ol class="breadcrumb">
+            <li>电影列表</li>
+            <li>{{vm.pager.category}}</li>
+            <li class="active">第{{vm.pager.curr}}页(共{{vm.pager.max}}页)</li>
+        </ol>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-xs-4" ng-repeat="subject in vm.data">
+            <div class="thumbnail img-thumbnail">
+                <img ng-src="{{subject.images.large}}"
+                     style="height: 420px;overflow-y: hidden;"
+                     alt="{{subject.title}}">
+                <div class="caption" style="text-align:center;">
+                    <a ng-href="#/detail/{{subject.id}}">{{subject.title}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

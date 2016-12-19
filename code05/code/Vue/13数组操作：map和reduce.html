@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组操作</title>
+</head>
+<body>
+<script>
+    // map:把旧的数组经过函数变换之后映射到新的数组
+    var newArray = [1,2,3,4,5].map(function(value){
+        return value+1;
+    });
+    console.log(newArray);
+
+    // 累计
+    var value = [{name:"张三",score:2},
+        {name:"王五",score:4},
+        {name:"赵六",score:1}].reduce(function(sum,nowValue){
+        console.log(sum,nowValue);
+        return sum + nowValue.score;
+    },0);
+    console.log(value)
+</script>
+</body>
+</html>

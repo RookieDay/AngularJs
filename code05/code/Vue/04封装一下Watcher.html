@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="name">张三</div>
+<button onclick="clickHandler()">click me</button>
+
+<script>
+    // Scope的构造函数
+    function Scope(){
+        this.$$watchers = [];
+    }
+
+    // 创建了一个watcher放到了$scope下面的$$watchers
+    Scope.prototype.$watch = function(expr,callback){
+        var watcher = {};
+        watcher.expr = expr;
+        watcher.callback = callback;
+        watcher.oldValue = this[expr];
+        this.$$watchers.push(watcher);
+    };
+
+    // 遍历$$watchers数组，如果发现了数值变更，则执行回调函数
+    Scope.prototype.$digest = function(){
+        var _this = this;
+        this.$$watchers.forEach(function(value){
+            var newValue = _this[value.expr];
+            if(newValue != value.oldValue){
+                value.callback(newValue,value.oldValue);
+            };
+            value.oldValue = newValue;
+        })
+    };
+
+    Scope.prototype.$click = function(callback){
+        var _this = this;
+        return function (){
+            callback();
+            _this.$digest();
+        }
+    };
+
+    var scope = new Scope();
+    scope.name = "张三";
+    scope.age = 18;
+
+    scope.$watch('name',function(newValue,oldValue){
+        document.getElementById('name').innerHTML = newValue;
+        console.log('回调',newValue,oldValue);
+    });
+
+    var clickHandler = scope.$click(function(){
+        scope.name = "李四";
+    })
+
+
+</script>
+</body>
+</html>

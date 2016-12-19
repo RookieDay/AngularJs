@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="container">
+    名字：{{name}}
+    <br>
+    年龄：{{age}}
+    <br>
+    性别:{{sex}}
+</div>
+
+<script src="vue.js"></script>
+<script>
+    var data = {
+        name: "张三",
+        age: 24,
+        sex: "男"
+    };
+
+    new Vue({
+        el: "#container",
+        data: data,
+    })
+</script>
+</body>
+</html>

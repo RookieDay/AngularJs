@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="container" style="width: 100px;height: 100px;">div</div>
+
+<script src="jquery.js"></script>
+<script>
+    var scope = {
+        _name: "张三"
+    };
+    Object.defineProperties(scope, {
+        name: {
+            get: function () {
+                console.log('执行了取值的函数');
+                return this._name + '先生';
+            },
+            set: function (value) {
+                console.log('执行了赋值的函数');
+                this._name = value + '先生';
+            }
+        }
+    });
+
+    // 有些时候，我们对字段的取值、赋值操作，需要一些额外的处理
+    // 通常来说，我们会给它包装一个函数：
+//    $("#container").css ('background-color', 'red');
+//
+//    var background = $("#container").css('background-color');
+//    console.log(background)
+//
+//    $("#container").css.backgourndColor = 'red'
+//
+
+</script>
+</body>
+</html>

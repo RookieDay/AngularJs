@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+    <style>
+        .red{
+            background-color: red;
+        }
+        .green{
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div v-bind:class="{'red':false,'green':true}"
+         v-bind:style="{border:style_border}">
+        this is a div
+    </div>
+</div>
+<script>
+    new Vue({
+        el:"#container",
+        data:{
+            style_border:"3px solid black"
+        }
+    })
+</script>
+</body>
+</html>

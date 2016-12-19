@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+    scope = {
+        name :"张三",
+        age:24,
+        sex:"男"
+    };
+
+    var watchers = [];
+
+    // 创建watcher的API：
+//    $scope.$watch('expr',function(newValue,oldValue,scope){
+//        //TODO:当表达式的值发生变化时，执行下面的功能
+//
+//    })
+
+
+    function Watcher (expr,scope,callback){
+        this.expr = expr ; // 存储要监听的表达式
+        this.scope = scope; // 把作用域放到对象上
+        this.oldValue = scope[expr]; // 获取旧的值
+        this.callback = callback;
+    }
+
+    var watcher = new Watcher('name',scope,function(newValue,oldValue){
+        console.log("我们在watcher创建时传入的回调函数",newValue,oldValue)
+    });
+
+    watchers.push(watcher);
+
+    function check(watchers){
+        watchers.forEach(function(value,index,array){
+            console.log(value);
+            // 在value.scope作用域上对value.expr表达式求值
+            var newValue = value.scope[value.expr];
+            // 和旧的值进行比较
+            if(value.oldValue != newValue){
+                value.callback(newValue,value.oldValue);
+            }
+            // 收尾工作：更新vlaue.oldValue
+            value.oldValue = newValue;
+        })
+    }
+
+    check(watchers);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    function render(elemId,data){
+        var htmlstr = `<span>${data.name}</span>`;
+        document.getElementById(elemId).innerHTML = htmlstr;
+    }
+
+    render('container',{name:'张三'});
+</script>
+</body>
+</html>
